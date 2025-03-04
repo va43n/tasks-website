@@ -1,0 +1,6 @@
+{
+	"extends": "newt/core-web-vitals",
+	"rules": {
+		"no-unused-vars": "off"
+	}
+}
