@@ -1,9 +1,14 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useRouter } from "next/navigation";
+
+export default function HomePage() {
+  const router = useRouter();
+
   return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-100">
-        <h1 className="text-4xl font-bold text-red-600">BYE WORLD</h1>
-      </div>  
+    <div>
+      <button onClick={() => router.push("auth/register")}>Регистрация</button>
+      <button onClick={() => router.push("auth/login")}>Вход</button>
+    </div>
   );
 }
