@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import supabase from "@/lib/supabase";
-import { createJWT } from "@/lib/jwt";
+import supabase from "../../../../lib/supabase";
+import { createJWT } from "../../../../lib/jwt";
 
 export async function POST(req: NextRequest) {
 	try {
