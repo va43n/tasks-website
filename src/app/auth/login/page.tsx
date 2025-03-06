@@ -39,7 +39,7 @@ export default function LoginPage() {
 			<input type="text" name="username" placeholder="Логин" onChange={handleChange} />
 			<input type="text" name="password" placeholder="Пароль" onChange={handleChange} />
 			{error && <p style={{color: red}}>{error}</p>}
-			<button onCLick={handleRegister}>Войти</button>
+			<button onClick={handleLogin}>Войти</button>
 		</div>
 	);
 }

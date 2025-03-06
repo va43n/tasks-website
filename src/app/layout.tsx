@@ -58,8 +58,8 @@ export default function Layout ({
             <p>Добро пожаловать, {user.username}!</p>
           ) : (
             <div>
-              <button onClick={() => router.push("auth/register")}>Регистрация</button>
-              <button onClick={() => router.push("auth/login")}>Вход</button>
+              <button onClick={() => router.push("/auth/register")}>Регистрация</button>
+              <button onClick={() => router.push("/auth/login")}>Вход</button>
             </div>
           )}
         </header>

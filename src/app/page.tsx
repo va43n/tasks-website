@@ -7,8 +7,7 @@ export default function HomePage() {
 
   return (
     <div>
-      <button onClick={() => router.push("auth/register")}>Регистрация</button>
-      <button onClick={() => router.push("auth/login")}>Вход</button>
+      <p>Страница с заданиями</p>
     </div>
   );
 }
