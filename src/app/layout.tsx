@@ -1,13 +1,13 @@
 "use client";
 
-import type { Metadata } from "next";
+/* import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import "./globals.css"; */
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const geistSans = Geist({
+/* const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
@@ -15,14 +15,14 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-});
+}); */
 
 /* export const metadata: Metadata = {
   title: "Tasks",
   description: "Website for downloading tasks",
 }; */
 
-export default function RootLayout({
+/* export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -36,7 +36,7 @@ export default function RootLayout({
       </body>
     </html>
   );
-}
+} */
 
 export default function Layout ({
   children
