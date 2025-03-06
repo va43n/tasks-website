@@ -54,7 +54,7 @@ export default function RegisterPage() {
 			</select>
 			<input type="text" name="password" placeholder="Пароль" onChange={handleChange} />
 			<input type="text" name="confirmPassword" placeholder="Повторите пароль" onChange={handleChange} />
-			{error && <p style={{color: red}}>{error}</p>}
+			{error && <p color="red">{error}</p>}
 			<button onClick={handleRegister}>Зарегистрироваться</button>
 		</div>
 	)
