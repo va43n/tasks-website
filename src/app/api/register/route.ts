@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "newxt/server";
+import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import supabase from "@/lib/supabase";
 
