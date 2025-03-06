@@ -45,15 +45,15 @@ export default function RegisterPage() {
 	return (
 		<div>
 			<h1>Регистрация</h1>
-			<input type="text", name="full_name" placeholder="ФИО" onChange={handleChange} />
-			<input type="text", name="username" placeholder="Логин" onChange={handleChange} />
-			<input type="text", name="email" placeholder="Электронная почта" onChange={handleChange} />
+			<input type="text" name="full_name" placeholder="ФИО" onChange={handleChange} />
+			<input type="text" name="username" placeholder="Логин" onChange={handleChange} />
+			<input type="text" name="email" placeholder="Электронная почта" onChange={handleChange} />
 			<select name="role" onChange={handleChange}>
 				<option value="Пациент">Пациент</option>
 				<option value="Доктор">Доктор</option>
 			</select>
-			<input type="text", name="password" placeholder="Пароль" onChange={handleChange} />
-			<input type="text", name="confirmPassword" placeholder="Повторите пароль" onChange={handleChange} />
+			<input type="text" name="password" placeholder="Пароль" onChange={handleChange} />
+			<input type="text" name="confirmPassword" placeholder="Повторите пароль" onChange={handleChange} />
 			{error && <p style={{color: red}}>{error}</p>}
 			<button onCLick={handleRegister}>Зарегистрироваться</button>
 		</div>
