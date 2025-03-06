@@ -17,10 +17,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
+/* export const metadata: Metadata = {
   title: "Tasks",
   description: "Website for downloading tasks",
-};
+}; */
 
 export default function RootLayout({
   children,
