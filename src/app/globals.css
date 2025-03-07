@@ -13,11 +13,11 @@ body {
   align-items: center;
 }
 
-.button {
+button {
   cursor: pointer;
 }
 
-.input {
+input {
   width: 100%;
 }
 
@@ -60,7 +60,7 @@ body {
   gap: 10px;
 }
 
-.header {
+header {
   width: 100%;
   display: flex;
   justify-content: space-between;
