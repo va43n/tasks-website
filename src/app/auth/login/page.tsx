@@ -3,7 +3,8 @@
 import {useState} from "react";
 import {useRouter} from "next/navigation";
 
-import "../../globals.css";
+import "../../../../styles/globals.css";
+import "../../../../styles/form.css";
 
 export default function LoginPage() {
 	const router = useRouter();
@@ -19,6 +20,11 @@ export default function LoginPage() {
 
 	const handleLogin = async () => {
 		setError("");
+
+		// if (!form.username || !form.password) {
+		// 	setError("Вы не заполнили все поля");
+		// 	return;
+		// }
 
 		const response = await fetch("/api/login", {
 			method: "POST",

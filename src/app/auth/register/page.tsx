@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import "../../globals.css";
+import "../../../../styles/globals.css";
+import "../../../../styles/form.css";
 
 export default function RegisterPage() {
 	const router = useRouter();
@@ -23,6 +24,11 @@ export default function RegisterPage() {
 
 	const handleRegister = async () => {
 		setError("");
+
+		// if (!form.full_name || !form.username || !form.email || !form.role || !form.password || !form.confirmPassword) {
+		// 	setError("Вы не заполнили все поля");
+		// 	return;
+		// }
 
 		if (form.password !== form.confirmPassword) {
 			setError("Пароли не совпадают");
@@ -50,10 +56,12 @@ export default function RegisterPage() {
 			<input className="form-box-size rounded-box" type="text" name="full_name" placeholder="ФИО" onChange={handleChange} />
 			<input className="form-box-size rounded-box" type="text" name="username" placeholder="Логин" onChange={handleChange} />
 			<input className="form-box-size rounded-box" type="text" name="email" placeholder="Электронная почта" onChange={handleChange} />
-			<select className="form-box-size rounded-box" name="role" onChange={handleChange}>
+			<div className="select-container form-box-size rounded-box">
+			<select className="select-form" name="role" onChange={handleChange}>
 				<option value="Пациент">Пациент</option>
 				<option value="Доктор">Доктор</option>
 			</select>
+			</div>
 			<input className="form-box-size rounded-box" type="text" name="password" placeholder="Пароль" onChange={handleChange} />
 			<input className="form-box-size rounded-box" type="text" name="confirmPassword" placeholder="Повторите пароль" onChange={handleChange} />
 			{error && <p color="red">{error}</p>}

@@ -7,6 +7,10 @@ export async function POST(req: NextRequest) {
 	try {
 		const {username, password} = await req.json();
 
+		if (!username || !password) {
+			return NextResponse.json({error: "Вы не заполнили все поля"}, {status: 400});
+		}
+
 		const {data: user, error} = await supabase
 			.from("users")
 			.select("id, username, password")

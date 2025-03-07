@@ -4,7 +4,11 @@ import supabase from "../../../../lib/supabase";
 
 export async function POST(req: NextRequest) {
 	try {
-		const { full_name, username, email, role, password } = await req.json();
+		const { full_name, username, email, role, password, confirmPassword } = await req.json();
+
+		if (!full_name || !username || !email || !role || !password || !confirmPassword) {
+			return NextResponse.json({error: "Вы не заполнили все поля"}, {status: 400});
+		}
 
 		const { data: existingUser } = await supabase
 			.from("users")
