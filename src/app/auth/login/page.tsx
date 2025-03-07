@@ -41,7 +41,7 @@ export default function LoginPage() {
 			<input className="form-box-size rounded-box" type="text" name="username" placeholder="Логин" onChange={handleChange} />
 			<input className="form-box-size rounded-box" type="text" name="password" placeholder="Пароль" onChange={handleChange} />
 			{error && <p color="red">{error}</p>}
-			<button className="form-box-size button-form" onClick={handleLogin}>Войти</button>
+			<button className="form-box-size rounded-box button-form" onClick={handleLogin}>Войти</button>
 		</div>
 	);
 }
