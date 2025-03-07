@@ -56,8 +56,8 @@ export default function RegisterPage() {
 			<input className="form-box-size rounded-box" type="text" name="full_name" placeholder="ФИО" onChange={handleChange} />
 			<input className="form-box-size rounded-box" type="text" name="username" placeholder="Логин" onChange={handleChange} />
 			<input className="form-box-size rounded-box" type="text" name="email" placeholder="Электронная почта" onChange={handleChange} />
-			<div className="select-container">
-				<select className="select-form form-box-size rounded-box" name="role" onChange={handleChange}>
+			<div className="select-container form-box-size">
+				<select className="select-form rounded-box" name="role" onChange={handleChange}>
 					<option value="Пациент">Пациент</option>
 					<option value="Доктор">Доктор</option>
 				</select>
