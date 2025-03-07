@@ -37,7 +37,7 @@ export default function LoginPage() {
 
 	return (
 		<div className="centered-container">
-			<h1>Вход</h1>
+			<h3>Вход</h3>
 			<input className="form-box-size rounded-box" type="text" name="username" placeholder="Логин" onChange={handleChange} />
 			<input className="form-box-size rounded-box" type="text" name="password" placeholder="Пароль" onChange={handleChange} />
 			{error && <p color="red">{error}</p>}
