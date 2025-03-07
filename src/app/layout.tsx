@@ -55,7 +55,7 @@ export default function Layout ({
       <body>
         <header>
           {user ? (
-            <p>Добро пожаловать, {user.username}!</p>
+            <p>Добро пожаловать, {user?.username}!</p>
           ) : (
             <div>
               <button onClick={() => router.push("/auth/register")}>Регистрация</button>
