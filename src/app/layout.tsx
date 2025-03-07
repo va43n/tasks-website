@@ -38,11 +38,15 @@ const geistMono = Geist_Mono({
   );
 } */
 
+type User = {
+  username: string;
+};
+
 export default function Layout ({
   children
 }: {children: React.ReactNode}) {
   const router = useRouter();
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     fetch("/api/auth/me")
@@ -55,7 +59,7 @@ export default function Layout ({
       <body>
         <header>
           {user ? (
-            <p>Добро пожаловать, {user?.username}!</p>
+            <p>Добро пожаловать, {user.username}!</p>
           ) : (
             <div>
               <button onClick={() => router.push("/auth/register")}>Регистрация</button>
