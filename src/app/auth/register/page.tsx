@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+import styles from "@/styles/components.module.css";
+
 export default function RegisterPage() {
 	const router = useRouter();
 	const [form, setForm] = useState({
@@ -45,9 +47,9 @@ export default function RegisterPage() {
 	return (
 		<div className="centered-container">
 			<h1>Регистрация</h1>
-			<input className="input-form rounded-box" type="text" name="full_name" placeholder="ФИО" onChange={handleChange} />
+			<input className={styles["rounded-box"]} type="text" name="full_name" placeholder="ФИО" onChange={handleChange} />
 			<input className="input-form rounded-box" type="text" name="username" placeholder="Логин" onChange={handleChange} />
-			<input className="input-form rounded-box" type="text" name="email" placeholder="Электронная почта" onChange={handleChange} />
+			<input className={styles["rounded-box"]} type="text" name="email" placeholder="Электронная почта" onChange={handleChange} />
 			<select name="role" onChange={handleChange}>
 				<option value="Пациент">Пациент</option>
 				<option value="Доктор">Доктор</option>
