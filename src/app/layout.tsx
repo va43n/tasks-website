@@ -23,6 +23,9 @@ export default function Layout ({
 
   return (
     <html lang="ru">
+      <head>
+        <title>Сайт с заданиями</title>
+      </head>
       <body>
         <header>
           {user ? (

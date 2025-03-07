@@ -38,10 +38,10 @@ export default function LoginPage() {
 	return (
 		<div className="centered-container">
 			<h1>Вход</h1>
-			<input className="input-form rounded-box" type="text" name="username" placeholder="Логин" onChange={handleChange} />
-			<input className="input-form rounded-box" type="text" name="password" placeholder="Пароль" onChange={handleChange} />
+			<input className="form-box-size rounded-box" type="text" name="username" placeholder="Логин" onChange={handleChange} />
+			<input className="form-box-size rounded-box" type="text" name="password" placeholder="Пароль" onChange={handleChange} />
 			{error && <p color="red">{error}</p>}
-			<button className="rounded-box button-form" onClick={handleLogin}>Войти</button>
+			<button className="form-box-size button-form" onClick={handleLogin}>Войти</button>
 		</div>
 	);
 }

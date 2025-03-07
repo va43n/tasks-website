@@ -47,17 +47,17 @@ export default function RegisterPage() {
 	return (
 		<div className="centered-container">
 			<h1>Регистрация</h1>
-			<input className="input-form rounded-box" type="text" name="full_name" placeholder="ФИО" onChange={handleChange} />
-			<input className="input-form rounded-box" type="text" name="username" placeholder="Логин" onChange={handleChange} />
-			<input className="input-form rounded-box" type="text" name="email" placeholder="Электронная почта" onChange={handleChange} />
-			<select name="role" onChange={handleChange}>
+			<input className="form-box-size rounded-box" type="text" name="full_name" placeholder="ФИО" onChange={handleChange} />
+			<input className="form-box-size rounded-box" type="text" name="username" placeholder="Логин" onChange={handleChange} />
+			<input className="form-box-size rounded-box" type="text" name="email" placeholder="Электронная почта" onChange={handleChange} />
+			<select className="form-box-size rounded-box" name="role" onChange={handleChange}>
 				<option value="Пациент">Пациент</option>
 				<option value="Доктор">Доктор</option>
 			</select>
-			<input className="input-form rounded-box" type="text" name="password" placeholder="Пароль" onChange={handleChange} />
-			<input className="input-form rounded-box" type="text" name="confirmPassword" placeholder="Повторите пароль" onChange={handleChange} />
+			<input className="form-box-size rounded-box" type="text" name="password" placeholder="Пароль" onChange={handleChange} />
+			<input className="form-box-size rounded-box" type="text" name="confirmPassword" placeholder="Повторите пароль" onChange={handleChange} />
 			{error && <p color="red">{error}</p>}
-			<button className="rounded-box button-form" onClick={handleRegister}>Зарегистрироваться</button>
+			<button className="form-box-size rounded-box button-form" onClick={handleRegister}>Зарегистрироваться</button>
 		</div>
 	)
 }
