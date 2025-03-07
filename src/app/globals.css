@@ -65,7 +65,6 @@ header {
   display: flex;
   justify-content: space-between;
   padding: 20px;
-  align-content: end;
   background-color: white;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -73,5 +72,6 @@ header {
 .header-buttons {
   display: flex;
   align-items: center;
+  align: right;
   gap: 10px;
 }
