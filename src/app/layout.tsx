@@ -3,6 +3,8 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import "globals.css";
+
 type User = {
   username: string;
 };

@@ -3,6 +3,8 @@
 import {useState} from "react";
 import {useRouter} from "next/navigation";
 
+import "../../globals.css";
+
 export default function LoginPage() {
 	const router = useRouter();
 	const [form, setForm] = useState({
