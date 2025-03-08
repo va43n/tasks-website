@@ -24,13 +24,13 @@ export async function POST(req: NextRequest) {
 
 		const { error } = await supabase
 			.from('users')
-			.insert([{
+			.insert({
 				full_name,
 				username,
 				email,
 				role,
 				hashedPassword
-			}]);
+			});
 
 		if (error) {
 			return NextResponse.json({error: "Не удалось зарегистрироваться"}, {status: 500});
