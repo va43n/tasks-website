@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import "../../styles/globals.css";
@@ -13,13 +13,14 @@ export default function Layout ({
   children
 }: {children: React.ReactNode}) {
   const router = useRouter();
+  const pathname = usePathname();
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     fetch("/api/auth/me")
     .then((res) => res.json())
     .then((data) => setUser(data.user));
-  }, [router.pathname]);
+  }, [pathname]);
 
   const handleLogout = async () => {
     await fetch("api/auth/logout", {method: "POST"});
