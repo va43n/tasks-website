@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
 		const hashedPassword = await bcrypt.hash(password, 11);
 
 		const { error } = await supabase
-			.from("users")
+			.from('users')
 			.insert({
 				full_name: full_name,
 				username: username,
