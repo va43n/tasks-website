@@ -19,7 +19,7 @@ export default function Layout ({
     fetch("/api/auth/me")
     .then((res) => res.json())
     .then((data) => setUser(data.user));
-  }, []);
+  }, [router.pathname]);
 
   const handleLogout = async () => {
     await fetch("api/auth/logout", {method: "POST"});
