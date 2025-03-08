@@ -47,7 +47,7 @@ export default function RegisterPage() {
 			return;
 		}
 
-		router.push("auth/login");
+		router.push("/auth/login");
 	};
 
 	return (
