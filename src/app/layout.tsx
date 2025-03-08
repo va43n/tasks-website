@@ -32,7 +32,9 @@ export default function Layout ({
             <button className="header-button" onClick={() => router.push("/")}>Главное меню</button>
           </div>
           {user ? (
-            <p>Добро пожаловать, {user.username}!</p>
+            <div className="header-buttons-container">
+              <p>Добро пожаловать, {user.username}!</p>
+            </div>
           ) : (
             <div className="header-buttons-container">
               <button className="header-button" onClick={() => router.push("/auth/register")}>Регистрация</button>
