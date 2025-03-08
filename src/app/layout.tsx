@@ -21,6 +21,11 @@ export default function Layout ({
     .then((data) => setUser(data.user));
   }, []);
 
+  const handleLogout = async () => {
+    await fetch("api/auth/logout", {method: "POST"});
+    setUser(null);
+  }
+
   return (
     <html lang="ru">
       <head>
@@ -34,6 +39,7 @@ export default function Layout ({
           {user ? (
             <div className="header-buttons-container">
               <p>Добро пожаловать, {user.username}!</p>
+              <button className="header-button" onClick={handleLogout}>Выход</button>
             </div>
           ) : (
             <div className="header-buttons-container">
