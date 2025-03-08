@@ -22,18 +22,18 @@ export async function POST(req: NextRequest) {
 
 		const hashedPassword = await bcrypt.hash(password, 11);
 
-		const { error } = await supabase
+		const { data, error } = await supabase
 			.from('users')
 			.insert({
-				full_name,
-				username,
-				email,
-				role,
-				hashedPassword
+				full_name: full_name,
+				username: username,
+				email: email,
+				role: role,
+				password: hashedPassword
 			});
 
 		if (error) {
-			return NextResponse.json({error: "Не удалось зарегистрироваться"}, {status: 500});
+			return NextResponse.json({error: "Не удалось зарегистрироваться", error}, {status: 500});
 		}
 
 		return NextResponse.json({ success: true });
