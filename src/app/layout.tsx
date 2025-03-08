@@ -31,9 +31,9 @@ export default function Layout ({
           {user ? (
             <p>Добро пожаловать, {user.username}!</p>
           ) : (
-            <div className="header-buttons">
-              <button className="rounded-box button-form" onClick={() => router.push("/auth/register")}>Регистрация</button>
-              <button className="rounded-box button-form" onClick={() => router.push("/auth/login")}>Вход</button>
+            <div className="header-buttons-container">
+              <button className="header-button" onClick={() => router.push("/auth/register")}>Регистрация</button>
+              <button className="header-button" onClick={() => router.push("/auth/login")}>Вход</button>
             </div>
           )}
         </header>

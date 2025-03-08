@@ -20,6 +20,10 @@ export async function POST(req: NextRequest) {
 			return NextResponse.json({error: "Пользователь с таким логином уже существует"}, {status: 400});
 		}
 
+		if (password !== confirmPassword) {
+			return NextResponse.json({error: "Пароли не совпадают"}, {status: 400});
+		}
+
 		const hashedPassword = await bcrypt.hash(password, 11);
 
 		const { data, error } = await supabase

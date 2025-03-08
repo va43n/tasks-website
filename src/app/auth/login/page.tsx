@@ -21,11 +21,6 @@ export default function LoginPage() {
 	const handleLogin = async () => {
 		setError("");
 
-		// if (!form.username || !form.password) {
-		// 	setError("Вы не заполнили все поля");
-		// 	return;
-		// }
-
 		const response = await fetch("/api/login", {
 			method: "POST",
 			headers: {"Content-Type": "application/json"},

@@ -25,16 +25,6 @@ export default function RegisterPage() {
 	const handleRegister = async () => {
 		setError("");
 
-		// if (!form.full_name || !form.username || !form.email || !form.role || !form.password || !form.confirmPassword) {
-		// 	setError("Вы не заполнили все поля");
-		// 	return;
-		// }
-
-		if (form.password !== form.confirmPassword) {
-			setError("Пароли не совпадают");
-			return;
-		}
-
 		const response = await fetch("/api/register", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
