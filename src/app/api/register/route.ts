@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
 		const { error } = await supabase
 			.from("users")
 			.insert({
-				fullname: full_name,
+				full_name: full_name,
 				username: username,
 				email: email,
 				role: role,
