@@ -40,7 +40,7 @@ export default function EditProfile() {
 		await fetch(`api/profile/${username}`, {
 			method: "PUT",
 			headers: {"Content-Type": "application/json"},
-			body: JSON.stringify({bio}),
+			body: JSON.stringify({username, bio}),
 		});
 	};
 
@@ -66,12 +66,10 @@ export default function EditProfile() {
 		const fileUrl = await uploadFile(file, "file");
 		const imageUrl = await uploadFile(image, "image");
 
-		const newTask = {title: title, description: description, fileUrl: fileUrl, imageUrl: imageUrl}
-
 		await fetch(`api/profile/${username}`, {
 			method: "POST",
 			headers: {"Content-Type": "application/json"},
-			body: JSON.stringify(newTask),
+			body: JSON.stringify({username, title, description, fileUrl, imageUrl}),
 		});
 
 		if (!res.ok) {
@@ -90,7 +88,7 @@ export default function EditProfile() {
 		await fetch(`api/profile/${username}`, {
 			method: "DELETE",
 			headers: {"Content-Type": "application/json"},
-			body: JSON.stringify({title: taskToDelete}),
+			body: JSON.stringify({username, taskToDelete}),
 		});
 
 		setAllTitles(tasks.filter((task) => task.title !== taskToDelete));

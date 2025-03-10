@@ -16,9 +16,8 @@ export async function GET(req: NextRequest) {
 	return NextResponse.json({...profile, username: username});
 }
 
-export async function PUT(req: Request, context: {params: {username: string}}) {
-	const {username} = context.params;
-	const {bio} = await req.json();
+export async function PUT(req: NextRequest) {
+	const { username, bio } = await req.json();
 
 	const {error} = await supabase
 		.from("profiles")
@@ -32,9 +31,8 @@ export async function PUT(req: Request, context: {params: {username: string}}) {
 	return NextResponse.json({message: "Профиль обновлен"});
 }
 
-export async function POST(req: Request, context: {params: {username: string}}) {
-	const {username} = context.params;
-	const {title, description, fileUrl, imageUrl} = await req.json();
+export async function POST(req: NextRequest) {
+	const {username, title, description, fileUrl, imageUrl} = await req.json();
 
 	if (!title || !description || !imageUrl || !fileUrl) {
 		return NextResponse.json({error: "Вы не заполнили все поля"}, {status: 400});
@@ -63,9 +61,8 @@ export async function POST(req: Request, context: {params: {username: string}}) 
 	return NextResponse.json({message: "Задание добавлено"});
 }
 
-export async function DELETE(req: Request, context: {params: {username: string}}) {
-	const {username} = context.params;
-	const {title} = await req.json();
+export async function DELETE(req: NextRequest) {
+	const {username, title} = await req.json();
 
 	const {data: tasks} = await supabase
 		.from("profiles")
