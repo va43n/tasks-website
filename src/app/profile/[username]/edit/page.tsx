@@ -106,8 +106,8 @@ export default function EditProfile() {
 			<button onClick={updateBio}>Сохранить</button>
 
 			<h3>Добавление нового задания:</h3>
-			<input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Название задания" /} />
-			<textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Описание задания" /} />
+			<input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Название задания" />
+			<textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Описание задания" />
 			<p>Прикрепите картинку:</p>
 			<input type="file" accept="image/*" onChange={(e) => setImage(e.target.files?.[0] || null)} className="input-file" />
 			<p>Прикрепите файл:</p>
