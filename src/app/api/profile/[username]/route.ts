@@ -1,8 +1,8 @@
 import {NextResponse} from "next/server";
 import supabase from "../../../../../lib/supabase";
 
-export async function GET(req: Request, {params}: {params: {username: string}}) {
-	const {username} = params;
+export async function GET(req: Request, context: {params: {username: string}}) {
+	const {username} = context.params;
 
 	const {data: profile} = await supabase
 		.from("profiles")
@@ -16,8 +16,8 @@ export async function GET(req: Request, {params}: {params: {username: string}}) 
 	return NextResponse.json({...profile, username: username});
 }
 
-export async function PUT(req: Request, {params}: {params: {username: string}}) {
-	const {username} = params;
+export async function PUT(req: Request, context: {params: {username: string}}) {
+	const {username} = context.params;
 	const {bio} = await req.json();
 
 	const {error} = await supabase
@@ -32,8 +32,8 @@ export async function PUT(req: Request, {params}: {params: {username: string}}) 
 	return NextResponse.json({message: "Профиль обновлен"});
 }
 
-export async function POST(req: Request, {params}: {params: {username: string}}) {
-	const {username} = params;
+export async function POST(req: Request, context: {params: {username: string}}) {
+	const {username} = context.params;
 	const {title, description, fileUrl, imageUrl} = await req.json();
 
 	if (!title || !description || !imageUrl || !fileUrl) {
@@ -63,8 +63,8 @@ export async function POST(req: Request, {params}: {params: {username: string}})
 	return NextResponse.json({message: "Задание добавлено"});
 }
 
-export async function DELETE(req: Request, {params}: {params: {username: string}}) {
-	const {username} = params;
+export async function DELETE(req: Request, context: {params: {username: string}}) {
+	const {username} = context.params;
 	const {title} = await req.json();
 
 	const {data: tasks} = await supabase
