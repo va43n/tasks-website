@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
 
 		const hashedPassword = await bcrypt.hash(password, 11);
 
-		const { userData, error } = await supabase
+		const { error } = await supabase
 			.from("users")
 			.insert({
 				full_name: full_name,
@@ -34,8 +34,7 @@ export async function POST(req: NextRequest) {
 				email: email,
 				role: role,
 				password: hashedPassword
-			})
-			.select();
+			});
 
 		if (error) {
 			return NextResponse.json({error: "Не удалось зарегистрироваться " + error}, {status: 500});
@@ -45,7 +44,7 @@ export async function POST(req: NextRequest) {
 			const { error } = await supabase
 			.from("profiles")
 			.insert({
-				doctor_id: userData.id,
+				doctor_username: username,
 				bio: "",
 				tasks: []
 			});

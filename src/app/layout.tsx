@@ -19,8 +19,10 @@ export default function Layout ({
 
   useEffect(() => {
     fetch("/api/auth/me")
-    .then((res) => res.json())
-    .then((data) => setUser(data.user));
+      .then((res) => res.json())
+      .then((data) => setUser({username: data.user.username, role: data.user.role}));
+    console.log(data.user.username, data.user.role);
+    console.log(user.username, user.role);
   }, [pathname]);
 
   const handleLogout = async () => {
@@ -37,14 +39,14 @@ export default function Layout ({
         <header>
           <div className="header-buttons-container">
             <button className="header-button" onClick={() => router.push("/")}>Главное меню</button>
+          </div>
+          {user ? (
             {user.role === "Доктор" && (
               <div>
                 <button className="header-button" onClick={() => router.push(`/auth/profile/${user.username}`)}>Профиль</button>
                 <button className="header-button" onClick={() => router.push(`/auth/profile/${user.username}/edit`)}>Редактирование профиля</button>
               </div>
             )}
-          </div>
-          {user ? (
             <div className="header-buttons-container">
               <p>Добро пожаловать, {user.username}!</p>
               <button className="header-button" onClick={handleLogout}>Выход</button>

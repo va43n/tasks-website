@@ -66,7 +66,7 @@ export default function EditProfile() {
 		const fileUrl = await uploadFile(file, "file");
 		const imageUrl = await uploadFile(image, "image");
 
-		const newTask = {title: title, description: description, fileUrl, imageUrl}
+		const newTask = {title: title, description: description, fileUrl: fileUrl, imageUrl: imageUrl}
 
 		await fetch(`api/profile/${username}`, {
 			method: "POST",
