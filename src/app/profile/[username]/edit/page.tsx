@@ -13,7 +13,7 @@ interface Task {
 export default function EditProfile() {
 	const {username} = useParams();
 
-	const [tasks, setTasks] useState<Task[]>([]);
+	const [tasks, setTasks] = useState<Task[]>([]);
 	
 	const [bio, setBio] = useState("");
 

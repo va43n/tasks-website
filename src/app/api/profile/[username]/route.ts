@@ -20,7 +20,7 @@ export async function GET(req: Request, {params}: {params: {username: string}}) 
 	const {data: profile} = await supabase
 		.from("profiles")
 		.select("*")
-		.eq("doctor_id", user.id)
+		.eq("doctor_id", user.id);
 
 	if (!profile) {
 		return NextResponse.json({error: "Профиль доктора не найден"}, {status: 404});
@@ -31,12 +31,12 @@ export async function GET(req: Request, {params}: {params: {username: string}}) 
 
 export async function PUT(req: Request, {params}: {params: {username: string}}) {
 	const {username} = params;
-	const {bio} await req.json();
+	const {bio} = await req.json();
 
-	const {data: user} await supabase
+	const {data: user} = await supabase
 		.from("users")
 		.select("id")
-		.eq("username", username)
+		.eq("username", username);
 
 	if (!user) {
 		return NextResponse.json({error: "Доктор не найден"}, {status: 404});
@@ -56,16 +56,16 @@ export async function PUT(req: Request, {params}: {params: {username: string}}) 
 
 export async function POST(req: Request, {params}: {params: {username: string}}) {
 	const {username} = params;
-	const {title, description, imageUrl, fileUrl} await req.json();
+	const {title, description, imageUrl, fileUrl} = await req.json();
 
 	if (!title || !description || !imageUrl || !fileUrl) {
 		return NextResponse.json({error: "Вы не заполнили все поля"}, {status: 400});
 	}
 
-	const {data: user} await supabase
+	const {data: user} = await supabase
 		.from("users")
 		.select("id")
-		.eq("username", username)
+		.eq("username", username);
 
 	if (!user) {
 		return NextResponse.json({error: "Доктор не найден"}, {status: 404});
@@ -96,12 +96,12 @@ export async function POST(req: Request, {params}: {params: {username: string}})
 
 export async function DELETE(req: Request, {params}: {params: {username: string}}) {
 	const {username} = params;
-	const {title} await req.json();
+	const {title} = await req.json();
 
-	const {data: user} await supabase
+	const {data: user} = await supabase
 		.from("users")
 		.select("id")
-		.eq("username", username)
+		.eq("username", username);
 
 	if (!user) {
 		return NextResponse.json({error: "Доктор не найден"}, {status: 404});
@@ -116,7 +116,7 @@ export async function DELETE(req: Request, {params}: {params: {username: string}
 		return NextResponse.json({error: "Задания доктора не найдены"}, {status: 500});
 	}
 
-	const updatedTasks = [...(profile.tasks || []).filter((task: any) => task.title !== title);
+	const updatedTasks = [...(profile.tasks || []).filter((task: any) => task.title !== title)];
 
 	const {error} = await supabase
 		.from("profiles")
