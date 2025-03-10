@@ -8,11 +8,10 @@ export default function Profile() {
 	const [profile, setProfile] = useState(null);
 
 	useEffect(() => {
-		fetch(`api/profile/${username}`{
+		fetch(`api/profile/${username}`, {
 			method: "GET",
 			body: JSON.stringify(username),
 		})
-			.then((res) => res.json())
 			.then((data) => setProfile(data))
 			.catch((err) => console.error("Ошибка загрузки профиля:", err));
 	}, [username]);
