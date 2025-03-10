@@ -39,23 +39,23 @@ export async function POST(req: NextRequest) {
 		return NextResponse.json({error: "Вы не заполнили все поля"}, {status: 400});
 	}
 
-	const {data, error} = await supabase
+	const {data, error: findError} = await supabase
 		.from("profiles")
 		.select("tasks")
 		.eq("doctor_username", username);
 
-	if (error) {
+	if (findError) {
 		return NextResponse.json({error: "Задания доктора не найдены"}, {status: 500});
 	}
 
 	const updatedTasks = [...(data || []), {title, description, imageUrl, fileUrl}];
 
-	const {error} = await supabase
+	const {error: addError} = await supabase
 		.from("profiles")
 		.update({tasks: updatedTasks})
 		.eq("doctor_username", username);
 
-	if (error) {
+	if (addError) {
 		return NextResponse.json({error: "Не удалось добавить задание"}, {status: 500});
 	}
 
@@ -65,23 +65,23 @@ export async function POST(req: NextRequest) {
 export async function DELETE(req: NextRequest) {
 	const {username, title} = await req.json();
 
-	const {data, error} = await supabase
+	const {data, error: findError} = await supabase
 		.from("profiles")
 		.select("tasks")
 		.eq("doctor_username", username);
 
-	if (error) {
+	if (findError) {
 		return NextResponse.json({error: "Задания доктора не найдены"}, {status: 500});
 	}
 
 	const updatedTasks = [...(data || []).filter((task: any) => task.title !== title)];
 
-	const {error} = await supabase
+	const {error: deleteError} = await supabase
 		.from("profiles")
 		.update({tasks: updatedTasks})
 		.eq("doctor_username", username);
 
-	if (error) {
+	if (deleteError) {
 		return NextResponse.json({error: "Не удалось удалить задание"}, {status: 500});
 	}
 
