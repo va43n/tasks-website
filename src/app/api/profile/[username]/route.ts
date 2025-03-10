@@ -9,11 +9,11 @@ export async function GET(req: Request, {params}: {params: {username: string}}) 
 		.select("*")
 		.eq("doctor_username", username);
 
-	if (!profile) {
+	if (!profile || profile === []) {
 		return NextResponse.json({error: "Профиль доктора не найден"}, {status: 404});
 	}
 
-	return NextResponse.json({...profile, username: user.username});
+	return NextResponse.json({...profile, username: username});
 }
 
 export async function PUT(req: Request, {params}: {params: {username: string}}) {
