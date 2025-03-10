@@ -1,8 +1,8 @@
 import {NextResponse} from "next/server";
 import supabase from "../../../../../lib/supabase";
 
-export async function GET(req: Request, context: {params: {username: string}}) {
-	const {username} = context.params;
+export async function GET(req: NextRequest) {
+	const { username } = await req.json();
 
 	const {data: profile} = await supabase
 		.from("profiles")
