@@ -26,18 +26,33 @@ export async function POST(req: NextRequest) {
 
 		const hashedPassword = await bcrypt.hash(password, 11);
 
-		const { data, error } = await supabase
-			.from('users')
+		const { userData, error } = await supabase
+			.from("users")
 			.insert({
 				full_name: full_name,
 				username: username,
 				email: email,
 				role: role,
 				password: hashedPassword
-			});
+			})
+			.select();
 
 		if (error) {
 			return NextResponse.json({error: "Не удалось зарегистрироваться " + error}, {status: 500});
+		}
+
+		if (role === "Доктор") {
+			const { error } = await supabase
+			.from("profiles")
+			.insert({
+				doctor_id: userData.id,
+				bio: "",
+				tasks: []
+			});
+
+			if (error) {
+				return NextResponse.json({error: "Не удалось добавить профиль в базу данных"}, {status: 500});
+			}
 		}
 
 		return NextResponse.json({ success: true });

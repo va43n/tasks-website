@@ -7,6 +7,7 @@ import "../../styles/globals.css";
 
 type User = {
   username: string;
+  role: string;
 };
 
 export default function Layout ({
@@ -36,6 +37,12 @@ export default function Layout ({
         <header>
           <div className="header-buttons-container">
             <button className="header-button" onClick={() => router.push("/")}>Главное меню</button>
+            {user.role === "Доктор" && (
+              <div>
+                <button className="header-button" onClick={() => router.push(`/auth/profile/${user.username}`)}>Профиль</button>
+                <button className="header-button" onClick={() => router.push(`/auth/profile/${user.username}/edit`)}>Редактирование профиля</button>
+              </div>
+            )}
           </div>
           {user ? (
             <div className="header-buttons-container">
