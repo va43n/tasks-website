@@ -3,7 +3,7 @@
 import {useEffect, useState} from "react";
 import {useParams, useRouter} from "next/navigation";
 
-type Task {
+interface Task {
 	title: string;
 	description: string;
 	fileUrl: string;
