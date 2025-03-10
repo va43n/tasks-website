@@ -41,16 +41,18 @@ export default function Layout ({
             <button className="header-button" onClick={() => router.push("/")}>Главное меню</button>
           </div>
           {user ? (
-            {user.role === "Доктор" && (
-              <div>
-                <button className="header-button" onClick={() => router.push(`/auth/profile/${user.username}`)}>Профиль</button>
-                <button className="header-button" onClick={() => router.push(`/auth/profile/${user.username}/edit`)}>Редактирование профиля</button>
+            <>
+              {user.role === "Доктор" && (
+                <div>
+                  <button className="header-button" onClick={() => router.push(`/auth/profile/${user.username}`)}>Профиль</button>
+                  <button className="header-button" onClick={() => router.push(`/auth/profile/${user.username}/edit`)}>Редактирование профиля</button>
+                </div>
+              )}
+              <div className="header-buttons-container">
+                <p>Добро пожаловать, {user.username}!</p>
+                <button className="header-button" onClick={handleLogout}>Выход</button>
               </div>
-            )}
-            <div className="header-buttons-container">
-              <p>Добро пожаловать, {user.username}!</p>
-              <button className="header-button" onClick={handleLogout}>Выход</button>
-            </div>
+            </>
           ) : (
             <div className="header-buttons-container">
               <button className="header-button" onClick={() => router.push("/auth/register")}>Регистрация</button>
