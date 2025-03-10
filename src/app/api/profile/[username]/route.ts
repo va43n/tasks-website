@@ -7,9 +7,10 @@ export async function GET(req: NextRequest) {
 	const {data: profile} = await supabase
 		.from("profiles")
 		.select("*")
-		.eq("doctor_username", username);
+		.eq("doctor_username", username)
+		.maybeSingle();
 
-	if (!profile || profile === []) {
+	if (!profile) {
 		return NextResponse.json({error: "Профиль доктора не найден"}, {status: 404});
 	}
 
