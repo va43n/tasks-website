@@ -21,7 +21,6 @@ export default function Layout ({
     fetch("/api/auth/me")
       .then((res) => res.json())
       .then((data) => setUser({username: data.user.username, role: data.user.role}));
-    console.log(user.username, user.role);
   }, [pathname]);
 
   const handleLogout = async () => {
