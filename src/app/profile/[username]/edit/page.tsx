@@ -44,7 +44,7 @@ export default function EditProfile() {
 		});
 	};
 
-	const uploadFile = async (file: File, type: "file" | "image") => {
+	const uploadFile = async (file: File | null, type: "file" | "image") => {
 		const formData = new FormData();
 
 		if (file === null) {
@@ -75,6 +75,8 @@ export default function EditProfile() {
 	}
 
 	const addTask = async() => {
+
+
 		const fileUrl = await uploadFile(file, "file");
 		const imageUrl = await uploadFile(image, "image");
 
