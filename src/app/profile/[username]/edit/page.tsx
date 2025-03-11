@@ -91,7 +91,7 @@ export default function EditProfile() {
 			return;
 		}
 
-		setTasks([...allTitles, {title}]);
+		setTasks([...tasks, {title, description, fileUrl, imageUrl}]);
 		setTitle("");
 		setDescription("");
 		setImageUrl("");
