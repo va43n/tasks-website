@@ -80,7 +80,7 @@ export default function EditProfile() {
 		const fileUrl = await uploadFile(file, "file");
 		const imageUrl = await uploadFile(image, "image");
 
-		await fetch(`api/profile/${username}`, {
+		const res = await fetch(`api/profile/${username}`, {
 			method: "POST",
 			headers: {"Content-Type": "application/json"},
 			body: JSON.stringify({username, title, description, fileUrl, imageUrl}),
