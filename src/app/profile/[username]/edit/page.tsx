@@ -94,8 +94,8 @@ export default function EditProfile() {
 		setTasks([...tasks, {title, description, fileUrl, imageUrl}]);
 		setTitle("");
 		setDescription("");
-		setImageUrl("");
-		setFileUrl("");
+		setImage(null);
+		setFile(null);
 	};
 
 	const deleteTask = async() => {
