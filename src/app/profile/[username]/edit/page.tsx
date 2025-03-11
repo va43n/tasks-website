@@ -56,10 +56,10 @@ export default function EditProfile() {
 			return null;
 		}
 
-		formData.append("file", file);
+		formData.append(file, "file");
 
 		const usernameStr = Array.isArray(username) ? username[0] : username;
-		formData.append("username", usernameStr);
+		formData.append(usernameStr, "username");
 
 		const res = await fetch("{api/upload", {
 			method: "POST",
