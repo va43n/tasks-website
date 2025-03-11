@@ -8,7 +8,7 @@ interface Task {
 	description: string;
 	fileUrl: string;
 	imageUrl: string;
-}
+};
 
 type Profile = {
   doctor_username: string;
