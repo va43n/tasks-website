@@ -12,6 +12,7 @@ export default function Profile() {
 			method: "GET",
 			body: JSON.stringify(username),
 		})
+			.then((res) => res.json())
 			.then((data) => setProfile(data))
 			.catch((err) => console.error("Ошибка загрузки профиля:", err));
 	}, [username]);
