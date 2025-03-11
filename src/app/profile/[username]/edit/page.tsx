@@ -91,7 +91,7 @@ export default function EditProfile() {
 			return;
 		}
 
-		setAllTitles([...allTitles, {title}]);
+		setTasks([...allTitles, {title}]);
 		setTitle("");
 		setDescription("");
 		setImageUrl("");
@@ -105,7 +105,7 @@ export default function EditProfile() {
 			body: JSON.stringify({username, taskToDelete}),
 		});
 
-		setAllTitles(tasks.filter((task) => task.title !== taskToDelete));
+		setTasks(tasks.filter((task) => task.title !== taskToDelete));
 		setTaskToDelete("");
 	};
 
