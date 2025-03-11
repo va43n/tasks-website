@@ -47,7 +47,7 @@ export default function EditProfile() {
 	const uploadFile = async (file: File, type: "file" | "image") => {
 		const formData = new FormData();
 
-		if (!file) {
+		if (file === null) {
 			console.error("Не удалось обработать файл");
 			return null;
 		}
