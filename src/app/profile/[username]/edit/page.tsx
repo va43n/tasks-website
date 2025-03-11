@@ -47,16 +47,19 @@ export default function EditProfile() {
 	const uploadFile = async (file: File, type: "file" | "image") => {
 		const formData = new FormData();
 
-		if (file && username) {
-			formData.append("file", file);
-
-			const usernameStr = Array.isArray(username) ? username[0] : username;
-			formData.append("username", usernameStr);
-		}
-		else {
-			console.error("username не определен или не удалось обработать файл");
+		if (!file) {
+			console.error("Не удалось обработать файл");
 			return null;
 		}
+		if (!username) {
+			console.error("username не определен");
+			return null;
+		}
+
+		formData.append("file", file);
+
+		const usernameStr = Array.isArray(username) ? username[0] : username;
+		formData.append("username", usernameStr);
 
 		const res = await fetch("{api/upload", {
 			method: "POST",
