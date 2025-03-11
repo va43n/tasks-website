@@ -3,14 +3,26 @@
 import {useEffect, useState} from "react";
 import {useParams} from "next/navigation";
 
+interface Task {
+	title: string;
+	description: string;
+	fileUrl: string;
+	imageUrl: string;
+}
+
+type Profile = {
+  doctor_username: string;
+  bio: string;
+  tasks: Task[];
+};
+
 export default function Profile() {
 	const {username} = useParams();
-	const [profile, setProfile] = useState(null);
+	const [profile, setProfile] = useState<Profile | null>(null);
 
 	useEffect(() => {
 		fetch(`api/profile/${username}`, {
 			method: "GET",
-			body: JSON.stringify(username),
 		})
 			.then((res) => res.json())
 			.then((data) => setProfile(data))
@@ -21,7 +33,7 @@ export default function Profile() {
 
 	return (
 		<div>
-			<h1>Профиль доктора {profile.username}</h1>
+			<h1>Профиль доктора {profile.doctor_username}</h1>
 			<p>{profile.bio}</p>
 
 			<h3>Список заданий:</h3>

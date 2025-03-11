@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
 		return NextResponse.json({error: "Профиль доктора не найден"}, {status: 404});
 	}
 
-	return NextResponse.json({...profile, username: username});
+	return NextResponse.json({profile});
 }
 
 export async function PUT(req: NextRequest) {
