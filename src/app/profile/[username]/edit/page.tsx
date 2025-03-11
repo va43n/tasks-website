@@ -49,7 +49,8 @@ export default function EditProfile() {
 		formData.append("file", file);
 
 		if (username) {
-			formData.append("username", username);
+			const usernameStr = Array.isArray(username) ? username[0] : username;
+			formData.append("username", usernameStr);
 		}
 		else {
 			console.error("username не определен");
