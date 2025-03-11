@@ -38,18 +38,21 @@ export default function Profile() {
 
 			<h3>Список заданий:</h3>
 			{profile.tasks && profile.tasks.length > 0 ? (
-				profile.tasks.map((task, index) => (
-					<div key={index}>
-						<h3>{task.title}</h3>
-						<p>{task.description}</p>
-						{task.image && <img src={task.image} alt={task.title} width="200" />}
-						{task.file && (
-							<a href={task.file} download>
-								<button>Скачать</button>
-							</a>
-						)}
-					</div>
-				)) : (
+				<>
+					{profile.tasks.map((task, index) => (
+						<div key={index}>
+							<h3>{task.title}</h3>
+							<p>{task.description}</p>
+							{task.image && <img src={task.image} alt={task.title} width="200" />}
+							{task.file && (
+								<a href={task.file} download>
+									<button>Скачать</button>
+								</a>
+							)}
+						</div>
+					))}
+				</>
+				) : (
 				<p>Заданий пока нет.</p>
 			)}
 		</div>
