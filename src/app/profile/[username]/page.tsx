@@ -43,9 +43,9 @@ export default function Profile() {
 						<div key={index}>
 							<h3>{task.title}</h3>
 							<p>{task.description}</p>
-							{task.image && <img src={task.image} alt={task.title} width="200" />}
-							{task.file && (
-								<a href={task.file} download>
+							{task.imageUrl && <img src={task.imageUrl} alt={task.title} width="200" />}
+							{task.fileUrl && (
+								<a href={task.fileUrl} download>
 									<button>Скачать</button>
 								</a>
 							)}
