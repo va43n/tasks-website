@@ -46,14 +46,15 @@ export default function EditProfile() {
 
 	const uploadFile = async (file: File, type: "file" | "image") => {
 		const formData = new FormData();
-		formData.append("file", file);
 
-		if (username) {
+		if (file && username) {
+			formData.append("file", file);
+
 			const usernameStr = Array.isArray(username) ? username[0] : username;
 			formData.append("username", usernameStr);
 		}
 		else {
-			console.error("username не определен");
+			console.error("username не определен или не удалось обработать файл");
 			return null;
 		}
 
