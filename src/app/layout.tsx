@@ -41,13 +41,13 @@ export default function Layout ({
           {user ? (
             <>
               {user.role === "Доктор" && (
-                <div>
-                  <button className="header-button" onClick={() => router.push(`/auth/profile/${user.username}`)}>Профиль</button>
-                  <button className="header-button" onClick={() => router.push(`/auth/profile/${user.username}/edit`)}>Редактирование профиля</button>
+                <div className="header-buttons-container">
+                  <button className="header-button" onClick={() => router.push(`/profile/${user.username}`)}>Профиль</button>
+                  <button className="header-button" onClick={() => router.push(`/profile/${user.username}/edit`)}>Редактирование профиля</button>
                 </div>
               )}
               <div className="header-buttons-container">
-                <p>Добро пожаловать, {user.username}, {user.role}!</p>
+                <p>Добро пожаловать, {user.role} {user.username}!</p>
                 <button className="header-button" onClick={handleLogout}>Выход</button>
               </div>
             </>
