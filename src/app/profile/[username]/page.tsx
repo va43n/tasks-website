@@ -21,8 +21,9 @@ export default function Profile() {
 	const [profile, setProfile] = useState<Profile | null>(null);
 
 	useEffect(() => {
-		fetch(`api/profile/${username}`, {
-			method: "GET",
+		fetch(`api/profile/${username}/get`, {
+			method: "POST",
+			body: JSON.stringify({username}),
 		})
 			.then((res) => res.json())
 			.then((data) => setProfile(data))
