@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
 
 		const {data: user, error} = await supabase
 			.from("users")
-			.select("id, username, password")
+			.select("id, username, password, role")
 			.eq("username", username)
 			.single();
 
@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
 			return NextResponse.json({error: "Неправильно введен логин или пароль"}, {status: 400});
 		}
 
-		const token = createJWT({id: user.id, username: user.username});
+		const token = createJWT({id: user.id, username: user.username, role: user.role});
 
 		const response = NextResponse.json({success: true});
 		response.cookies.set("token", token, {httpOnly: true, secure: true, path: "/"});
