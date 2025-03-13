@@ -47,7 +47,7 @@ export default function Layout ({
                 </div>
               )}
               <div className="header-buttons-container">
-                <p>Добро пожаловать, {user.username}!</p>
+                <p>Добро пожаловать, {user.username}, {user.role}!</p>
                 <button className="header-button" onClick={handleLogout}>Выход</button>
               </div>
             </>
