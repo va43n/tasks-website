@@ -21,16 +21,29 @@ export default function Profile() {
 	const [profile, setProfile] = useState<Profile | null>(null);
 
 	useEffect(() => {
-		fetch(`api/profile/${username}/get`, {
-			method: "POST",
-			body: JSON.stringify({username}),
-		})
-			.then((res) => res.json())
-			.then((data) => setProfile(data))
-			.catch((err) => console.error("Ошибка загрузки профиля:", err));
+		const getProfile = async () => {
+			try {
+				const response = await fetch(`/api/profile/${username}/get`, {
+					method: "POST",
+					headers: {"Content-Type": "application/json"},
+					body: JSON.stringify({username}),
+				});
+
+				const data = await response.json();
+				if (!response.ok) {
+					console.error("Не удалось загрузить профиль");
+					return;
+				}
+
+				setProfile(data.profile);
+			} catch (err) {
+				console.error("Ошибка загрузки профиля:", err);
+			}
+		}
+		getProfile();
 	}, [username]);
 
-	if (!profile) return <p>Загрузка профиля...</p>;
+	if (!profile) return (<p>Загрузка профиля...</p>);
 
 	return (
 		<div>

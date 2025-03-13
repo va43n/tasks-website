@@ -25,19 +25,31 @@ export default function EditProfile() {
 	const [taskToDelete, setTaskToDelete] = useState("");
 
 	useEffect(() => {
-		const fetchProfile = async () => {
-			const res = await fetch(`api/profile/${username}`);
-			const data = await res.json();
-			if (data) {
+		const getProfile = async () => {
+			try {
+				const response = await fetch(`/api/profile/${username}/get`, {
+					method: "POST",
+					headers: {"Content-Type": "application/json"},
+					body: JSON.stringify({username}),
+				});
+
+				const data = await response.json();
+				if (!response.ok) {
+					console.error("Не удалось загрузить профиль");
+					return;
+				}
+
 				setBio(data.bio || "");
 				setTasks(data.tasks || []);
+			} catch (err) {
+				console.error("Ошибка загрузки профиля:", err);
 			}
-		};
-		fetchProfile();
+		}
+		getProfile();
 	}, [username]);
 
 	const updateBio = async() => {
-		await fetch(`api/profile/${username}`, {
+		await fetch(`/api/profile/${username}`, {
 			method: "PUT",
 			headers: {"Content-Type": "application/json"},
 			body: JSON.stringify({username, bio}),
@@ -61,7 +73,7 @@ export default function EditProfile() {
 		const usernameStr = Array.isArray(username) ? username[0] : username;
 		formData.append("username", usernameStr);
 
-		const res = await fetch("{api/upload", {
+		const res = await fetch("/api/upload", {
 			method: "POST",
 			body: formData,
 		});
@@ -75,12 +87,10 @@ export default function EditProfile() {
 	}
 
 	const addTask = async() => {
-
-
 		const fileUrl = await uploadFile(file, "file");
 		const imageUrl = await uploadFile(image, "image");
 
-		const res = await fetch(`api/profile/${username}`, {
+		const res = await fetch(`/api/profile/${username}`, {
 			method: "POST",
 			headers: {"Content-Type": "application/json"},
 			body: JSON.stringify({username, title, description, fileUrl, imageUrl}),
@@ -99,7 +109,7 @@ export default function EditProfile() {
 	};
 
 	const deleteTask = async() => {
-		await fetch(`api/profile/${username}`, {
+		await fetch(`/api/profile/${username}`, {
 			method: "DELETE",
 			headers: {"Content-Type": "application/json"},
 			body: JSON.stringify({username, taskToDelete}),
