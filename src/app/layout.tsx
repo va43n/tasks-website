@@ -20,7 +20,7 @@ export default function Layout ({
   useEffect(() => {
     fetch("/api/auth/me")
       .then((res) => res.json())
-      .then((data) => setUser({username: data.user.username, role: data.user.role}));
+      .then((data) => setUser(data));
   }, [pathname]);
 
   const handleLogout = async () => {
