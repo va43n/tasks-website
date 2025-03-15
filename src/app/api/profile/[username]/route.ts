@@ -31,7 +31,10 @@ export async function PUT(req: NextRequest) {
 export async function POST(req: NextRequest) {
 	const {username, title, description, fileUrl, imageUrl} = await req.json();
 
+	console.log(`|${username}|${title}|${description}|${fileUrl}|${imageUrl}|`);
+
 	if (!title || !description || !imageUrl || !fileUrl) {
+		console.log("Вы не заполнили все поля");
 		return NextResponse.json({error: "Вы не заполнили все поля"}, {status: 400});
 	}
 

@@ -39,8 +39,8 @@ export default function EditProfile() {
 					return;
 				}
 
-				setBio(data.bio || "");
-				setTasks(data.tasks || []);
+				setBio(data.profile.bio || "");
+				setTasks(data.profile.tasks || []);
 			} catch (err) {
 				console.error("Ошибка загрузки профиля:", err);
 			}
@@ -62,6 +62,8 @@ export default function EditProfile() {
 	};
 
 	const uploadFile = async (file: File | null, type: "file" | "image") => {
+		console.log(username, file);
+
 		const formData = new FormData();
 
 		if (file === null) {
@@ -85,9 +87,10 @@ export default function EditProfile() {
 
 		const data = await res.json();
 		if (data.error) {
-			alert(`Ошибка загрузки ${type}: ${data.error}`);
+			console.log(`Ошибка загрузки ${type}: ${data.error}`);
 			return null;
 		}
+
 		return data.publicUrl;
 	}
 
@@ -102,7 +105,7 @@ export default function EditProfile() {
 		});
 
 		if (!res.ok) {
-			alert("Не удалось добавить задание");
+			console.error("Не удалось добавить задание");
 			return;
 		}
 
