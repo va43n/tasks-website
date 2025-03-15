@@ -49,11 +49,16 @@ export default function EditProfile() {
 	}, [username]);
 
 	const updateBio = async() => {
-		await fetch(`/api/profile/${username}`, {
+		const response = await fetch(`/api/profile/${username}`, {
 			method: "PUT",
 			headers: {"Content-Type": "application/json"},
 			body: JSON.stringify({username, bio}),
 		});
+
+		if (!response.ok) {
+			console.error("Не удалось обновить описание");
+			return;
+		}
 	};
 
 	const uploadFile = async (file: File | null, type: "file" | "image") => {

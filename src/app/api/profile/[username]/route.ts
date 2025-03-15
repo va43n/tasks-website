@@ -5,16 +5,27 @@ import supabase from "../../../../../lib/supabase";
 export async function PUT(req: NextRequest) {
 	const { username, bio } = await req.json();
 
-	const {error} = await supabase
+	const {data: profile, error: profileNotFound} = await supabase
+		.from("profiles")
+		.select("*")
+		.eq("doctor_username", username)
+		.single();
+
+	if (!profile) {
+		return NextResponse.json({error: "Профиль не найден"}, {status: 404});
+	}
+
+	const {data: row, error: notUpdated} = await supabase
 		.from("profiles")
 		.update({bio: bio})
-		.eq("doctor_username", username);
+		.eq("doctor_username", username)
+		.select();
 
-	if (error) {
+	if (!row || notUpdated) {
 		return NextResponse.json({error: "Ошибка обновления профиля"}, {status: 500});
 	}
 
-	return NextResponse.json({message: "Профиль обновлен"});
+	return NextResponse.json({message: "Профиль обновлен "}, {status: 200});
 }
 
 export async function POST(req: NextRequest) {
@@ -24,16 +35,17 @@ export async function POST(req: NextRequest) {
 		return NextResponse.json({error: "Вы не заполнили все поля"}, {status: 400});
 	}
 
-	const {data, error: findError} = await supabase
+	const {data, error} = await supabase
 		.from("profiles")
 		.select("tasks")
-		.eq("doctor_username", username);
+		.eq("doctor_username", username)
+		.single();
 
-	if (findError) {
+	if (!data) {
 		return NextResponse.json({error: "Задания доктора не найдены"}, {status: 500});
 	}
 
-	const updatedTasks = [...(data || []), {title, description, imageUrl, fileUrl}];
+	const updatedTasks = [...data.tasks, {title, description, imageUrl, fileUrl}];
 
 	const {error: addError} = await supabase
 		.from("profiles")
