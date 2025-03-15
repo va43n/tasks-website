@@ -37,21 +37,26 @@ export default function Layout ({
         <header>
           <div className="header-buttons-container">
             <button className="header-button" onClick={() => router.push("/")}>Главное меню</button>
+            {user && (
+              <>
+                {user.role === "Доктор" && (
+                  <>
+                    <button className="header-button" onClick={() => router.push(`/profile/${user.username}`)}>Профиль</button>
+                    <button className="header-button" onClick={() => router.push(`/profile/${user.username}/edit`)}>Редактирование профиля</button>
+                  </>
+                )}
+              </>
+            )}
           </div>
-          {user ? (
-            <>
-              {user.role === "Доктор" && (
+          {user && (
+              <>
                 <div className="header-buttons-container">
-                  <button className="header-button" onClick={() => router.push(`/profile/${user.username}`)}>Профиль</button>
-                  <button className="header-button" onClick={() => router.push(`/profile/${user.username}/edit`)}>Редактирование профиля</button>
+                  <p>Добро пожаловать, {user.role} {user.username}!</p>
+                  <button className="header-button" onClick={handleLogout}>Выход</button>
                 </div>
-              )}
-              <div className="header-buttons-container">
-                <p>Добро пожаловать, {user.role} {user.username}!</p>
-                <button className="header-button" onClick={handleLogout}>Выход</button>
-              </div>
-            </>
-          ) : (
+              </>
+            )}
+          {!user && (
             <div className="header-buttons-container">
               <button className="header-button" onClick={() => router.push("/auth/register")}>Регистрация</button>
               <button className="header-button" onClick={() => router.push("/auth/login")}>Вход</button>

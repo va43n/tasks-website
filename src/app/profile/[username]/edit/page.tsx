@@ -2,6 +2,9 @@
 
 import {useEffect, useState} from "react";
 import {useParams, useRouter} from "next/navigation";
+import FileUploader from "../../../components/fileUploader";
+import "../../../../../styles/globals.css";
+import "../../../../../styles/profile_edit.css";
 
 interface Task {
 	title: string;
@@ -128,31 +131,39 @@ export default function EditProfile() {
 	};
 
 	return (
-		<div>
-			<h1>Редактирование профиля пользователя {username}</h1>
+		<div className="centered-container">
+			<h1 className="edit-profile-title">Редактирование профиля пользователя {username}</h1>
 
-			<h3>Изменение описания:</h3>
-			<textarea value={bio} onChange={(e) => setBio(e.target.value)} />
-			<button onClick={updateBio}>Сохранить</button>
+			<div className="objects-gap">
+				<h3>Изменение описания:</h3>
+				<textarea className="rounded-box edit-textarea" value={bio} onChange={(e) => setBio(e.target.value)} />
+				<button className="rounded-box edit-box-size save-button-edit" onClick={updateBio}>Сохранить</button>
+			</div>
 
-			<h3>Добавление нового задания:</h3>
-			<input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Название задания" />
-			<textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Описание задания" />
-			<p>Прикрепите картинку:</p>
-			<input type="file" accept="image/*" onChange={(e) => setImage(e.target.files?.[0] || null)} className="input-file" />
-			<p>Прикрепите файл:</p>
-			<input type="file" onChange={(e) => setFile(e.target.files?.[0] || null)} className="input-file" />
-			<button onClick={addTask}>Добавить задание</button>
+			<div className="objects-gap">
+				<h3>Добавление нового задания:</h3>
+				<input className="rounded-box edit-box-size" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Название задания" />
+				<textarea className="rounded-box edit-textarea" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Описание задания" />
+				<p>Прикрепите картинку:</p>
+				<FileUploader onFileSelect={(image) => setImage(image)} />
+				<p>Прикрепите файл:</p>
+				<FileUploader onFileSelect={(file) => setFile(file)} />
+				<button className="rounded-box edit-box-size save-button-edit" onClick={addTask}>Добавить задание</button>
+			</div>
 
-			<h3>Удаление задания:</h3>
-			<select value={taskToDelete} onChange={(e) => setTaskToDelete(e.target.value)}>
-				{tasks.map((task) => (
-					<option key={task.title} value={task.title}>
-						{task.title}
-					</option>
-				))}
-			</select>
-			<button onClick={deleteTask}>Удалить задание</button>
+			<div className="objects-gap">
+				<h3>Удаление задания:</h3>
+				<div className="select-container edit-box-size">
+					<select className="select-edit rounded-box" value={taskToDelete} onChange={(e) => setTaskToDelete(e.target.value)}>
+						{tasks.map((task) => (
+							<option key={task.title} value={task.title}>
+								{task.title}
+							</option>
+						))}
+					</select>
+				</div>
+				<button className="rounded-box edit-box-size save-button-edit" onClick={deleteTask}>Удалить задание</button>
+			</div>
 		</div>
 	);
 }
