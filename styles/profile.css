@@ -9,9 +9,59 @@
   background: white;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
-  gap: 20px;
+  gap: 30px;
+}
+
+.space-text {
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 .profile-title {
   text-align: center;
+}
+
+.task-title {
+  text-align: center;
+  font-weight: bold;
+}
+
+.task-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+}
+
+.button-img-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+}
+
+.button-download {
+  width: 150px;
+  height: 40px;
+  font-size: 16px;
+  border-radius: 8px;
+  padding: 12px;
+  border: 1px solid #cccccc;
+  background-color: #007bff;
+  color: white;
+  border: none;
+}
+
+.button-download:hover {
+  background-color: #0056b3;
+}
+
+.gap-between-tasks {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.img-size {
+  width: 300px;
 }

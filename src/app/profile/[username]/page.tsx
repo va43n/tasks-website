@@ -59,7 +59,7 @@ export default function Profile() {
 				<h3>Описание:</h3>
 				{profile.bio ? (
 					<>
-						<p>{profile.bio}</p>
+						<p className="space-text">{profile.bio}</p>
 					</>
 				) : <p>Описание отсутствует</p>}
 			</div>
@@ -67,20 +67,24 @@ export default function Profile() {
 			<div>
 				<h3>Список заданий:</h3>
 				{profile.tasks && profile.tasks.length > 0 ? (
-					<>
+					<div className="gap-between-tasks">
 						{profile.tasks.map((task, index) => (
 							<div key={index}>
-								<h3>{task.title}</h3>
-								<p>{task.description}</p>
-								{task.imageUrl && <img src={task.imageUrl} alt={task.title} width="200" />}
-								{task.fileUrl && (
-									<a href={task.fileUrl} download>
-										<button>Скачать</button>
-									</a>
-								)}
+								<p className="task-title">{index + 1}. {task.title}</p>
+								<div className="task-content">
+									<p className="space-text">{task.description}</p>
+									<div className="button-img-container">
+										{task.imageUrl && <img src={task.imageUrl} alt={task.title} className="img-size" />}
+										{task.fileUrl && (
+											<a href={task.fileUrl} download>
+												<button className="button-download">Скачать</button>
+											</a>
+										)}
+									</div>
+								</div>
 							</div>
 						))}
-					</>
+					</div>
 				) : (
 				<p>Заданий пока нет.</p>
 			)}

@@ -2,6 +2,14 @@ import {NextRequest, NextResponse} from "next/server";
 import supabase from "../../../../../lib/supabase";
 
 
+interface Task {
+	title: string;
+	description: string;
+	fileUrl: string;
+	imageUrl: string;
+};
+
+
 export async function PUT(req: NextRequest) {
 	const { username, bio } = await req.json();
 
@@ -67,23 +75,27 @@ export async function DELETE(req: NextRequest) {
 
 	const {data, error: findError} = await supabase
 		.from("profiles")
-		.select("tasks")
+		.select("*")
 		.eq("doctor_username", username);
 
 	if (findError) {
 		return NextResponse.json({error: "Задания доктора не найдены"}, {status: 500});
 	}
 
-	const updatedTasks = [...(data || []).filter((task: any) => task.title !== title)];
+	//console.log((data || []).filter((task: any) => task.title !== title));
+	console.log("test", data[0].tasks);
 
-	const {error: deleteError} = await supabase
-		.from("profiles")
-		.update({tasks: updatedTasks})
-		.eq("doctor_username", username);
+	const updatedTasks = [...(data[0].tasks || []).filter((task: any) => task.title !== title)];
+	console.log(updatedTasks, title);
 
-	if (deleteError) {
-		return NextResponse.json({error: "Не удалось удалить задание"}, {status: 500});
-	}
+	// const {error: deleteError} = await supabase
+	// 	.from("profiles")
+	// 	.update({tasks: updatedTasks})
+	// 	.eq("doctor_username", username);
+
+	// if (deleteError) {
+	// 	return NextResponse.json({error: "Не удалось удалить задание"}, {status: 500});
+	// }
 
 	return NextResponse.json({message: "Задание удалено"});
 }

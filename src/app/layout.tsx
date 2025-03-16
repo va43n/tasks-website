@@ -17,6 +17,8 @@ export default function Layout ({
   const pathname = usePathname();
   const [user, setUser] = useState<User | null>(null);
 
+  const [searchQuery, setSearchQuery] = useState("");
+
   useEffect(() => {
     fetch("/api/auth/me")
       .then((res) => res.json())
@@ -24,8 +26,15 @@ export default function Layout ({
   }, [pathname]);
 
   const handleLogout = async () => {
+    router.push("/");
     await fetch("api/auth/logout", {method: "POST"});
     setUser(null);
+  }
+
+  const handleSearch = ()  => {
+    if (!searchQuery.trim()) return;
+    router.push(`/profile/${searchQuery}`);
+    setSearchQuery("");
   }
 
   return (
@@ -39,10 +48,16 @@ export default function Layout ({
             <button className="header-button" onClick={() => router.push("/")}>Главное меню</button>
             {user && (
               <>
-                {user.role === "Доктор" && (
+                {user.role === "Доктор" ? (
                   <>
                     <button className="header-button" onClick={() => router.push(`/profile/${user.username}`)}>Профиль</button>
                     <button className="header-button" onClick={() => router.push(`/profile/${user.username}/edit`)}>Редактирование профиля</button>
+                  </>
+                ) : (
+                  <>
+                    <div>
+                      <input type="text" className="header-search-input" placeholder="Поиск профиля доктора" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleSearch()} />
+                    </div>
                   </>
                 )}
               </>

@@ -1,11 +1,12 @@
 "use client";
 
-import {useState} from "react";
+import {useState, useEffect, useRef} from "react";
 import styles from "../../../styles/file_uploader.module.css";
 
-export default function FileUploader({ onFileSelect }: { onFileSelect: (file: File) => void }) {
+export default function FileUploader({ onFileSelect, resetTrigger }: { onFileSelect: (file: File) => void, resetTrigger: boolean }) {
 	const [dragging, setDragging] = useState(false);
 	const [fileName, setFileName] = useState<string | null>(null);
+	const fileInputRef = useRef<HTMLInputElement>(null);
 
 	const handleDragOver = (e: React.DragEvent) => {
 		e.preventDefault();
@@ -33,6 +34,15 @@ export default function FileUploader({ onFileSelect }: { onFileSelect: (file: Fi
 			onFileSelect(file);
 		}
 	};
+
+	useEffect(() => {
+		if (resetTrigger) {
+			setFileName(null);
+			if (fileInputRef.current) {
+				fileInputRef.current.value = "";
+			}
+		}
+	}, [resetTrigger]);
 
 	return (
 		<div className={`${styles.fileUploader} ${dragging ? styles.dragging : ""}`} onDragOver={handleDragOver} onDragLeave={handleDragLeave} onDrop={handleDrop}>

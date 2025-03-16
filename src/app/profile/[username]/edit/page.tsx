@@ -27,6 +27,8 @@ export default function EditProfile() {
 
 	const [taskToDelete, setTaskToDelete] = useState("");
 
+	const [resetTrigger, setResetTrigger] = useState(false);
+
 	useEffect(() => {
 		const getProfile = async () => {
 			try {
@@ -44,6 +46,10 @@ export default function EditProfile() {
 
 				setBio(data.profile.bio || "");
 				setTasks(data.profile.tasks || []);
+				if (tasks) {
+					console.log(tasks);
+					// setTaskToDelete(tasks[0].title);
+				} else setTaskToDelete("");
 			} catch (err) {
 				console.error("Ошибка загрузки профиля:", err);
 			}
@@ -117,9 +123,15 @@ export default function EditProfile() {
 		setDescription("");
 		setImage(null);
 		setFile(null);
+
+		setResetTrigger(true);
+		setTimeout(() => setResetTrigger(false), 1000);
 	};
 
 	const deleteTask = async() => {
+		if (!taskToDelete) {
+			console.log("taskToDelete undefined");
+		}
 		await fetch(`/api/profile/${username}`, {
 			method: "DELETE",
 			headers: {"Content-Type": "application/json"},
@@ -127,7 +139,9 @@ export default function EditProfile() {
 		});
 
 		setTasks(tasks.filter((task) => task.title !== taskToDelete));
-		setTaskToDelete("");
+		if (tasks) {
+			setTaskToDelete(tasks[0].title);
+		} else setTaskToDelete("");
 	};
 
 	return (
@@ -145,9 +159,9 @@ export default function EditProfile() {
 				<input className="rounded-box edit-box-size" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Название задания" />
 				<textarea className="rounded-box edit-textarea" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Описание задания" />
 				<p>Прикрепите картинку:</p>
-				<FileUploader onFileSelect={(image) => setImage(image)} />
+				<FileUploader onFileSelect={(image) => setImage(image)} resetTrigger={resetTrigger} />
 				<p>Прикрепите файл:</p>
-				<FileUploader onFileSelect={(file) => setFile(file)} />
+				<FileUploader onFileSelect={(file) => setFile(file)} resetTrigger={resetTrigger} />
 				<button className="rounded-box edit-box-size save-button-edit" onClick={addTask}>Добавить задание</button>
 			</div>
 

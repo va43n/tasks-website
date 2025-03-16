@@ -49,3 +49,13 @@ header {
 .header-button:hover {
   background-color: #0056b3;
 }
+
+.header-search-input {
+  outline: none;
+  border-radius: 8px;
+  padding: 12px;
+  border: 1px solid #cccccc;
+  width: 250px;
+  height: 40px;
+  font-size: 16px;
+}
