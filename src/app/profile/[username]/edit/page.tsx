@@ -23,7 +23,7 @@ export default function EditProfile() {
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
 	const [file, setFile] = useState<File | null>(null)
-	const [image, setImage] = useState<File | null>(null);;
+	const [image, setImage] = useState<File | null>(null);
 
 	const [taskToDelete, setTaskToDelete] = useState("");
 
