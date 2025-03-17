@@ -41,7 +41,7 @@ export default function RegisterPage() {
 	};
 
 	return (
-		<div className="centered-container">
+		<div className="centered-container-form">
 			<h3>Регистрация</h3>
 			<input className="form-box-size rounded-box" type="text" name="full_name" placeholder="ФИО" onChange={handleChange} />
 			<input className="form-box-size rounded-box" type="text" name="username" placeholder="Логин" onChange={handleChange} />
