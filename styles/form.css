@@ -3,61 +3,59 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  max-width: 400px;
-  min-width: 400px;
-  padding: 20px;
-  margin-top: 40px;
+  min-width: 20vw;
+  padding: 1vw;
+  margin-top: 3vw;
   background: white;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 12px;
-  gap: 10px;
+  box-shadow: 0px 1vw 1vw rgba(0, 0, 0, 0.1);
+  border-radius: 0.6vw;
+  gap: 0.5vw;
 }
 
-.rounded-box {
-  border-radius: 8px;
-  padding: 12px;
+.form-rounded-box {
+  border-radius: 0.45vw;
+  padding: 0.6vw;
   border: 1px solid #cccccc;
 }
 
 .form-box-size {
-  width: 300px;
-  height: 40px;
-  font-size: 16px;
+  width: 15vw;
+  height: 2vw;
+  font-size: 0.75vw;
 }
 
-.button-form {
+.form-button-form {
   background-color: #007bff;
   color: white;
   border: none;
 }
 
-.button-form:hover {
+.form-button-form:hover {
   background-color: #0056b3;
 }
 
-.select-form {
+.form-select-form {
   width: 100%;
   appearance: none;
   cursor: pointer;
   outline: none;
 }
 
-.select-container {
+.form-select-container {
   position: relative;
   display: flex;
   align-items: center;
 }
 
-.select-container select {
+.form-select-container select {
   flex: 1;
 }
 
-.select-container::after {
+.form-select-container::after {
   content: "▼";
   position: absolute;
-  right: 10px;
+  right: 0.5vw;
   pointer-events: none;
-  color: #666666;
-  font-size: 16px;
+  color: #222222;
+  font-size: 0.75vw;
 }

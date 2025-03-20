@@ -46,20 +46,20 @@ export default function Profile() {
 	}, [username]);
 
 	if (!profile) return (
-		<div className="centered-container">
+		<div className="profile-centered-container">
 			<p>Загрузка профиля...</p>
 		</div>
 		);
 
 	return (
-		<div className="centered-container">
+		<div className="profile-centered-container">
 			<h1 className="profile-title">Профиль доктора {profile.doctor_username}</h1>
 
 			<div>
 				<h3>Описание:</h3>
 				{profile.bio ? (
 					<>
-						<p className="space-text">{profile.bio}</p>
+						<p className="profile-space-text">{profile.bio}</p>
 					</>
 				) : <p>Описание отсутствует</p>}
 			</div>
@@ -67,17 +67,17 @@ export default function Profile() {
 			<div>
 				<h3>Список заданий:</h3>
 				{profile.tasks && profile.tasks.length > 0 ? (
-					<div className="gap-between-tasks">
+					<div className="profile-gap-between-tasks">
 						{profile.tasks.map((task, index) => (
 							<div key={index}>
-								<p className="task-title">{index + 1}. {task.title}</p>
-								<div className="task-content">
-									<p className="space-text">{task.description}</p>
-									<div className="button-img-container">
-										{task.imageUrl && <img src={task.imageUrl} alt={task.title} className="img-size" />}
+								<p className="profile-task-title">{index + 1}. {task.title}</p>
+								<div className="profile-task-content">
+									<p className="profile-space-text">{task.description}</p>
+									<div className="profile-button-img-container">
+										{task.imageUrl && <img src={task.imageUrl} alt={task.title} className="profile-img-size" />}
 										{task.fileUrl && (
 											<a href={task.fileUrl} download>
-												<button className="button-download">Скачать</button>
+												<button className="profile-button-download">Скачать</button>
 											</a>
 										)}
 									</div>

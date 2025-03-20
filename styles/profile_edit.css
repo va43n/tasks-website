@@ -1,83 +1,83 @@
-.centered-container {
+.edit-centered-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-width: 1000px;
-  padding: 20px;
-  margin-top: 40px;
-  margin-bottom: 40px;
+  min-width: 50vw;
+  padding: 1vw;
+  margin-top: 3vw;
+  margin-bottom: 2vw;
   background: white;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 12px;
-  gap: 20px;
+  box-shadow: 0px 1vw 1vw rgba(0, 0, 0, 0.1);
+  border-radius: 0.6vw;
+  gap: 1vw;
 }
 
 .edit-profile-title {
   text-align: center;
 }
 
-.rounded-box {
-  border-radius: 8px;
-  padding: 12px;
+.edit-rounded-box {
+  border-radius: 0.45vw;
+  padding: 0.6vw;
   border: 1px solid #cccccc;
 }
 
 .edit-box-size {
-  height: 40px;
-  font-size: 16px;
+  height: 2vw;
+  font-size: 0.75vw;
 }
 
-.save-button-edit {
-  width: 300px;
+.edit-save-button-edit {
+  width: 15vw;
   background-color: #007bff;
   color: white;
   border: none;
 }
 
-.save-button-edit:hover {
+.edit-save-button-edit:hover {
   background-color: #0056b3;
 }
 
 .edit-textarea {
   width: 100%;
-  height: 150px;
+  height: 7.5vw;
   resize: none;
-  font-size: 16px;
+  font-size: 0.75vw;
   outline: none;
 }
 
-.select-edit {
+.edit-select-edit {
   width: 100%;
   appearance: none;
   cursor: pointer;
   outline: none;
 }
 
-.select-container {
+.edit-select-container {
   width: 100%;
   position: relative;
   display: flex;
   align-items: center;
 }
 
-.select-container select {
+.edit-select-container select {
   flex: 1;
 }
 
-.select-container::after {
+.edit-select-container::after {
   content: "▼";
   position: absolute;
-  right: 10px;
+  right: 0.5vw;
   pointer-events: none;
-  color: #666666;
-  font-size: 16px;
+  color: #222222;
+  font-size: 0.75;
 }
 
-.objects-gap {
+.edit-objects-gap {
   width: 100%;
   display: flex;
   align-items: center;
   flex-direction: column;
-  gap: 5px;
+  gap: 0.25vw;
 }

@@ -43,19 +43,19 @@ export default function RegisterPage() {
 	return (
 		<div className="centered-container-form">
 			<h3>Регистрация</h3>
-			<input className="form-box-size rounded-box" type="text" name="full_name" placeholder="ФИО" onChange={handleChange} />
-			<input className="form-box-size rounded-box" type="text" name="username" placeholder="Логин" onChange={handleChange} />
-			<input className="form-box-size rounded-box" type="text" name="email" placeholder="Электронная почта" onChange={handleChange} />
+			<input className="form-box-size form-rounded-box" type="text" name="full_name" placeholder="ФИО" onChange={handleChange} />
+			<input className="form-box-size form-rounded-box" type="text" name="username" placeholder="Логин" onChange={handleChange} />
+			<input className="form-box-size form-rounded-box" type="text" name="email" placeholder="Электронная почта" onChange={handleChange} />
 			<div className="select-container form-box-size">
-				<select className="select-form rounded-box" name="role" onChange={handleChange}>
+				<select className="form-select-form form-rounded-box" name="role" onChange={handleChange}>
 					<option value="Пациент">Пациент</option>
 					<option value="Доктор">Доктор</option>
 				</select>
 			</div>
-			<input className="form-box-size rounded-box" type="text" name="password" placeholder="Пароль" onChange={handleChange} />
-			<input className="form-box-size rounded-box" type="text" name="confirmPassword" placeholder="Повторите пароль" onChange={handleChange} />
+			<input className="form-box-size form-rounded-box" type="text" name="password" placeholder="Пароль" onChange={handleChange} />
+			<input className="form-box-size form-rounded-box" type="text" name="confirmPassword" placeholder="Повторите пароль" onChange={handleChange} />
 			{error && <p color="red">{error}</p>}
-			<button className="form-box-size rounded-box button-form" onClick={handleRegister}>Зарегистрироваться</button>
+			<button className="form-box-size form-rounded-box form-button-form" onClick={handleRegister}>Зарегистрироваться</button>
 		</div>
 	)
 }

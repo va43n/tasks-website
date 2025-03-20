@@ -145,30 +145,30 @@ export default function EditProfile() {
 	};
 
 	return (
-		<div className="centered-container">
+		<div className="edit-centered-container">
 			<h1 className="edit-profile-title">Редактирование профиля пользователя {username}</h1>
 
-			<div className="objects-gap">
+			<div className="edit-objects-gap">
 				<h3>Изменение описания:</h3>
-				<textarea className="rounded-box edit-textarea" value={bio} onChange={(e) => setBio(e.target.value)} />
-				<button className="rounded-box edit-box-size save-button-edit" onClick={updateBio}>Сохранить</button>
+				<textarea className="edit-rounded-box edit-textarea" value={bio} onChange={(e) => setBio(e.target.value)} />
+				<button className="edit-rounded-box edit-box-size edit-save-button-edit" onClick={updateBio}>Сохранить</button>
 			</div>
 
-			<div className="objects-gap">
+			<div className="edit-objects-gap">
 				<h3>Добавление нового задания:</h3>
-				<input className="rounded-box edit-box-size" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Название задания" />
-				<textarea className="rounded-box edit-textarea" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Описание задания" />
+				<input className="edit-rounded-box edit-box-size" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Название задания" />
+				<textarea className="edit-rounded-box edit-textarea" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Описание задания" />
 				<p>Прикрепите картинку:</p>
 				<FileUploader onFileSelect={(image) => setImage(image)} resetTrigger={resetTrigger} />
 				<p>Прикрепите файл:</p>
 				<FileUploader onFileSelect={(file) => setFile(file)} resetTrigger={resetTrigger} />
-				<button className="rounded-box edit-box-size save-button-edit" onClick={addTask}>Добавить задание</button>
+				<button className="edit-rounded-box edit-box-size edit-save-button-edit" onClick={addTask}>Добавить задание</button>
 			</div>
 
-			<div className="objects-gap">
+			<div className="edit-objects-gap">
 				<h3>Удаление задания:</h3>
-				<div className="select-container edit-box-size">
-					<select className="select-edit rounded-box" value={taskToDelete} onChange={(e) => setTaskToDelete(e.target.value)}>
+				<div className="edit-select-container edit-box-size">
+					<select className="edit-select-edit edit-rounded-box" value={taskToDelete} onChange={(e) => setTaskToDelete(e.target.value)}>
 						{tasks.map((task) => (
 							<option key={task.title} value={task.title}>
 								{task.title}
@@ -176,7 +176,7 @@ export default function EditProfile() {
 						))}
 					</select>
 				</div>
-				<button className="rounded-box edit-box-size save-button-edit" onClick={deleteTask}>Удалить задание</button>
+				<button className="edit-rounded-box edit-box-size edit-save-button-edit" onClick={deleteTask}>Удалить задание</button>
 			</div>
 		</div>
 	);
