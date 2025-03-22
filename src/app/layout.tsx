@@ -56,7 +56,7 @@ export default function Layout ({
                 ) : (
                   <>
                     <div>
-                      <input type="text" className="header-search-input" placeholder="Поиск профиля доктора" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleSearch()} />
+                      <input type="text" className="header-search-input header-search-input-width" placeholder="Поиск профиля доктора" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleSearch()} />
                     </div>
                   </>
                 )}

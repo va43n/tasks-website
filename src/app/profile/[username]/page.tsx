@@ -72,7 +72,7 @@ export default function Profile() {
 							<div key={index}>
 								<p className="profile-task-title">{index + 1}. {task.title}</p>
 								<div className="profile-task-content">
-									<p className="profile-space-text">{task.description}</p>
+									<p className="profile-task-text profile-space-text">{task.description}</p>
 									<div className="profile-button-img-container">
 										{task.imageUrl && <img src={task.imageUrl} alt={task.title} className="profile-img-size" />}
 										{task.fileUrl && (

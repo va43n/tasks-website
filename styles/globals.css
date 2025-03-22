@@ -1,8 +1,20 @@
+@media (orientation: landscape) {
+  .header-search-input-width {
+    width: 250px;
+  }
+}
+@media (orientation: portrait) {
+  .header-search-input-width {
+    width: 10vw;
+  }
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: sans-serif;
+  font-size: 16px;
 }
 
 body {
@@ -38,7 +50,6 @@ header {
 
 .header-button {
   height: 40px;
-  font-size: 16px;
   border-radius: 8px;
   padding: 12px;
   background-color: #007bff;
@@ -55,7 +66,5 @@ header {
   border-radius: 8px;
   padding: 12px;
   border: 1px solid #cccccc;
-  width: 250px;
   height: 40px;
-  font-size: 16px;
 }

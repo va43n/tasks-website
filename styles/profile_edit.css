@@ -35,8 +35,8 @@
 }
 
 .edit-box-size {
+  width: 100%;
   height: 40px;
-  font-size: 16px;
 }
 
 .edit-save-button-edit {
@@ -54,7 +54,6 @@
   width: 100%;
   height: 150px;
   resize: none;
-  font-size: 16px;
   outline: none;
 }
 
@@ -82,7 +81,6 @@
   right: 10px;
   pointer-events: none;
   color: #222222;
-  font-size: 16px;
 }
 
 .edit-objects-gap {
