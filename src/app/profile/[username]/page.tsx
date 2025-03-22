@@ -69,7 +69,7 @@ export default function Profile() {
 				{profile.tasks && profile.tasks.length > 0 ? (
 					<div className="profile-gap-between-tasks">
 						{profile.tasks.map((task, index) => (
-							<div key={index}>
+							<div className="tasks-part-profile" key={index}>
 								<p className="profile-task-title">{index + 1}. {task.title}</p>
 								<div className="profile-task-content">
 									<p className="profile-task-text profile-space-text">{task.description}</p>
