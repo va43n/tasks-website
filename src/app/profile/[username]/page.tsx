@@ -46,13 +46,13 @@ export default function Profile() {
 	}, [username]);
 
 	if (!profile) return (
-		<div className="profile-centered-container">
+		<div className="profile-centered-container profile-centered-container-width">
 			<p>Загрузка профиля...</p>
 		</div>
 		);
 
 	return (
-		<div className="profile-centered-container">
+		<div className="profile-centered-container profile-centered-container-width">
 			<h1 className="profile-title">Профиль доктора {profile.doctor_username}</h1>
 
 			<div>

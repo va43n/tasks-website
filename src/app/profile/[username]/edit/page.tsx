@@ -145,7 +145,7 @@ export default function EditProfile() {
 	};
 
 	return (
-		<div className="edit-centered-container">
+		<div className="edit-centered-container edit-centered-container-width">
 			<h1 className="edit-profile-title">Редактирование профиля пользователя {username}</h1>
 
 			<div className="edit-objects-gap">

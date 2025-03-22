@@ -7,7 +7,7 @@ export default function HomePage() {
   const router = useRouter();
 
   return (
-    <div className="centered-container-start">
+    <div className="centered-container-start centered-container-start-width">
       <h1>Страница с заданиями</h1>
     </div>
   );

@@ -1,9 +1,20 @@
+@media (orientation: landscape) {
+  .profile-centered-container-width {
+      width: 1000px;
+  }
+}
+
+@media (orientation: portrait) {
+  .profile-centered-container-width {
+      width: 90vw;
+  }
+}
+
 .profile-centered-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 1000px;
   padding: 20px;
   margin-top: 60px;
   margin-bottom: 40px;

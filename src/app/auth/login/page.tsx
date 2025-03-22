@@ -37,7 +37,7 @@ export default function LoginPage() {
 	};
 
 	return (
-		<div className="centered-container-form">
+		<div className="centered-container-form centered-container-form-width">
 			<h3>Вход</h3>
 			<input className="form-box-size form-rounded-box" type="text" name="username" placeholder="Логин" onChange={handleChange} />
 			<input className="form-box-size form-rounded-box" type="text" name="password" placeholder="Пароль" onChange={handleChange} />
