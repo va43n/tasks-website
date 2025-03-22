@@ -76,7 +76,7 @@ export default function Profile() {
 									<div className="profile-button-img-container">
 										{task.imageUrl && <img src={task.imageUrl} alt={task.title} className="profile-img-size" />}
 										{task.fileUrl && (
-											<a href={task.fileUrl} download>
+											<a className="profile-button-download-container" href={task.fileUrl} download>
 												<button className="profile-button-download">Скачать</button>
 											</a>
 										)}
