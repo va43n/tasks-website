@@ -54,8 +54,6 @@
   }
 
   .profile-task-content {
-    display: flex;
-    flex-direction: column;
     align-items: center;
     gap: 5px;
   }
@@ -66,8 +64,6 @@
 
   .profile-button-img-container {
     width: 100%;
-    display: flex;
-    flex-direction: column;
     align-items: center;
     gap: 5px;
   }
