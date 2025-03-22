@@ -2,11 +2,97 @@
   .profile-centered-container-width {
       width: 1000px;
   }
+
+  .profile-task-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .profile-task-text {
+    width: 50%;
+  }
+
+  .profile-button-img-container {
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .profile-button-download-container {
+    width: 30%;
+  }
+
+  .profile-img-size {
+    width: 70%;
+  }
+
+  .profile-button-download {
+    width: 100%;
+    height: 40px;
+    border-radius: 8px;
+    padding: 12px;
+    border: 1px solid #cccccc;
+    background-color: #007bff;
+    color: white;
+    border: none;
+  }
+
+  .profile-button-download:hover {
+    background-color: #0056b3;
+  }
 }
 
 @media (orientation: portrait) {
   .profile-centered-container-width {
       width: 90vw;
+  }
+
+  .profile-task-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .profile-task-text {
+    width: 100%;
+  }
+
+  .profile-button-img-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .profile-button-download-container {
+    width: 100%;
+  }
+
+  .profile-img-size {
+    width: 100%;
+  }
+
+  .profile-button-download {
+    width: 100%;
+    height: 40px;
+    border-radius: 8px;
+    padding: 12px;
+    border: 1px solid #cccccc;
+    background-color: #007bff;
+    color: white;
+    border: none;
+  }
+
+  .profile-button-download:hover {
+    background-color: #0056b3;
   }
 }
 
@@ -38,52 +124,8 @@
   font-weight: bold;
 }
 
-.profile-task-content {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  gap: 5px;
-}
-
-.profile-task-text {
-  width: 50%;
-}
-
-.profile-button-img-container {
-  width: 50%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  gap: 5px;
-}
-
-.profile-button-download-container {
-  width: 30%;
-}
-
-.profile-button-download {
-  width: 100%;
-  height: 40px;
-  border-radius: 8px;
-  padding: 12px;
-  border: 1px solid #cccccc;
-  background-color: #007bff;
-  color: white;
-  border: none;
-}
-
-.profile-button-download:hover {
-  background-color: #0056b3;
-}
-
 .profile-gap-between-tasks {
   display: flex;
   flex-direction: column;
   gap: 20px;
-}
-
-.profile-img-size {
-  width: 70%;
 }
