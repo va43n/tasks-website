@@ -67,7 +67,7 @@ export default function Layout ({
                           setIsMenuOpen(false);
                           router.push(`/profile/${user.username}`);
                         }}>Профиль</button>
-                        <button className="header-button" className="header-button" onClick={() => {
+                        <button className="header-button" onClick={() => {
                           setIsMenuOpen(false);
                           router.push(`/profile/${user.username}/edit`);
                         }}>Редактирование</button>
