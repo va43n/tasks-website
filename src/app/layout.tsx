@@ -17,6 +17,8 @@ export default function Layout ({
   const pathname = usePathname();
   const [user, setUser] = useState<User | null>(null);
 
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
@@ -24,6 +26,10 @@ export default function Layout ({
       .then((res) => res.json())
       .then((data) => setUser(data.user));
   }, [pathname]);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  }
 
   const handleLogout = async () => {
     router.push("/");
@@ -45,38 +51,56 @@ export default function Layout ({
       <body>
         <header>
           <div className="header-buttons-container">
-            <button className="header-button" onClick={() => router.push("/")}>Главное меню</button>
-            {user && (
+            <button className="header-button" onClick={() => router.push("/")}>Меню</button>
+          </div>
+
+          <div className="menu-container">
+            <button className="header-button menu-opener" onClick={toggleMenu}>≡</button>
+
+            {isMenuOpen && (
               <>
-                {user.role === "Доктор" ? (
-                  <>
-                    <button className="header-button" onClick={() => router.push(`/profile/${user.username}`)}>Профиль</button>
-                    <button className="header-button" onClick={() => router.push(`/profile/${user.username}/edit`)}>Редактирование профиля</button>
-                  </>
+                {user ? (
+                  <div className="menu-content">
+                    {user.role === "Доктор" ? (
+                      <>
+                        <button className="header-button" onClick={() => {
+                          setIsMenuOpen(false);
+                          router.push(`/profile/${user.username}`);
+                        }}>Профиль</button>
+                        <button className="header-button" className="header-button" onClick={() => {
+                          setIsMenuOpen(false);
+                          router.push(`/profile/${user.username}/edit`);
+                        }}>Редактирование</button>
+                      </>
+                    ) : (
+                      <>
+                        <div>
+                          <input type="text" className="header-search-input header-search-input-width" placeholder="Поиск профиля" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} onKeyDown={(e) => {
+                            if (e.key === "Enter") {setIsMenuOpen(false); handleSearch();}
+                          }} />
+                        </div>
+                      </>
+                    )}
+                    <button className="header-button-logout" onClick={() => {
+                      setIsMenuOpen(false);
+                      handleLogout();
+                    }}>Выйти</button>
+                  </div>
                 ) : (
-                  <>
-                    <div>
-                      <input type="text" className="header-search-input header-search-input-width" placeholder="Поиск профиля доктора" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleSearch()} />
-                    </div>
-                  </>
+                  <div className="menu-content">
+                    <button className="header-button" onClick={() => {
+                      setIsMenuOpen(false);
+                      router.push("/auth/register");
+                    }}>Регистрация</button>
+                    <button className="header-button" onClick={() => {
+                      setIsMenuOpen(false);
+                      router.push("/auth/login");
+                    }}>Вход</button>
+                  </div>
                 )}
               </>
             )}
           </div>
-          {user && (
-              <>
-                <div className="header-buttons-container">
-                  <p>Добро пожаловать, {user.role} {user.username}!</p>
-                  <button className="header-button" onClick={handleLogout}>Выход</button>
-                </div>
-              </>
-            )}
-          {!user && (
-            <div className="header-buttons-container">
-              <button className="header-button" onClick={() => router.push("/auth/register")}>Регистрация</button>
-              <button className="header-button" onClick={() => router.push("/auth/login")}>Вход</button>
-            </div>
-          )}
         </header>
         <main>{children}</main>
       </body>
