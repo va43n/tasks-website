@@ -53,6 +53,18 @@ export async function POST(req: NextRequest) {
 				return NextResponse.json({error: "Не удалось добавить профиль в базу данных"}, {status: 500});
 			}
 		}
+		else {
+			const { error } = await supabase
+			.from("patient_files")
+			.insert({
+				patient_username: username,
+				files: []
+			});
+
+			if (error) {
+				return NextResponse.json({error: "Не удалось добавить запись о файлах пациента в базу данных"}, {status: 500});
+			}
+		}
 
 		return NextResponse.json({ success: true });
 	} catch (err) {

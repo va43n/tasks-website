@@ -2,6 +2,7 @@
 
 import {useEffect, useState} from "react";
 import {useParams} from "next/navigation";
+
 import "../../../../styles/globals.css";
 import "../../../../styles/profile.css";
 
@@ -18,11 +19,25 @@ type Profile = {
   tasks: Task[];
 };
 
+type User = {
+  username: string;
+  role: string;
+};
+
 export default function Profile() {
+	const [selfUser, setSelfUser] = useState<User | null>(null);
+
 	const {username} = useParams();
 	const [profile, setProfile] = useState<Profile | null>(null);
 
 	useEffect(() => {
+		const fetchUser = async () => {
+			const res = await fetch("/api/auth/me");
+			if (!res.ok) return setSelfUser(null);
+			const data = await res.json();
+			setSelfUser(data.user);
+		};
+
 		const getProfile = async () => {
 			try {
 				const response = await fetch(`/api/profile/${username}/get`, {
@@ -42,8 +57,29 @@ export default function Profile() {
 				console.error("Ошибка загрузки профиля:", err);
 			}
 		}
+
+		fetchUser();
 		getProfile();
 	}, [username]);
+
+	const handleDownload = async (fileUrl: string) => {
+		const selfUsername = selfUser?.username;
+		console.log("download", selfUsername);
+		try {
+			const response = await fetch(`/api/download`, {
+				method: "POST",
+				body: JSON.stringify({selfUsername, fileUrl}),
+			});
+
+			const data = await response.json();
+			if (!response.ok) {
+				console.error(data.error);
+				return;
+			}
+		} catch (err) {
+			console.error(err);
+		}
+	}
 
 	if (!profile) return (
 		<div className="profile-centered-container profile-centered-container-width">
@@ -76,9 +112,7 @@ export default function Profile() {
 									<div className="profile-button-img-container">
 										{task.imageUrl && <img src={task.imageUrl} alt={task.title} className="profile-img-size" />}
 										{task.fileUrl && (
-											<a className="profile-button-download-container" href={task.fileUrl} download>
-												<button className="profile-button-download">Скачать</button>
-											</a>
+											<button className="profile-button-download" onClick={() => handleDownload(task.fileUrl)}>Скачать</button>
 										)}
 									</div>
 								</div>

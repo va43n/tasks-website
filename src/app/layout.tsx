@@ -76,7 +76,7 @@ export default function Layout ({
                       <>
                         <div>
                           <input type="text" className="header-search-input header-search-input-width" placeholder="Поиск профиля" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} onKeyDown={(e) => {
-                            if (e.key === "Enter") {setIsMenuOpen(false); handleSearch();}
+                            if (e.key === "Enter") {handleSearch(); setIsMenuOpen(false);}
                           }} />
                         </div>
                       </>
