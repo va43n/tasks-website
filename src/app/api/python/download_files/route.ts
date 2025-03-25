@@ -19,5 +19,5 @@ export async function POST(req: NextRequest) {
 		return NextResponse.json({error: "Запись о файлах пациента не найдена"}, {status: 500});
 	}
 
-	return NextResponse.json({data}, {status: 200});
+	return NextResponse.json({files: data.files}, {status: 200});
 }
