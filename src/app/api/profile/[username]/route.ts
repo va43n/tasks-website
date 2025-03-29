@@ -82,7 +82,7 @@ export async function DELETE(req: NextRequest) {
 		return NextResponse.json({error: "Задания доктора не найдены"}, {status: 500});
 	}
 
-	const updatedTasks = data[0].tasks.filter(task => task.title !== taskToDelete);
+	const updatedTasks = (data[0].tasks as Task[]).filter(task => task.title !== taskToDelete);
 
 	const {error: deleteError} = await supabase
 		.from("profiles")
