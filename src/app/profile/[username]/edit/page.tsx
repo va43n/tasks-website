@@ -138,6 +138,8 @@ export default function EditProfile() {
 			body: JSON.stringify({username, taskToDelete}),
 		});
 
+		console.log(tasks);
+
 		setTasks(tasks.filter((task) => task.title !== taskToDelete));
 		if (tasks) {
 			setTaskToDelete(tasks[0].title);

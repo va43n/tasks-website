@@ -71,7 +71,7 @@ export async function POST(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
-	const {username, title} = await req.json();
+	const {username, taskToDelete} = await req.json();
 
 	const {data, error: findError} = await supabase
 		.from("profiles")
@@ -82,20 +82,16 @@ export async function DELETE(req: NextRequest) {
 		return NextResponse.json({error: "Задания доктора не найдены"}, {status: 500});
 	}
 
-	//console.log((data || []).filter((task: any) => task.title !== title));
-	console.log("test", data[0].tasks);
+	const updatedTasks = data[0].tasks.filter(task => task.title !== taskToDelete);
 
-	const updatedTasks = [...(data[0].tasks || []).filter((task: any) => task.title !== title)];
-	console.log(updatedTasks, title);
+	const {error: deleteError} = await supabase
+		.from("profiles")
+		.update({tasks: updatedTasks})
+		.eq("doctor_username", username);
 
-	// const {error: deleteError} = await supabase
-	// 	.from("profiles")
-	// 	.update({tasks: updatedTasks})
-	// 	.eq("doctor_username", username);
-
-	// if (deleteError) {
-	// 	return NextResponse.json({error: "Не удалось удалить задание"}, {status: 500});
-	// }
+	if (deleteError) {
+		return NextResponse.json({error: "Не удалось удалить задание"}, {status: 500});
+	}
 
 	return NextResponse.json({message: "Задание удалено"});
 }

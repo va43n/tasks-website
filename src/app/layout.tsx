@@ -33,7 +33,7 @@ export default function Layout ({
 
   const handleLogout = async () => {
     router.push("/");
-    await fetch("api/auth/logout", {method: "POST"});
+    await fetch("/api/auth/logout", {method: "POST"});
     setUser(null);
   }
 
@@ -74,11 +74,13 @@ export default function Layout ({
                       </>
                     ) : (
                       <>
-                        <div>
-                          <input type="text" className="header-search-input header-search-input-width" placeholder="Поиск профиля" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} onKeyDown={(e) => {
-                            if (e.key === "Enter") {handleSearch(); setIsMenuOpen(false);}
-                          }} />
-                        </div>
+                        <input type="text" className="header-search-input header-search-input-width" placeholder="Поиск профиля" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} onKeyDown={(e) => {
+                          if (e.key === "Enter") {handleSearch(); setIsMenuOpen(false);}
+                        }} />
+                        <button className="header-button" onClick={() => {
+                          setIsMenuOpen(false);
+                          router.push(`/patient-files/${user.username}`);
+                        }}>Мои файлы</button>
                       </>
                     )}
                     <button className="header-button-logout" onClick={() => {

@@ -62,13 +62,12 @@ export default function Profile() {
 		getProfile();
 	}, [username]);
 
-	const handleDownload = async (fileUrl: string) => {
+	const handleDownload = async (title: string, fileUrl: string) => {
 		const selfUsername = selfUser?.username;
-		console.log("download", selfUsername);
 		try {
 			const response = await fetch(`/api/download`, {
 				method: "POST",
-				body: JSON.stringify({selfUsername, fileUrl}),
+				body: JSON.stringify({selfUsername, username, title, fileUrl}),
 			});
 
 			const data = await response.json();
@@ -85,7 +84,7 @@ export default function Profile() {
 		<div className="profile-centered-container profile-centered-container-width">
 			<p>Загрузка профиля...</p>
 		</div>
-		);
+	);
 
 	return (
 		<div className="profile-centered-container profile-centered-container-width">
@@ -112,7 +111,7 @@ export default function Profile() {
 									<div className="profile-button-img-container">
 										{task.imageUrl && <img src={task.imageUrl} alt={task.title} className="profile-img-size" />}
 										{task.fileUrl && (
-											<button className="profile-button-download" onClick={() => handleDownload(task.fileUrl)}>Скачать</button>
+											<button className="profile-button-download" onClick={() => handleDownload(task.title, task.fileUrl)}>Скачать</button>
 										)}
 									</div>
 								</div>

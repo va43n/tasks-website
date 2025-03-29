@@ -3,13 +3,13 @@ import supabase from "../../../../lib/supabase";
 
 
 export async function POST(req: NextRequest) {
-	const {selfUsername, fileUrl} = await req.json();
+	const {selfUsername, username, title, fileUrl} = await req.json();
 
-	console.log(selfUsername, fileUrl);
+	console.log(selfUsername, username, title, fileUrl);
 
-	if (!selfUsername || !fileUrl) {
-		console.log("Не удалось получить username или ссылку на файл");
-		return NextResponse.json({error: "Не удалось получить username или ссылку на файл"}, {status: 400});
+	if (!selfUsername || !username || !title || !fileUrl) {
+		console.log("Не удалось получить username пользователя или доктора или название файла или ссылку на файл");
+		return NextResponse.json({error: "Не удалось получить username пользователя или доктора или название файла или ссылку на файл"}, {status: 400});
 	}
 
 	const {data, error} = await supabase
@@ -22,7 +22,15 @@ export async function POST(req: NextRequest) {
 		return NextResponse.json({error: "Запись о файлах пациента не найдена"}, {status: 500});
 	}
 
-	const updatedFiles = [...data.files, fileUrl];
+	const fileName = `Задание "${title}" доктора ${username}`
+
+	for (let i = 0; i < data.files.length; i++) {
+		if (data.files[i].fileName === fileName) {
+			return NextResponse.json({message: "Такой файл уже есть в очереди на скачивание"});
+		}
+	}
+
+	const updatedFiles = [...data.files, {fileName, fileUrl}];
 
 	const {error: addError} = await supabase
 		.from("patient_files")
