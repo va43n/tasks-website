@@ -3,8 +3,8 @@ import supabase from "../../../../../lib/supabase";
 
 
 type File = {
-	title: string;
-  fileUrl: string;
+	fileName: string;
+ 	fileUrl: string;
 };
 
 export async function POST(req: NextRequest) {
@@ -50,11 +50,7 @@ export async function DELETE(req: NextRequest) {
 		return NextResponse.json({error: "Запись о файлах пациента не найдена"}, {status: 500});
 	}
 
-	console.log(files);
-
-	const updatedFiles = files.files.filter((file: File) => file.fileName !== fileName);
-
-	console.log(updatedFiles);
+	const updatedFiles = (files.files as File[]).filter((file: File) => file.fileName !== fileName);
 
 	const {error: deleteError} = await supabase
 		.from("patient_files")
