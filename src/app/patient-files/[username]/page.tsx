@@ -12,7 +12,7 @@ type User = {
 };
 
 type File = {
-	title: string;
+	fileName: string;
   fileUrl: string;
 };
 
@@ -20,7 +20,7 @@ export default function PatientFiles() {
 	const [selfUser, setSelfUser] = useState<User | null>(null);
 
 	const {username} = useParams();
-	const [files, setFiles] = useState([]);
+	const [files, setFiles] = useState<File[]>([]);
 
 	useEffect(() => {
 		const fetchUser = async () => {
