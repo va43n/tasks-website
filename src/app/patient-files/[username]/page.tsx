@@ -69,7 +69,7 @@ export default function PatientFiles() {
 		}
 	}
 
-	if (files === [] || !username) return (
+	if (!files || !username) return (
 		<div className="files-centered-container files-centered-container-width">
 			<p>Загрузка списка файлов...</p>
 		</div>
