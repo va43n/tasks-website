@@ -2,6 +2,11 @@ import {NextRequest, NextResponse} from "next/server";
 import supabase from "../../../../../lib/supabase";
 
 
+type File = {
+	title: string;
+  fileUrl: string;
+};
+
 export async function POST(req: NextRequest) {
 	const {username} = await req.json();
 
@@ -47,7 +52,7 @@ export async function DELETE(req: NextRequest) {
 
 	console.log(files);
 
-	const updatedFiles = files.files.filter(file => file.fileName !== fileName);
+	const updatedFiles = files.files.filter((file: File) => file.fileName !== fileName);
 
 	console.log(updatedFiles);
 
