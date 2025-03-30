@@ -79,7 +79,7 @@ export default function PatientFiles() {
 		<div className="files-centered-container files-centered-container-width">
 			<h1 className="files-patient-title">Еще не скачанные файлы пациента {username}</h1>
 
-			{files && (
+			{files && files.length > 0 && (
 				<div className="files-gap-between-files">
 					{files.map((file, index) => (
 						<div className="files-file-content" key={index}>

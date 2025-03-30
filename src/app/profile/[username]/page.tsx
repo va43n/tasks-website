@@ -90,13 +90,13 @@ export default function Profile() {
 		<div className="profile-centered-container profile-centered-container-width">
 			<h1 className="profile-title">Профиль доктора {profile.doctor_username}</h1>
 
-			<div>
-				<h3>Описание:</h3>
+			<div className="profile-text-width">
+				<h3 className="profile-text-width">Описание:</h3>
 				{profile.bio ? (
 					<>
-						<p className="profile-space-text">{profile.bio}</p>
+						<p className="profile-space-text profile-text-width">{profile.bio}</p>
 					</>
-				) : <p>Описание отсутствует</p>}
+				) : <p className="profile-space-text profile-text-width">Описание отсутствует</p>}
 			</div>
 
 			<div>

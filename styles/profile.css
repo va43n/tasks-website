@@ -114,6 +114,10 @@
   gap: 30px;
 }
 
+.profile-text-width {
+  width: 100%;
+}
+
 .profile-space-text {
   white-space: pre-wrap;
   word-wrap: break-word;
