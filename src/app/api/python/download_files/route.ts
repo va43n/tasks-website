@@ -19,11 +19,9 @@ export async function POST(req: NextRequest) {
 		return NextResponse.json({error: "Запись о файлах пациента не найдена"}, {status: 500});
 	}
 
-	const emptyFiles = [];
-
 	const {error: deleteError} = await supabase
 		.from("patient_files")
-		.update({files: emptyFiles})
+		.update({files: []})
 		.eq("patient_username", username);
 
 	if (deleteError) {
