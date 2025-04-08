@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
 			return NextResponse.json({error: "Не удалось получить файл"}, {status: 500});
 		}
 
-		files.push(file);
+		files.push(file[0]);
 	}
 
 	const {error: deleteError} = await supabase
