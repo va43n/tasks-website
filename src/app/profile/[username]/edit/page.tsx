@@ -121,7 +121,9 @@ export default function EditProfile() {
 			return;
 		}
 
-		setTasks([...tasks, {data.task_id, title, description, fileUrl, imageUrl}]);
+		const new_task_id = data.task_id;
+
+		setTasks([...tasks, {new_task_id, title, description, fileUrl, imageUrl}]);
 		setTitle("");
 		setDescription("");
 		setImage(null);
