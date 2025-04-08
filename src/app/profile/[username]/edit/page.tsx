@@ -175,7 +175,7 @@ export default function EditProfile() {
 			<div className="edit-objects-gap">
 				<h3>Удаление задания:</h3>
 				<div className="edit-select-container edit-box-size">
-					<select className="edit-select-edit edit-rounded-box" value={taskToDelete} onChange={(e) => setTaskToDelete(e.target.key)}>
+					<select className="edit-select-edit edit-rounded-box" value={taskToDelete} onChange={(e) => setTaskToDelete(e.target.value)}>
 						{tasks.map((task) => (
 							<option key={task.task_id} value={task.title}>
 								{task.title}
