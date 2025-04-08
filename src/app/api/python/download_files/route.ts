@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
 
 	let files = [];
 
-	for (var id in all_id) {
+	for (var id of all_id) {
 		const {data: file, error} = await supabase
 			.from("tasks")
 			.select("task_id, title, file_url")
