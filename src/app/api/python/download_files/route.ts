@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
 			.select("task_id, title, file_url")
 			.eq("task_id", id.task_id);	
 
-		if (!error) {
+		if (error) {
 			return NextResponse.json({error: "Не удалось получить файл"}, {status: 500});
 		}
 

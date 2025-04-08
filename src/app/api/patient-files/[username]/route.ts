@@ -1,7 +1,6 @@
 import {NextRequest, NextResponse} from "next/server";
 import supabase from "../../../../../lib/supabase";
 
-
 type File = {
 	task_id: string
 	title: string;
