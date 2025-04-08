@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
 		.select("*")
 		.eq("patient_username", selfUsername);
 
-	for (let id in all_id) {
+	for (let id of all_id) {
 		if (id.task_id === task_id) {
 			return NextResponse.json({message: "Такой файл уже есть в очереди на скачивание"});
 		}
