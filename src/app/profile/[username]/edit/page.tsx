@@ -115,12 +115,13 @@ export default function EditProfile() {
 			body: JSON.stringify({username, title, description, fileUrl, imageUrl}),
 		});
 
-		if (!res.ok) {
+		const data = await res.json();
+		if (data.error) {
 			console.error("Не удалось добавить задание");
 			return;
 		}
 
-		setTasks([...tasks, {title, description, fileUrl, imageUrl}]);
+		setTasks([...tasks, {data.task_id, title, description, fileUrl, imageUrl}]);
 		setTitle("");
 		setDescription("");
 		setImage(null);

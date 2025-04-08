@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
 		return NextResponse.json({error: "Доктор не найден"}, {status: 404});
 	}
 
-	const { error: addError } = await supabase
+	const { error: addError, data: newRow } = await supabase
 		.from("tasks")
 		.insert({
 			doctor_username: username,
@@ -64,13 +64,14 @@ export async function POST(req: NextRequest) {
 			description: description,
 			image_url: imageUrl,
 			file_url: fileUrl
-		});
+		})
+		.select();
 
 	if (addError) {
 		return NextResponse.json({error: "Не удалось добавить задание"}, {status: 500});
 	}
 
-	return NextResponse.json({message: "Задание добавлено"});
+	return NextResponse.json({task_id: newRow[0].task_id}, {status: 200});
 }
 
 export async function DELETE(req: NextRequest) {
