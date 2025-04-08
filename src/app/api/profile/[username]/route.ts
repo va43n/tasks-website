@@ -2,7 +2,8 @@ import {NextRequest, NextResponse} from "next/server";
 import supabase from "../../../../../lib/supabase";
 
 
-interface Task {
+type Task = {
+	task_id: string;
 	title: string;
 	description: string;
 	fileUrl: string;
@@ -13,27 +14,26 @@ interface Task {
 export async function PUT(req: NextRequest) {
 	const { username, bio } = await req.json();
 
-	const {data: profile, error: profileNotFound} = await supabase
-		.from("profiles")
+	const {data: doctor, error: doctorNotFound} = await supabase
+		.from("doctors")
 		.select("*")
 		.eq("doctor_username", username)
 		.single();
 
-	if (!profile) {
-		return NextResponse.json({error: "Профиль не найден"}, {status: 404});
+	if (!doctor) {
+		return NextResponse.json({error: "Доктор не найден"}, {status: 404});
 	}
 
-	const {data: row, error: notUpdated} = await supabase
-		.from("profiles")
+	const {error: notUpdated} = await supabase
+		.from("doctors")
 		.update({bio: bio})
-		.eq("doctor_username", username)
-		.select();
+		.eq("doctor_username", username);
 
-	if (!row || notUpdated) {
+	if (notUpdated) {
 		return NextResponse.json({error: "Ошибка обновления профиля"}, {status: 500});
 	}
 
-	return NextResponse.json({message: "Профиль обновлен "}, {status: 200});
+	return NextResponse.json({message: "Профиль обновлен"}, {status: 200});
 }
 
 export async function POST(req: NextRequest) {
@@ -46,22 +46,25 @@ export async function POST(req: NextRequest) {
 		return NextResponse.json({error: "Вы не заполнили все поля"}, {status: 400});
 	}
 
-	const {data, error} = await supabase
-		.from("profiles")
-		.select("tasks")
+	const {data: doctor, error: doctorNotFound} = await supabase
+		.from("doctors")
+		.select("*")
 		.eq("doctor_username", username)
 		.single();
 
-	if (!data) {
-		return NextResponse.json({error: "Задания доктора не найдены"}, {status: 500});
+	if (!doctor) {
+		return NextResponse.json({error: "Доктор не найден"}, {status: 404});
 	}
 
-	const updatedTasks = [...data.tasks, {title, description, imageUrl, fileUrl}];
-
-	const {error: addError} = await supabase
-		.from("profiles")
-		.update({tasks: updatedTasks})
-		.eq("doctor_username", username);
+	const { error: addError } = await supabase
+		.from("tasks")
+		.insert({
+			doctor_username: username,
+			title: title,
+			description: description,
+			image_url: imageUrl,
+			file_url: fileUrl
+		});
 
 	if (addError) {
 		return NextResponse.json({error: "Не удалось добавить задание"}, {status: 500});
@@ -71,23 +74,22 @@ export async function POST(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
-	const {username, taskToDelete} = await req.json();
+	const {username, task_id} = await req.json();
 
-	const {data, error: findError} = await supabase
-		.from("profiles")
+	const {data: doctor, error: doctorNotFound} = await supabase
+		.from("doctors")
 		.select("*")
-		.eq("doctor_username", username);
+		.eq("doctor_username", username)
+		.single();
 
-	if (findError) {
-		return NextResponse.json({error: "Задания доктора не найдены"}, {status: 500});
+	if (!doctor) {
+		return NextResponse.json({error: "Доктор не найден"}, {status: 404});
 	}
 
-	const updatedTasks = (data[0].tasks as Task[]).filter(task => task.title !== taskToDelete);
-
 	const {error: deleteError} = await supabase
-		.from("profiles")
-		.update({tasks: updatedTasks})
-		.eq("doctor_username", username);
+		.from("tasks")
+		.delete()
+  		.eq('task_id', task_id)
 
 	if (deleteError) {
 		return NextResponse.json({error: "Не удалось удалить задание"}, {status: 500});

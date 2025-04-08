@@ -9,19 +9,33 @@ export async function POST(req: NextRequest) {
 		return NextResponse.json({error: "Не удалось получить username"}, {status: 400});
 	}
 
-	const {data, error} = await supabase
-		.from("patient_files")
-		.select("files")
-		.eq("patient_username", username)
-		.single();
+	const {data: all_id, error} = await supabase
+		.from("files_to_download")
+		.select("task_id")
+		.eq("patient_username", username);
 
-	if (!data) {
-		return NextResponse.json({error: "Запись о файлах пациента не найдена"}, {status: 500});
+	if (!all_id) {
+		return NextResponse.json({error: "id файлов пациента не найдены"}, {status: 500});
+	}
+
+	let files = [];
+
+	for (var id in all_id) {
+		const {data: file, error} = await supabase
+			.from("tasks")
+			.select("task_id, title, file_url")
+			.eq("task_id", id.task_id);	
+
+		if (!error) {
+			return NextResponse.json({error: "Не удалось получить файл"}, {status: 500});
+		}
+
+		files.push(file);
 	}
 
 	const {error: deleteError} = await supabase
 		.from("patient_files")
-		.update({files: []})
+		.delete()
 		.eq("patient_username", username);
 
 	if (deleteError) {

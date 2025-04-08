@@ -6,7 +6,8 @@ import FileUploader from "../../../components/fileUploader";
 import "../../../../../styles/globals.css";
 import "../../../../../styles/profile_edit.css";
 
-interface Task {
+type Task = {
+	task_id: string;
 	title: string;
 	description: string;
 	fileUrl: string;
@@ -48,7 +49,6 @@ export default function EditProfile() {
 				setTasks(data.profile.tasks || []);
 				if (tasks) {
 					console.log(tasks);
-					// setTaskToDelete(tasks[0].title);
 				} else setTaskToDelete("");
 			} catch (err) {
 				console.error("Ошибка загрузки профиля:", err);
@@ -63,6 +63,8 @@ export default function EditProfile() {
 			headers: {"Content-Type": "application/json"},
 			body: JSON.stringify({username, bio}),
 		});
+
+		console.log(tasks);
 
 		if (!response.ok) {
 			console.error("Не удалось обновить описание");
@@ -89,7 +91,7 @@ export default function EditProfile() {
 		const usernameStr = Array.isArray(username) ? username[0] : username;
 		formData.append("username", usernameStr);
 
-		const res = await fetch("/api/upload", {
+		const res = await fetch(`/api/profile/${username}/upload`, {
 			method: "POST",
 			body: formData,
 		});
@@ -135,14 +137,14 @@ export default function EditProfile() {
 		await fetch(`/api/profile/${username}`, {
 			method: "DELETE",
 			headers: {"Content-Type": "application/json"},
-			body: JSON.stringify({username, taskToDelete}),
+			body: JSON.stringify({username, task_id: taskToDelete}),
 		});
 
 		console.log(tasks);
 
-		setTasks(tasks.filter((task) => task.title !== taskToDelete));
+		setTasks(tasks.filter((task) => task.task_id !== taskToDelete));
 		if (tasks) {
-			setTaskToDelete(tasks[0].title);
+			setTaskToDelete(tasks[0].task_id);
 		} else setTaskToDelete("");
 	};
 
@@ -170,9 +172,9 @@ export default function EditProfile() {
 			<div className="edit-objects-gap">
 				<h3>Удаление задания:</h3>
 				<div className="edit-select-container edit-box-size">
-					<select className="edit-select-edit edit-rounded-box" value={taskToDelete} onChange={(e) => setTaskToDelete(e.target.value)}>
+					<select className="edit-select-edit edit-rounded-box" value={taskToDelete} onChange={(e) => setTaskToDelete(e.target.key)}>
 						{tasks.map((task) => (
-							<option key={task.title} value={task.title}>
+							<option key={task.task_id} value={task.title}>
 								{task.title}
 							</option>
 						))}

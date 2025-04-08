@@ -6,11 +6,12 @@ import {useParams} from "next/navigation";
 import "../../../../styles/globals.css";
 import "../../../../styles/profile.css";
 
-interface Task {
+type Task = {
+	task_id: string;
 	title: string;
 	description: string;
-	fileUrl: string;
-	imageUrl: string;
+	file_url: string;
+	image_url: string;
 };
 
 type Profile = {
@@ -24,7 +25,7 @@ type User = {
   role: string;
 };
 
-export default function Profile() {
+export default function ProfilePage() {
 	const [selfUser, setSelfUser] = useState<User | null>(null);
 
 	const {username} = useParams();
@@ -53,6 +54,7 @@ export default function Profile() {
 				}
 
 				setProfile(data.profile);
+				console.log(data.profile);
 			} catch (err) {
 				console.error("Ошибка загрузки профиля:", err);
 			}
@@ -62,12 +64,12 @@ export default function Profile() {
 		getProfile();
 	}, [username]);
 
-	const handleDownload = async (title: string, fileUrl: string) => {
+	const handleDownload = async (task_id: string) => {
 		const selfUsername = selfUser?.username;
 		try {
-			const response = await fetch(`/api/download`, {
+			const response = await fetch(`/api/profile/${username}/download`, {
 				method: "POST",
-				body: JSON.stringify({selfUsername, username, title, fileUrl}),
+				body: JSON.stringify({selfUsername, task_id}),
 			});
 
 			const data = await response.json();
@@ -109,9 +111,9 @@ export default function Profile() {
 								<div className="profile-task-content">
 									<p className="profile-task-text profile-space-text">{task.description}</p>
 									<div className="profile-button-img-container">
-										{task.imageUrl && <img src={task.imageUrl} alt={task.title} className="profile-img-size" />}
-										{task.fileUrl && (
-											<button className="profile-button-download" onClick={() => handleDownload(task.title, task.fileUrl)}>Скачать</button>
+										{task.image_url && <img src={task.image_url} alt={task.title} className="profile-img-size" />}
+										{task.file_url && (
+											<button className="profile-button-download" onClick={() => handleDownload(task.task_id)}>Скачать</button>
 										)}
 									</div>
 								</div>

@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
 
 		const hashedPassword = await bcrypt.hash(password, 11);
 
-		const { error } = await supabase
+		const { data: newRow, error: error } = await supabase
 			.from("users")
 			.insert({
 				full_name: full_name,
@@ -34,7 +34,8 @@ export async function POST(req: NextRequest) {
 				email: email,
 				role: role,
 				password: hashedPassword
-			});
+			})
+			.select();
 
 		if (error) {
 			return NextResponse.json({error: "Не удалось зарегистрироваться " + error}, {status: 500});
@@ -42,27 +43,25 @@ export async function POST(req: NextRequest) {
 
 		if (role === "Доктор") {
 			const { error } = await supabase
-			.from("profiles")
+			.from("doctors")
 			.insert({
-				doctor_username: username,
-				bio: "",
-				tasks: []
+				doctor_username: newRow[0].username,
+				bio: ""
 			});
 
 			if (error) {
-				return NextResponse.json({error: "Не удалось добавить профиль в базу данных"}, {status: 500});
+				return NextResponse.json({error: "Не удалось добавить доктора в базу данных"}, {status: 500});
 			}
 		}
 		else {
 			const { error } = await supabase
-			.from("patient_files")
+			.from("patients")
 			.insert({
-				patient_username: username,
-				files: []
+				patient_username: newRow[0].username
 			});
 
 			if (error) {
-				return NextResponse.json({error: "Не удалось добавить запись о файлах пациента в базу данных"}, {status: 500});
+				return NextResponse.json({error: "Не удалось добавить пациента в базу данных"}, {status: 500});
 			}
 		}
 

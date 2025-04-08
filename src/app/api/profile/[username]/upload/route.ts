@@ -1,5 +1,5 @@
 import {NextResponse} from "next/server";
-import {uploadFile} from "../../../../lib/supabase";
+import {uploadFile} from "../../../../../../lib/supabase";
 
 export async function POST(req: Request) {
 	const formData = await req.formData();

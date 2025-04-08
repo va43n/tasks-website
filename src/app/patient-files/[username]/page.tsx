@@ -12,8 +12,9 @@ type User = {
 };
 
 type File = {
-	fileName: string;
-  fileUrl: string;
+	task_id: string
+	title: string;
+ 	file_url: string;
 };
 
 export default function PatientFiles() {
@@ -44,7 +45,9 @@ export default function PatientFiles() {
 					return;
 				}
 
-				setFiles(data.files.files);
+				console.log(data.files);
+
+				setFiles(data.files);
 			} catch (err) {
 				console.error("Ошибка загрузки списка файлов:", err);
 			}
@@ -54,13 +57,13 @@ export default function PatientFiles() {
 		getFiles();
 	}, [username]);
 
-	const handleDelete = async (fileName: string) => {
-		setFiles(files.filter(file => file.fileName !== fileName));
+	const handleDelete = async (task_id: string) => {
+		setFiles(files.filter(file => file.task_id !== task_id));
 
 		const response = await fetch(`/api/patient-files/${username}`, {
 			method: "DELETE",
 			headers: {"Content-Type": "application/json"},
-			body: JSON.stringify({username, fileName}),
+			body: JSON.stringify({username, task_id}),
 		});
 
 		if (!response.ok) {
@@ -83,8 +86,8 @@ export default function PatientFiles() {
 				<div className="files-gap-between-files">
 					{files.map((file, index) => (
 						<div className="files-file-content" key={index}>
-							<p className="files-title files-space-text">{file.fileName}</p>
-							<button className="files-delete-button" onClick={() => handleDelete(file.fileName)}>✕</button>
+							<p className="files-title files-space-text">{file.title}</p>
+							<button className="files-delete-button" onClick={() => handleDelete(file.task_id)}>✕</button>
 						</div>
 					))}
 				</div>
