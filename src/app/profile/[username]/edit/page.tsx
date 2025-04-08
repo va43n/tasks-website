@@ -10,8 +10,8 @@ type Task = {
 	task_id: string;
 	title: string;
 	description: string;
-	fileUrl: string;
-	imageUrl: string;
+	file_url: string;
+	image_url: string;
 }
 
 export default function EditProfile() {
@@ -106,13 +106,13 @@ export default function EditProfile() {
 	}
 
 	const addTask = async() => {
-		const fileUrl = await uploadFile(file, "file");
-		const imageUrl = await uploadFile(image, "image");
+		const file_url = await uploadFile(file, "file");
+		const image_url = await uploadFile(image, "image");
 
 		const res = await fetch(`/api/profile/${username}`, {
 			method: "POST",
 			headers: {"Content-Type": "application/json"},
-			body: JSON.stringify({username, title, description, fileUrl, imageUrl}),
+			body: JSON.stringify({username, title, description, file_url, image_url}),
 		});
 
 		const data = await res.json();
@@ -123,7 +123,7 @@ export default function EditProfile() {
 
 		const new_task_id = data.task_id;
 
-		setTasks([...tasks, {new_task_id, title, description, fileUrl, imageUrl}]);
+		setTasks([...tasks, {task_id: new_task_id, title: title, description: description, file_url: file_url, image_url: image_url}]);
 		setTitle("");
 		setDescription("");
 		setImage(null);
