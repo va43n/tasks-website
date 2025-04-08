@@ -35,6 +35,6 @@ export async function POST(req: NextRequest) {
 
 		return NextResponse.json({profile}, {status: 200});
 	} catch (err) {
-		return NextResponse.json({error: `Профиль доктора не найден |${username}|`}, {status: 500});
+		return NextResponse.json({error: "Профиль доктора не найден"}, {status: 500});
 	}
 }
