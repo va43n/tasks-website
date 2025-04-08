@@ -42,5 +42,5 @@ export async function POST(req: NextRequest) {
 		return NextResponse.json({error: "Не удалось удалить очередь скачиваемых файлов"}, {status: 500});
 	}
 
-	return NextResponse.json({files: data.files}, {status: 200});
+	return NextResponse.json({files: files}, {status: 200});
 }
