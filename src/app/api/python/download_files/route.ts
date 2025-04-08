@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
 	}
 
 	const {error: deleteError} = await supabase
-		.from("patient_files")
+		.from("files_to_download")
 		.delete()
 		.eq("patient_username", username);
 
