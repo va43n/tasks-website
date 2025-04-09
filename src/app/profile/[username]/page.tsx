@@ -101,7 +101,7 @@ export default function ProfilePage() {
 		} catch (err) {
 			setMessages(prev => {
 				const updated = [...prev];
-				updated[index] = err.toString();
+				updated[index] = "Не удалось выполнить запрос";
 				return updated;
 			});
 		}
