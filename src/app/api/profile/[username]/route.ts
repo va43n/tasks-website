@@ -37,11 +37,11 @@ export async function PUT(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-	const {username, title, description, fileUrl, imageUrl} = await req.json();
+	const {username, title, description, file_url, image_url} = await req.json();
 
-	console.log(`|${username}|${title}|${description}|${fileUrl}|${imageUrl}|`);
+	console.log(`|${username}|${title}|${description}|${file_url}|${image_url}|`);
 
-	if (!title || !description || !imageUrl || !fileUrl) {
+	if (!title || !description || !image_url || !file_url) {
 		console.log("Вы не заполнили все поля");
 		return NextResponse.json({error: "Вы не заполнили все поля"}, {status: 400});
 	}
@@ -62,8 +62,8 @@ export async function POST(req: NextRequest) {
 			doctor_username: username,
 			title: title,
 			description: description,
-			image_url: imageUrl,
-			file_url: fileUrl
+			image_url: image_url,
+			file_url: file_url
 		})
 		.select();
 
@@ -96,5 +96,5 @@ export async function DELETE(req: NextRequest) {
 		return NextResponse.json({error: "Не удалось удалить задание"}, {status: 500});
 	}
 
-	return NextResponse.json({message: "Задание удалено"});
+	return NextResponse.json({message: "Задание удалено"}, {status: 200});
 }

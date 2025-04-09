@@ -20,13 +20,16 @@ export default function EditProfile() {
 	const [tasks, setTasks] = useState<Task[]>([]);
 	
 	const [bio, setBio] = useState("");
+	const [bioMessage, setBioMessage] = useState<string>("");
 
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
 	const [file, setFile] = useState<File | null>(null)
 	const [image, setImage] = useState<File | null>(null);
+	const [addTaskMessage, setAddTaskMessage] = useState<string>("");
 
 	const [taskToDelete, setTaskToDelete] = useState("");
+	const [deleteTaskMessage, setDeleteTaskMessage] = useState<string>("");
 
 	const [resetTrigger, setResetTrigger] = useState(false);
 
@@ -58,18 +61,21 @@ export default function EditProfile() {
 	}, [username]);
 
 	const updateBio = async() => {
+		setBioMessage("");
 		const response = await fetch(`/api/profile/${username}`, {
 			method: "PUT",
 			headers: {"Content-Type": "application/json"},
 			body: JSON.stringify({username, bio}),
 		});
 
-		console.log(tasks);
+		const data = await response.json();
+		console.log(data);
 
 		if (!response.ok) {
-			console.error("Не удалось обновить описание");
+			setBioMessage(data.error);
 			return;
 		}
+		setBioMessage(data.message);
 	};
 
 	const uploadFile = async (file: File | null, type: "file" | "image") => {
@@ -78,11 +84,11 @@ export default function EditProfile() {
 		const formData = new FormData();
 
 		if (file === null) {
-			console.error("Не удалось обработать файл");
+			console.log(`file null`);
 			return null;
 		}
 		if (!username) {
-			console.error("username не определен");
+			console.log(`username null`);
 			return null;
 		}
 
@@ -106,6 +112,8 @@ export default function EditProfile() {
 	}
 
 	const addTask = async() => {
+		setAddTaskMessage("");
+
 		const file_url = await uploadFile(file, "file");
 		const image_url = await uploadFile(image, "image");
 
@@ -116,10 +124,11 @@ export default function EditProfile() {
 		});
 
 		const data = await res.json();
-		if (data.error) {
-			console.error("Не удалось добавить задание");
+		if (!res.ok) {
+			setAddTaskMessage(data.error);
 			return;
 		}
+		setAddTaskMessage(data.message);
 
 		const new_task_id = data.task_id;
 
@@ -134,18 +143,31 @@ export default function EditProfile() {
 	};
 
 	const deleteTask = async() => {
-		if (!taskToDelete) {
-			console.log("taskToDelete undefined");
+		setDeleteTaskMessage("");
+
+		console.log(`taskToDelete ${taskToDelete}`); 
+
+		const deleteTaskId = taskToDelete ? taskToDelete : tasks[0].task_id;
+
+		if (tasks.length === 0) {
+			setDeleteTaskMessage("Заданий нет");
+			return;
 		}
-		await fetch(`/api/profile/${username}`, {
+
+		const res = await fetch(`/api/profile/${username}`, {
 			method: "DELETE",
 			headers: {"Content-Type": "application/json"},
-			body: JSON.stringify({username, task_id: taskToDelete}),
+			body: JSON.stringify({username, task_id: deleteTaskId}),
 		});
 
-		console.log(tasks);
+		const data = await res.json();
+		if (!res.ok) {
+			setDeleteTaskMessage(data.error);
+			return;
+		}
+		setDeleteTaskMessage(data.message);
 
-		setTasks(tasks.filter((task) => task.task_id !== taskToDelete));
+		setTasks(tasks.filter((task) => task.task_id !== deleteTaskId));
 		if (tasks) {
 			setTaskToDelete(tasks[0].task_id);
 		} else setTaskToDelete("");
@@ -158,6 +180,7 @@ export default function EditProfile() {
 			<div className="edit-objects-gap">
 				<h3>Изменение описания:</h3>
 				<textarea className="edit-rounded-box edit-textarea" value={bio} onChange={(e) => setBio(e.target.value)} />
+				{bioMessage !== "" && <p>{bioMessage}</p>}
 				<button className="edit-rounded-box edit-box-size edit-save-button-edit" onClick={updateBio}>Сохранить</button>
 			</div>
 
@@ -169,6 +192,7 @@ export default function EditProfile() {
 				<FileUploader onFileSelect={(image) => setImage(image)} resetTrigger={resetTrigger} />
 				<p>Прикрепите файл:</p>
 				<FileUploader onFileSelect={(file) => setFile(file)} resetTrigger={resetTrigger} />
+				{addTaskMessage !== "" && <p>{addTaskMessage}</p>}
 				<button className="edit-rounded-box edit-box-size edit-save-button-edit" onClick={addTask}>Добавить задание</button>
 			</div>
 
@@ -177,12 +201,13 @@ export default function EditProfile() {
 				<div className="edit-select-container edit-box-size">
 					<select className="edit-select-edit edit-rounded-box" value={taskToDelete} onChange={(e) => setTaskToDelete(e.target.value)}>
 						{tasks.map((task) => (
-							<option key={task.task_id} value={task.title}>
+							<option key={task.task_id} value={task.task_id}>
 								{task.title}
 							</option>
 						))}
 					</select>
 				</div>
+				{deleteTaskMessage !== "" && <p>{deleteTaskMessage}</p>}
 				<button className="edit-rounded-box edit-box-size edit-save-button-edit" onClick={deleteTask}>Удалить задание</button>
 			</div>
 		</div>

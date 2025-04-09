@@ -31,6 +31,8 @@ export default function ProfilePage() {
 	const {username} = useParams();
 	const [profile, setProfile] = useState<Profile | null>(null);
 
+	const [messages, setMessages] = useState<string[]>([]);
+
 	useEffect(() => {
 		const fetchUser = async () => {
 			const res = await fetch("/api/auth/me");
@@ -55,6 +57,10 @@ export default function ProfilePage() {
 
 				setProfile(data.profile);
 				console.log(data.profile);
+
+				if (profile) {
+					setMessages(new Array(profile.tasks.length).fill(""));
+				}
 			} catch (err) {
 				console.error("Ошибка загрузки профиля:", err);
 			}
@@ -64,7 +70,13 @@ export default function ProfilePage() {
 		getProfile();
 	}, [username]);
 
-	const handleDownload = async (task_id: string) => {
+	const handleDownload = async (task_id: string, index: number) => {
+		setMessages(prev => {
+			const updated = [...prev];
+			updated[index] = "";
+			return updated;
+		});
+
 		const selfUsername = selfUser?.username;
 		try {
 			const response = await fetch(`/api/profile/${username}/download`, {
@@ -74,11 +86,24 @@ export default function ProfilePage() {
 
 			const data = await response.json();
 			if (!response.ok) {
-				console.error(data.error);
+				setMessages(prev => {
+					const updated = [...prev];
+					updated[index] = data.error;
+					return updated;
+				});
 				return;
 			}
+			setMessages(prev => {
+				const updated = [...prev];
+				updated[index] = data.message;
+				return updated;
+			});
 		} catch (err) {
-			console.error(err);
+			setMessages(prev => {
+				const updated = [...prev];
+				updated[index] = err;
+				return updated;
+			});
 		}
 	}
 
@@ -113,10 +138,11 @@ export default function ProfilePage() {
 									<div className="profile-button-img-container">
 										{task.image_url && <img src={task.image_url} alt={task.title} className="profile-img-size" />}
 										{task.file_url && (
-											<button className="profile-button-download" onClick={() => handleDownload(task.task_id)}>Скачать</button>
+											<button className="profile-button-download" onClick={() => handleDownload(task.task_id, index)}>Скачать</button>
 										)}
 									</div>
 								</div>
+								{messages && messages[index] !== "" && <p className="message">{messages[index]}</p>}
 							</div>
 						))}
 					</div>
