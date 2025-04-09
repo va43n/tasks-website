@@ -101,7 +101,7 @@ export default function ProfilePage() {
 		} catch (err) {
 			setMessages(prev => {
 				const updated = [...prev];
-				updated[index] = err;
+				updated[index] = err.toString();
 				return updated;
 			});
 		}
