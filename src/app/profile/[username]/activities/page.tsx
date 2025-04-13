@@ -68,7 +68,7 @@ export default function ShowActivePatients() {
 							<p>{patientActivity.lastActivity}</p>
 							<button className="actpat-button" onClick={() => handleDownload(patientActivity.username)}>Подробнее</button>
 						</div>
-					)}
+					))}
 				</div>
 			)}
 		</div>
