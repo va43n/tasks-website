@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
 
 		console.log(all_id);
 
-		return NextResponse.json({profile}, {status: 200});
+		return NextResponse.json({status: 200});
 	} catch (err) {
 		return NextResponse.json({error: "Профиль доктора не найден"}, {status: 500});
 	}
