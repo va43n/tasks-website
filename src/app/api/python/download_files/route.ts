@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
 			.from("patient_activities")
 			.insert({
 				patient_username: username,
-			 	task_id: task_id,
+			 	task_id: id.task_id,
 				activity: activity,
 				time: time
 			});
