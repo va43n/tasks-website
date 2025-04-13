@@ -1,0 +1,59 @@
+@media (orientation: landscape) {
+  .actpat-centered-container-width {
+      width: 900px;
+  }
+}
+
+@media (orientation: portrait) {
+  .actpat-centered-container-width {
+      width: 90vw;
+  }
+}
+
+.actpat-centered-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  margin-top: 120px;
+  margin-bottom: 40px;
+  background: white;
+  box-shadow: 0px 1vw 1vw rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  gap: 30px;
+}
+
+.actpat-gap-between-tasks {
+  gap: 10px;
+}
+
+.actpat-patient-activity {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.actpat-rounded-box {
+  border-radius: 8px;
+  padding: 12px;
+  border: 1px solid #cccccc;
+}
+
+.actpat-box-size {
+  width: 100%;
+  height: 40px;
+}
+
+.actpat-button {
+  width: 300px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+}
+
+.actpat-button:hover {
+  background-color: #0056b3;
+}
