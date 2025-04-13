@@ -74,7 +74,6 @@ export async function POST(req: NextRequest) {
 			activityTime += seconds === 0 ? "" : `${seconds} сек. `
 
 			allPatientActivities[i].time = activityTime;
-			console.log(activityTime, days, hours, days === 0 ? "" : `${days} д. ` + hours === 0 ? "" : `${hours} ч. `, minutes, seconds);
 		}
 
 		console.log(allPatientActivities);
