@@ -5,23 +5,16 @@ import {useParams, useRouter} from "next/navigation";
 import "../../../../../styles/globals.css";
 import "../../../../../styles/active_patients.css";
 
-type Task = {
-	task_id: string;
-	title: string;
-	description: string;
-	file_url: string;
-	image_url: string;
-}
-
 type PatientActivity = {
-	username: string;
-	lastActivity: string;
+	patient_username: string;
+	activity: string;
+	time: string;
 }
 
 export default function ShowActivePatients() {
 	const {username} = useParams();
 
-	const [patientActivies, setPatientActivies] = useState<PatientActivity[]>([]);
+	const [patientActivities, setPatientActivities] = useState<PatientActivity[]>([]);
 
 	useEffect(() => {
 		const getActiveUsernames = async () => {
@@ -38,7 +31,9 @@ export default function ShowActivePatients() {
 					return;
 				}
 
-				// setPatientActivies(data.patientActivies);
+				console.log(data.allPatientActivities);
+
+				setPatientActivities(data.allPatientActivities);
 			} catch (err) {
 				console.error("Ошибка загрузки активных пациентов:", err);
 			}
@@ -50,7 +45,7 @@ export default function ShowActivePatients() {
 		console.log(username);
 	}
 
-	if (patientActivies.length === 0) {
+	if (!patientActivities) {
 		return (
 			<div className="actpat-centered-container actpat-centered-container-width">
 				<p>Загрузка пациентов...</p>
@@ -59,14 +54,16 @@ export default function ShowActivePatients() {
 	}
 
 	return (
-		<div className="edit-centered-container edit-centered-container-width">
-			{patientActivies && patientActivies.length > 0 && (
+		<div className="actpat-centered-container actpat-centered-container-width">
+			<h1>Недавняя активность пациентов в Ваших заданиях</h1>
+			{patientActivities && patientActivities.length > 0 && (
 				<div className="actpat-gap-between-tasks">
-					{patientActivies.map((patientActivity, index) => (
+					{patientActivities.map((patientActivity, index) => (
 						<div key={index} className="actpat-patient-activity">
-							<p>{patientActivity.username}</p>
-							<p>{patientActivity.lastActivity}</p>
-							<button className="actpat-button" onClick={() => getDetails(patientActivity.username)}>Подробнее</button>
+							<p className="actpat-text">Пациент: {patientActivity.patient_username}</p>
+							<p className="actpat-text">Активность: {patientActivity.activity}</p>
+							<p className="actpat-text">{patientActivity.time} назад</p>
+							<button className="actpat-button actpat-box-size actpat-rounded-box" onClick={() => getDetails(patientActivity.patient_username)}>Подробнее</button>
 						</div>
 					))}
 				</div>

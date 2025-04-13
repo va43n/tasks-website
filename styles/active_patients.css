@@ -25,13 +25,17 @@
 }
 
 .actpat-gap-between-tasks {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
   gap: 10px;
 }
 
 .actpat-patient-activity {
+  width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: 10px;
 }
@@ -43,12 +47,11 @@
 }
 
 .actpat-box-size {
-  width: 100%;
   height: 40px;
 }
 
 .actpat-button {
-  width: 300px;
+  width: 150px;
   background-color: #007bff;
   color: white;
   border: none;
@@ -56,4 +59,9 @@
 
 .actpat-button:hover {
   background-color: #0056b3;
+}
+
+.actpat-text {
+  text-align: center;
+  width: 100%;
 }
