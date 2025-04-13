@@ -38,7 +38,7 @@ export default function ShowActivePatients() {
 					return;
 				}
 
-				setPatientActivies(data.patientActivies);
+				// setPatientActivies(data.patientActivies);
 			} catch (err) {
 				console.error("Ошибка загрузки активных пациентов:", err);
 			}
@@ -66,7 +66,7 @@ export default function ShowActivePatients() {
 						<div key={index} className="actpat-patient-activity">
 							<p>{patientActivity.username}</p>
 							<p>{patientActivity.lastActivity}</p>
-							<button className="actpat-button" onClick={() => handleDownload(patientActivity.username)}>Подробнее</button>
+							<button className="actpat-button" onClick={() => getDetails(patientActivity.username)}>Подробнее</button>
 						</div>
 					))}
 				</div>
