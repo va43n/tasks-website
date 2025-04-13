@@ -20,6 +20,8 @@ export async function POST(req: NextRequest) {
 
 	let files = [];
 
+	const time = Date.now();
+
 	for (var id of all_id) {
 		const {data: file, error} = await supabase
 			.from("tasks")
@@ -28,6 +30,21 @@ export async function POST(req: NextRequest) {
 
 		if (error) {
 			return NextResponse.json({error: "Не удалось получить файл"}, {status: 500});
+		}
+
+		const activity = `Пациент скачал файл ${file[0].title}`;
+
+		const {error: insertError} = await supabase
+			.from("patient_activities")
+			.insert({
+				patient_username: username,
+			 	task_id: task_id,
+				activity: activity,
+				time: time
+			});
+
+		if (insertError) {
+			return NextResponse.json({error: `Не удалось вставить строку об активности ${username}`}, {status: 500});
 		}
 
 		files.push(file[0]);
