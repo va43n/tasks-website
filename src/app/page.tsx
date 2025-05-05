@@ -8,7 +8,7 @@ export default function HomePage() {
 
     return (
         <div className="centered-container-start centered-container-start-width">
-            <h1>Сайт для реабилитационного комплекса восстановления ходьбы: "Коврик"</h1>
+            <h1>Сайт для реабилитационного комплекса восстановления ходьбы: &quot;Коврик&quot;</h1>
             <div className="pic-text-container">
                 <div>
                     <h1 className="text-title">Можно заниматься не выходя из дома</h1>
