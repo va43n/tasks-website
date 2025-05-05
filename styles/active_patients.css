@@ -2,11 +2,33 @@
   .actpat-centered-container-width {
       width: 900px;
   }
+
+  .actpat-button {
+    width: 150px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+  }
+
+  .actpat-button:hover {
+    background-color: #0056b3;
+  }
 }
 
 @media (orientation: portrait) {
   .actpat-centered-container-width {
       width: 90vw;
+  }
+
+  .actpat-button {
+    width: 100%;
+    background-color: #007bff;
+    color: white;
+    border: none;
+  }
+
+  .actpat-button:hover {
+    background-color: #0056b3;
   }
 }
 
@@ -48,17 +70,6 @@
 
 .actpat-box-size {
   height: 40px;
-}
-
-.actpat-button {
-  width: 150px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-}
-
-.actpat-button:hover {
-  background-color: #0056b3;
 }
 
 .actpat-text {
