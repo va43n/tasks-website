@@ -3,7 +3,7 @@ import supabase from "../../../../../../lib/supabase";
 
 export async function POST(req: NextRequest) {
 	try {
-		const { username } = await req.json();
+		const { username, patient } = await req.json();
 
 		const {data: all_id, error: all_id_error} = await supabase
 			.from("tasks")
@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
 
 		const {data: allPatientActivities, error: allPatientActivitiesError} = await supabase
 			.from("patient_activities")
-			.select("patient_username, time, activity")
+			.select("task_id, patient_username, time, activity, tasks (title)")
 			.in("task_id", all_id_array)
 			.order('time', { ascending: false });
 
@@ -29,28 +29,20 @@ export async function POST(req: NextRequest) {
 			return NextResponse.json({error: "Не удалось найти имена пользователей, которые недавно совершали активность с Вашими заданиями"}, {status: 500});
 		}
 
-		let distinctPatientActivities = [];
-		let alreadyUsedPatients = [];
+		console.log(allPatientActivities);
+
+		let certainPatientActivities = [];
 
 		for (let patientActivity of allPatientActivities) {
-			let continueFlag = false;
-			for (let usedPatient of alreadyUsedPatients) {
-				if (usedPatient === patientActivity.patient_username) {
-					continueFlag = true;
-					break;
-				}
-			}
-			if (continueFlag) continue;
-
-			alreadyUsedPatients.push(patientActivity.patient_username);
-			distinctPatientActivities.push(patientActivity);
+				if (patient !== patientActivity.patient_username) continue;
+			certainPatientActivities.push(patientActivity);
 		}
 
 		const currentTime = Date.now();
-		for (let i = 0; i < distinctPatientActivities.length; i++) {
+		for (let i = 0; i < certainPatientActivities.length; i++) {
 			let activityTime = "";
 
-			const diffTime = currentTime - distinctPatientActivities[i].time;
+			const diffTime = currentTime - certainPatientActivities[i].time;
 			let seconds = Math.round(diffTime / 1000);
 			let minutes = Math.floor(seconds / 60);
 			let hours = Math.floor(minutes / 60);
@@ -65,12 +57,12 @@ export async function POST(req: NextRequest) {
 			activityTime += minutes === 0 ? "" : `${minutes} мин. `
 			activityTime += seconds === 0 ? "" : `${seconds} сек. `
 
-			distinctPatientActivities[i].time = activityTime;
+			certainPatientActivities[i].time = activityTime;
 		}
 
-		console.log(allPatientActivities, distinctPatientActivities);
+		console.log(certainPatientActivities);
 
-		return NextResponse.json({"allPatientActivities": distinctPatientActivities}, {status: 200});
+		return NextResponse.json({"patientActivities": certainPatientActivities}, {status: 200});
 	} catch (err) {
 		return NextResponse.json({error: "Профиль доктора не найден"}, {status: 500});
 	}

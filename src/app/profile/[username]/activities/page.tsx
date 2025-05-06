@@ -12,6 +12,8 @@ type PatientActivity = {
 }
 
 export default function ShowActivePatients() {
+	const router = useRouter();
+	
 	const {username} = useParams();
 
 	const [patientActivities, setPatientActivities] = useState<PatientActivity[]>([]);
@@ -41,8 +43,9 @@ export default function ShowActivePatients() {
 		getActiveUsernames();
 	}, [username]);
 
-	const getDetails = async (username: string) => {
-		console.log(username);
+	const getDetails = async (patient_username: string) => {
+		console.log(patient_username);
+		router.push(`/profile/${username}/activities/${patient_username}`);
 	}
 
 	if (!patientActivities) {
