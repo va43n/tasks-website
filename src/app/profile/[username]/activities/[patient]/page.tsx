@@ -5,7 +5,7 @@ import {useParams, useRouter} from "next/navigation";
 import "../../../../../../styles/globals.css";
 import "../../../../../../styles/active_patients.css";
 
-type TaskInfo {
+type TaskInfo = {
     title: string;
 }
 
