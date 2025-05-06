@@ -5,16 +5,20 @@ import {useParams, useRouter} from "next/navigation";
 import "../../../../../../styles/globals.css";
 import "../../../../../../styles/active_patients.css";
 
+type TaskInfo {
+    title: string;
+}
+
 type PatientActivity = {
     patient_username: string;
     activity: string;
     time: string;
-    title: string;
+    tasks: TaskInfo;
 }
 
 export default function ShowAllPatientActivity() {
     const router = useRouter();
-    
+
     const {username, patient} = useParams();
     console.log(username, patient);
 
