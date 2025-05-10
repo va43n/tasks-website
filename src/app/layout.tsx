@@ -51,11 +51,15 @@ export default function Layout ({
       <body>
         <header>
           <div className="header-buttons-container">
-            <button className="header-button" onClick={() => router.push("/")}>Меню</button>
+            <button className="header-button" onClick={() => router.push("/")}>
+               <img src="/icons/home.svg" width={16} height={16} />
+            </button>
           </div>
 
           <div className="menu-container">
-            <button className="header-button menu-opener" onClick={toggleMenu}>≡</button>
+            <button className="header-button menu-opener" onClick={toggleMenu}>
+              <img src="/icons/burger.svg" width={16} height={16} />
+            </button>
 
             {isMenuOpen && (
               <>
