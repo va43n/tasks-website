@@ -87,7 +87,9 @@ export default function PatientFiles() {
 					{files.map((file, index) => (
 						<div className="files-file-content" key={index}>
 							<p className="files-title files-space-text">{file.title}</p>
-							<button className="files-delete-button" onClick={() => handleDelete(file.task_id)}>✕</button>
+							<button className="files-delete-button" onClick={() => handleDelete(file.task_id)}>
+								<img src="/icons/cross.svg" width={16} height={16} />
+							</button>
 						</div>
 					))}
 				</div>
