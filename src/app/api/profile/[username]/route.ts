@@ -87,6 +87,27 @@ export async function DELETE(req: NextRequest) {
 		return NextResponse.json({error: "Доктор не найден"}, {status: 404});
 	}
 
+	const {data: task, error: taskNotFound} = await supabase
+		.from("tasks")
+		.select("*")
+		.eq("task_id", task_id)
+		.single();
+
+	if (taskNotFound) {
+		return NextResponse.json({error: "Не удалось найти задание"}, {status: 500});
+	}
+
+	image_path = `tasks/${username}/${task.image_url.split("/").pop()}`;
+	file_path = `tasks/${username}/${task.file_url.split("/").pop()}`;
+
+	const { error: deleteFilesError } = await supabase.storage
+		.from("profiles-files")
+		.remove([image_path, file_path])
+
+	if (!deleteFilesError) {
+		return NextResponse.json({error: "Не удалось удалить файлы задания"}, {status: 500});
+	}
+
 	const {error: deleteError} = await supabase
 		.from("tasks")
 		.delete()
