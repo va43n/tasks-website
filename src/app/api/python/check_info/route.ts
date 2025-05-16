@@ -12,18 +12,20 @@ export async function POST(req: NextRequest) {
 		return NextResponse.json({error: "Не удалось получить username или password"}, {status: 400});
 	}
 
-	const hashedPassword = await bcrypt.hash(password, 11);
-
 	const {data: user, error: userError} = await supabase
 		.from("users")
 		.select("*")
-		.eq("username", username)
-		.eq("password", hashedPassword);
+		.eq("username", username);
 
 	console.log(user);
 
-	if (!user) {
+	if (user.length == 0) {
 		return NextResponse.json({error: "Пользователя " + username + " " + password + "не существует"}, {status: 500});
+	}
+
+	const passwordMatch = await bcrypt.compare(password, user[0].password);
+	if (!passwordMatch) {
+		return NextResponse.json({error: "Неправильно введен логин или пароль"}, {status: 400});
 	}
 
 	const {data: patient, error: patientError} = await supabase
@@ -33,7 +35,7 @@ export async function POST(req: NextRequest) {
 
 		console.log(patient);
 
-	if (!patient) {
+	if (patient.length == 0) {
 		return NextResponse.json({error: "Такого пациента не существует"}, {status: 500});
 	}
 
