@@ -1,5 +1,6 @@
 import {NextRequest, NextResponse} from "next/server";
 import supabase from "../../../../../lib/supabase";
+import bcrypt from "bcryptjs";
 
 export async function POST(req: NextRequest) {
 	const {username, password} = await req.json();
@@ -9,11 +10,13 @@ export async function POST(req: NextRequest) {
 		return NextResponse.json({error: "Не удалось получить username или password"}, {status: 400});
 	}
 
+	const hashedPassword = await bcrypt.hash(password, 11);
+
 	const {data: user, error: userError} = await supabase
 		.from("users")
 		.select("*")
 		.eq("username", username)
-		.eq("password", password);
+		.eq("password", hashedPassword);
 
 	if (!user) {
 		return NextResponse.json({error: "Такого пользователя не существует"}, {status: 500});
