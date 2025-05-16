@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
 		.eq("password", hashedPassword);
 
 	if (!user) {
-		return NextResponse.json({error: "Такого пользователя не существует"}, {status: 500});
+		return NextResponse.json({error: "Пользователя " + username + " " + password + "не существует"}, {status: 500});
 	}
 
 	const {data: patient, error: patientError} = await supabase
