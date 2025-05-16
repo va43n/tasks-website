@@ -15,15 +15,16 @@ export async function POST(req: NextRequest) {
 	const {data: user, error: userError} = await supabase
 		.from("users")
 		.select("*")
-		.eq("username", username);
+		.eq("username", username)
+		.single();
 
 	console.log(user);
 
-	if (user.length == 0) {
+	if (!user) {
 		return NextResponse.json({error: "Пользователя " + username + " " + password + "не существует"}, {status: 500});
 	}
 
-	const passwordMatch = await bcrypt.compare(password, user[0].password);
+	const passwordMatch = await bcrypt.compare(password, user.password);
 	if (!passwordMatch) {
 		return NextResponse.json({error: "Неправильно введен логин или пароль"}, {status: 400});
 	}
@@ -31,11 +32,12 @@ export async function POST(req: NextRequest) {
 	const {data: patient, error: patientError} = await supabase
 		.from("patients")
 		.select("*")
-		.eq("patient_username", username);
+		.eq("patient_username", username)
+		.single();
 
 		console.log(patient);
 
-	if (patient.length == 0) {
+	if (!patient) {
 		return NextResponse.json({error: "Такого пациента не существует"}, {status: 500});
 	}
 
