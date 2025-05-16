@@ -50,6 +50,8 @@ export async function POST(req: NextRequest) {
 		files.push(file[0]);
 	}
 
+	console.log(files);
+
 	const {error: deleteError} = await supabase
 		.from("files_to_download")
 		.delete()
