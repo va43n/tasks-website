@@ -5,6 +5,8 @@ import bcrypt from "bcryptjs";
 export async function POST(req: NextRequest) {
 	const {username, password} = await req.json();
 
+	console.log(username, password);
+
 	if (!username || !password) {
 		console.log("Не удалось получить username или password");
 		return NextResponse.json({error: "Не удалось получить username или password"}, {status: 400});
@@ -18,14 +20,18 @@ export async function POST(req: NextRequest) {
 		.eq("username", username)
 		.eq("password", hashedPassword);
 
+	console.log(user);
+
 	if (!user) {
 		return NextResponse.json({error: "Пользователя " + username + " " + password + "не существует"}, {status: 500});
 	}
 
 	const {data: patient, error: patientError} = await supabase
-		.from("users")
+		.from("patients")
 		.select("*")
 		.eq("patient_username", username);
+
+		console.log(patient);
 
 	if (!patient) {
 		return NextResponse.json({error: "Такого пациента не существует"}, {status: 500});
