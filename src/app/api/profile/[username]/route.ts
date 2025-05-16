@@ -97,8 +97,8 @@ export async function DELETE(req: NextRequest) {
 		return NextResponse.json({error: "Не удалось найти задание"}, {status: 500});
 	}
 
-	image_path = `tasks/${username}/${task.image_url.split("/").pop()}`;
-	file_path = `tasks/${username}/${task.file_url.split("/").pop()}`;
+	const image_path = `tasks/${username}/${task.image_url.split("/").pop()}`;
+	const file_path = `tasks/${username}/${task.file_url.split("/").pop()}`;
 
 	const { error: deleteFilesError } = await supabase.storage
 		.from("profiles-files")
