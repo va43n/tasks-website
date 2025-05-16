@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
 
 	if (!username || !password) {
 		console.log("Не удалось получить username или password");
-		return NextResponse.json({message: "wrong"}, {status: 400});
+		return NextResponse.json({message: "Не удалось получить username или password"}, {status: 400});
 	}
 
 	const {data: user, error: userError} = await supabase
