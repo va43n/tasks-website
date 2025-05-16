@@ -89,7 +89,7 @@ export default function PatientFiles() {
 						<div className="files-file-content" key={index}>
 							<p className="files-title files-space-text">{file.title}</p>
 							<button className="files-delete-button" onClick={() => handleDelete(file.task_id)}>
-								<Image src="/icons/cross.svg" width={16} height={16} />
+								<Image alt="Удалить задание" src="/icons/cross.svg" width={16} height={16} />
 							</button>
 						</div>
 					))}

@@ -53,13 +53,13 @@ export default function Layout ({
         <header>
           <div className="header-buttons-container">
             <button className="header-button" onClick={() => router.push("/")}>
-               <Image src="/icons/home.svg" width={16} height={16} />
+               <Image alt="Меню" src="/icons/home.svg" width={16} height={16} />
             </button>
           </div>
 
           <div className="menu-container">
             <button className="header-button menu-opener" onClick={toggleMenu}>
-              <Image src="/icons/burger.svg" width={16} height={16} />
+              <Image alt="Бургер" src="/icons/burger.svg" width={16} height={16} />
             </button>
 
             {isMenuOpen && (

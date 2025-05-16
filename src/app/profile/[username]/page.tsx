@@ -69,7 +69,7 @@ export default function ProfilePage() {
 
 		fetchUser();
 		getProfile();
-	}, [username]);
+	}, [username, profile]);
 
 	const handleDownload = async (task_id: string, index: number) => {
 		setMessages(prev => {
