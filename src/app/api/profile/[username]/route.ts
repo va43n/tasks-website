@@ -104,7 +104,7 @@ export async function DELETE(req: NextRequest) {
 		.from("profiles-files")
 		.remove([image_path, file_path])
 
-	if (!deleteFilesError) {
+	if (deleteFilesError) {
 		return NextResponse.json({error: "Не удалось удалить файлы задания"}, {status: 500});
 	}
 
