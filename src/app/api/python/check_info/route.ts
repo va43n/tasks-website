@@ -21,12 +21,12 @@ export async function POST(req: NextRequest) {
 	console.log(user);
 
 	if (!user) {
-		return NextResponse.json({message: "wrong"}, {status: 500});
+		return NextResponse.json({message: "Не удалось найти пользователя"}, {status: 500});
 	}
 
 	const passwordMatch = await bcrypt.compare(password, user.password);
 	if (!passwordMatch) {
-		return NextResponse.json({message: "wrong"}, {status: 400});
+		return NextResponse.json({message: "Не удалось найти пользователя"}, {status: 400});
 	}
 
 	const {data: patient, error: patientError} = await supabase
@@ -38,8 +38,8 @@ export async function POST(req: NextRequest) {
 		console.log(patient);
 
 	if (!patient) {
-		return NextResponse.json({message: "wrong"}, {status: 500});
+		return NextResponse.json({message: "Не удалось найти пациента"}, {status: 500});
 	}
 
-	return NextResponse.json({message: "correct"}, {status: 200});
+	return NextResponse.json({message: "Пациент найден!"}, {status: 200});
 }
