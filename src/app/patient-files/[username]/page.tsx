@@ -2,6 +2,7 @@
 
 import {useEffect, useState} from "react";
 import {useParams} from "next/navigation";
+import Image from "next/image";
 
 import "../../../../styles/globals.css";
 import "../../../../styles/patient-files.css";
@@ -88,7 +89,7 @@ export default function PatientFiles() {
 						<div className="files-file-content" key={index}>
 							<p className="files-title files-space-text">{file.title}</p>
 							<button className="files-delete-button" onClick={() => handleDelete(file.task_id)}>
-								<img src="/icons/cross.svg" width={16} height={16} />
+								<Image src="/icons/cross.svg" width={16} height={16} />
 							</button>
 						</div>
 					))}

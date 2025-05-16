@@ -2,6 +2,7 @@
 
 import { useRouter, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 import "../../styles/globals.css";
 
@@ -52,13 +53,13 @@ export default function Layout ({
         <header>
           <div className="header-buttons-container">
             <button className="header-button" onClick={() => router.push("/")}>
-               <img src="/icons/home.svg" width={16} height={16} />
+               <Image src="/icons/home.svg" width={16} height={16} />
             </button>
           </div>
 
           <div className="menu-container">
             <button className="header-button menu-opener" onClick={toggleMenu}>
-              <img src="/icons/burger.svg" width={16} height={16} />
+              <Image src="/icons/burger.svg" width={16} height={16} />
             </button>
 
             {isMenuOpen && (

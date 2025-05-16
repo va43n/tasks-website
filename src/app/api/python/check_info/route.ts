@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
 		return NextResponse.json({error: "Не удалось получить username или password"}, {status: 400});
 	}
 
-	const {data: user, userError} = await supabase
+	const {data: user, error: userError} = await supabase
 		.from("users")
 		.select("*")
 		.eq("username", username)
@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
 		return NextResponse.json({error: "Такого пользователя не существует"}, {status: 500});
 	}
 
-	const {data: patient, patientError} = await supabase
+	const {data: patient, error: patientError} = await supabase
 		.from("users")
 		.select("*")
 		.eq("patient_username", username);

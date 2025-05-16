@@ -47,7 +47,7 @@ export default function ShowAllPatientActivity() {
             }
         }
         getActiveUsernames();
-    }, [username]);
+    }, [username, patient]);
 
     const getDetails = async (username: string) => {
         console.log(username);
