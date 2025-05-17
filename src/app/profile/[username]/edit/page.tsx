@@ -58,7 +58,7 @@ export default function EditProfile() {
 			}
 		}
 		getProfile();
-	}, [username, tasks]);
+	}, [username]);
 
 	const updateBio = async() => {
 		setBioMessage("");
