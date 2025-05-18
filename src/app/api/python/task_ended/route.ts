@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
 	}
 
 	const time = Date.now();
-	const activity = (result === "Success" ? "Пациент выполнил задание" : "Пациент не справился с заданием") + ${task.title};
+	const activity = (result === "Success" ? "Пациент выполнил задание" : "Пациент не справился с заданием") + task.title;
 
 	const {error: insertError} = await supabase
 		.from("patient_activities")
