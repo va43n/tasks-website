@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs";
 export async function POST(req: NextRequest) {
 	const {username, password} = await req.json();
 
-	console.log(username);
+	console.log(username, password);
 
 	if (!username || !password) {
 		console.log("Не удалось получить username или password");
@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
 
 	const passwordMatch = await bcrypt.compare(password, user.password);
 	if (!passwordMatch) {
-		return NextResponse.json({message: "Не удалось найти пользователя"}, {status: 400});
+		return NextResponse.json({message: "Неправильный пароль"}, {status: 400});
 	}
 
 	const {data: patient, error: patientError} = await supabase
