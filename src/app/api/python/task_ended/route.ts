@@ -45,12 +45,14 @@ export async function POST(req: NextRequest) {
 		.eq("task_id", task_id)
 		.single();
 
+	console.log(task);
+
 	if (!task) {
 		return NextResponse.json({message: "Задание не найдено"}, {status: 500});
 	}
 
 	const time = Date.now();
-	const activity = result === "Success" ? "Пациент выполнил задание" : "Пациент не справился с заданием";
+	const activity = (result === "Success" ? "Пациент выполнил задание" : "Пациент не справился с заданием") + ${task.title};
 
 	const {error: insertError} = await supabase
 		.from("patient_activities")
