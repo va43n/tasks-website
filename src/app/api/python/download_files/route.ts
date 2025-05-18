@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs";
 export async function POST(req: NextRequest) {
 	const {username, password} = await req.json();
 
-	console.log(username, password);
+	console.log(username);
 
 	if (!username || !password) {
 		console.log("Не удалось получить username или password");
