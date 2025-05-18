@@ -5,6 +5,8 @@ import bcrypt from "bcryptjs";
 export async function POST(req: NextRequest) {
 	const {username, password} = await req.json();
 
+	console.log(username);
+
 	if (!username || !password) {
 		console.log("Не удалось получить username или password");
 		return NextResponse.json({error: "Не удалось получить username или password"}, {status: 400});
@@ -33,7 +35,7 @@ export async function POST(req: NextRequest) {
 		.eq("patient_username", username)
 		.single();
 
-		console.log(patient);
+	console.log(patient);
 
 	if (!patient) {
 		return NextResponse.json({message: "Не удалось найти пациента"}, {status: 500});
