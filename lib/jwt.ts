@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import jwt, {JwtPayload} from "jsonwebtoken";
 
 const SECRET_KEY = process.env.JWT_SECRET || "10";
 
@@ -8,7 +8,7 @@ export function createJWT(payload: object) {
 
 export function verifyJWT(token: string) {
 	try {
-		return jwt.verify(token, SECRET_KEY);
+		return jwt.verify(token, SECRET_KEY) as JwtPayload;
 	} catch (err) {
 		return null;
 	}
@@ -20,6 +20,6 @@ export function isLoginValid(username: string, token: string) {
 		return false;
 	}
 
-	// const decoded_token = jwt.decode(verified_token);
-	return verified_token.username === username;
+	const decoded_token = jwt.decode(verified_token);
+	return decoded_token.username === username;
 }

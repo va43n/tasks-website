@@ -33,9 +33,9 @@ export default function Layout ({
   }
 
   const handleLogout = async () => {
-    router.push("/");
     await fetch("/api/auth/logout", {method: "POST"});
     setUser(null);
+    router.push("/");
   }
 
   const handleSearch = ()  => {
