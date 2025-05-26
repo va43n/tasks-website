@@ -14,7 +14,7 @@ export function verifyJWT(token: string) {
 	}
 }
 
-export function isLoginValid(username: string, token: string) {
+export function isLoginValid(username: string, jwt: string) {
 	const token = verifyJWT(jwt);
 	if (!token) {
 		return false;
