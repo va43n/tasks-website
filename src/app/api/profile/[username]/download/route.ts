@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
 	if (!token) {
 		return NextResponse.json({error: "Пользователь не залогинен"}, {status: 400});
 	}
-	if (!isLoginValid(username, token)) {
+	if (!isLoginValid(selfUsername, token)) {
 		return NextResponse.json({error: "Недостаточно прав"}, {status: 400});
 	}
 
