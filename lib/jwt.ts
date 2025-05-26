@@ -14,12 +14,12 @@ export function verifyJWT(token: string) {
 	}
 }
 
-export function isLoginValid(username: string, jwt: string) {
-	const token = verifyJWT(jwt);
-	if (!token) {
+export function isLoginValid(username: string, token: string) {
+	const verified_token = verifyJWT(token);
+	if (!verified_token) {
 		return false;
 	}
 
-	const decoded_token = jwt.decode(token);
+	const decoded_token = jwt.decode(verified_token);
 	return decoded_token.username === username;
 }
