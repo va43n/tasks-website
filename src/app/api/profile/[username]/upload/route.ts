@@ -1,8 +1,8 @@
-import {NextResponse} from "next/server";
+import {NextRequest, NextResponse} from "next/server";
 import {uploadFile} from "../../../../../../lib/supabase";
 import {isLoginValid} from "../../../../../../lib/jwt";
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
 	const formData = await req.formData();
 	const file = formData.get("file") as File | null;
 	const username = formData.get("username") as string;
