@@ -13,3 +13,13 @@ export function verifyJWT(token: string) {
 		return null;
 	}
 }
+
+export function isLoginValid(username: string, token: string) {
+	const token = verifyJWT(jwt);
+	if (!token) {
+		return false;
+	}
+
+	const decoded_token = jwt.decode(token);
+	return decoded_token.username === username;
+}

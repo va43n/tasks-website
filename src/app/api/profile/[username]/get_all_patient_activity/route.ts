@@ -1,9 +1,19 @@
 import {NextRequest, NextResponse} from "next/server";
 import supabase from "../../../../../../lib/supabase";
+import {isLoginValid} from "../../../../../../lib/jwt";
+
 
 export async function POST(req: NextRequest) {
 	try {
 		const { username, patient } = await req.json();
+
+		const token = req.cookies.get("token")?.value;
+		if (!token) {
+			return NextResponse.json({error: "Пользователь не залогинен"}, {status: 400});
+		}
+		if (!isLoginValid(username, token)) {
+			return NextResponse.json({error: "Недостаточно прав"}, {status: 400});
+		}
 
 		const {data: all_id, error: all_id_error} = await supabase
 			.from("tasks")

@@ -1,5 +1,6 @@
 import {NextRequest, NextResponse} from "next/server";
 import supabase from "../../../../../lib/supabase";
+import {isLoginValid} from "../../../../../lib/jwt";
 
 type File = {
 	task_id: string
@@ -10,11 +11,17 @@ type File = {
 export async function POST(req: NextRequest) {
 	const {username} = await req.json();
 
-	console.log(username);
-
 	if (!username) {
 		console.log("Не удалось получить username");
 		return NextResponse.json({error: "Не удалось получить username"}, {status: 400});
+	}
+
+	const token = req.cookies.get("token")?.value;
+	if (!token) {
+		return NextResponse.json({error: "Пользователь не залогинен"}, {status: 400});
+	}
+	if (!isLoginValid(username, token)) {
+		return NextResponse.json({error: "Недостаточно прав"}, {status: 400});
 	}
 
 	const {data: all_id, error} = await supabase

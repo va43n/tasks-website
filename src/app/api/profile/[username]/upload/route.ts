@@ -1,5 +1,6 @@
 import {NextResponse} from "next/server";
 import {uploadFile} from "../../../../../../lib/supabase";
+import {isLoginValid} from "../../../../../../lib/jwt";
 
 export async function POST(req: Request) {
 	const formData = await req.formData();
@@ -9,6 +10,14 @@ export async function POST(req: Request) {
 	if (file === null) {
 		console.log("Файл не найден", 400);
 		return NextResponse.json({error: "Файл не найден"}, {status: 400});
+	}
+
+	const token = req.cookies.get("token")?.value;
+	if (!token) {
+		return NextResponse.json({error: "Пользователь не залогинен"}, {status: 400});
+	}
+	if (!isLoginValid(username, token)) {
+		return NextResponse.json({error: "Недостаточно прав"}, {status: 400});
 	}
 
 	try {

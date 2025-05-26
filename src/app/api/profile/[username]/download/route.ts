@@ -1,16 +1,24 @@
 import {NextRequest, NextResponse} from "next/server";
 import supabase from "../../../../../../lib/supabase";
+import {isLoginValid} from "../../../../../../lib/jwt";
 
 
 export async function POST(req: NextRequest) {
 	const {selfUsername, task_id} = await req.json();
 
-	console.log(selfUsername, task_id);
-
 	if (!selfUsername || !task_id) {
 		console.log("Не удалось получить username пользователя или task_id");
 		return NextResponse.json({error: "Не удалось получить username пользователя или task_id"}, {status: 400});
 	}
+
+	const token = req.cookies.get("token")?.value;
+	if (!token) {
+		return NextResponse.json({error: "Пользователь не залогинен"}, {status: 400});
+	}
+	if (!isLoginValid(username, token)) {
+		return NextResponse.json({error: "Недостаточно прав"}, {status: 400});
+	}
+
 
 	const {data: patient, error: patientNotFound} = await supabase
 		.from("patients")

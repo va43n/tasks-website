@@ -1,5 +1,6 @@
 import {NextRequest, NextResponse} from "next/server";
 import supabase from "../../../../../lib/supabase";
+import {isLoginValid} from "../../../../../lib/jwt";
 
 
 type Task = {
@@ -13,6 +14,15 @@ type Task = {
 
 export async function PUT(req: NextRequest) {
 	const { username, bio } = await req.json();
+
+	const token = req.cookies.get("token")?.value;
+	if (!token) {
+		return NextResponse.json({error: "Пользователь не залогинен"}, {status: 400});
+	}
+	if (!isLoginValid(username, token)) {
+		return NextResponse.json({error: "Недостаточно прав"}, {status: 400});
+	}
+
 
 	const {data: doctor, error: doctorNotFound} = await supabase
 		.from("doctors")
@@ -46,6 +56,14 @@ export async function POST(req: NextRequest) {
 		return NextResponse.json({error: "Вы не заполнили все поля"}, {status: 400});
 	}
 
+	const token = req.cookies.get("token")?.value;
+	if (!token) {
+		return NextResponse.json({error: "Пользователь не залогинен"}, {status: 400});
+	}
+	if (!isLoginValid(username, token)) {
+		return NextResponse.json({error: "Недостаточно прав"}, {status: 400});
+	}
+
 	const {data: doctor, error: doctorNotFound} = await supabase
 		.from("doctors")
 		.select("*")
@@ -76,6 +94,14 @@ export async function POST(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
 	const {username, task_id} = await req.json();
+
+	const token = req.cookies.get("token")?.value;
+	if (!token) {
+		return NextResponse.json({error: "Пользователь не залогинен"}, {status: 400});
+	}
+	if (!isLoginValid(username, token)) {
+		return NextResponse.json({error: "Недостаточно прав"}, {status: 400});
+	}
 
 	const {data: doctor, error: doctorNotFound} = await supabase
 		.from("doctors")
