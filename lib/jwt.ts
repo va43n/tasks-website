@@ -20,6 +20,6 @@ export function isLoginValid(username: string, token: string) {
 		return false;
 	}
 
-	const decoded_token = jwt.decode(verified_token);
+	const decoded_token = jwt.decode(verified_token?.token);
 	return decoded_token.username === username;
 }
