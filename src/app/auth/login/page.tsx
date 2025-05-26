@@ -8,16 +8,19 @@ import "../../../../styles/form.css";
 
 export default function LoginPage() {
 	const router = useRouter();
+	// Определение формы
 	const [form, setForm] = useState({
 		username: "",
 		password: "",
 	});
 	const [error, setError] = useState("");
 
+	// Изменение формы должно отражаться на экране
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setForm({...form, [e.target.name]: e.target.value});
 	};
 
+	// Обработка нажатия на кнопку "Войти"
 	const handleLogin = async () => {
 		setError("");
 

@@ -34,7 +34,9 @@ export default function ProfilePage() {
 
 	const [messages, setMessages] = useState<string[]>([]);
 
+	// Выполнение действий при загрузке страницы
 	useEffect(() => {
+		// Проверка пользователя
 		const fetchUser = async () => {
 			const res = await fetch("/api/auth/me");
 			if (!res.ok) return setSelfUser(null);
@@ -42,6 +44,7 @@ export default function ProfilePage() {
 			setSelfUser(data.user);
 		};
 
+		// Получение данных о профиле
 		const getProfile = async () => {
 			try {
 				const response = await fetch(`/api/profile/${username}/get`, {
@@ -71,6 +74,7 @@ export default function ProfilePage() {
 		getProfile();
 	}, [username]);
 
+	// Обработка нажатия на кнопку "Скачать"
 	const handleDownload = async (task_id: string, index: number) => {
 		setMessages(prev => {
 			const updated = [...prev];

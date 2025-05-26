@@ -8,6 +8,7 @@ import "../../../../styles/form.css";
 
 export default function RegisterPage() {
 	const router = useRouter();
+	// Определение формы
 	const [form, setForm] = useState({
 		full_name: "",
 		username: "",
@@ -18,10 +19,12 @@ export default function RegisterPage() {
 	});
 	const [error, setError] = useState("");
 
+	// Изменение формы должно отражаться на экране
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
 		setForm({...form, [e.target.name]: e.target.value});
 	};
 
+	// Обработка нажатия на кнопку "Зарегистрироваться"
 	const handleRegister = async () => {
 		setError("");
 

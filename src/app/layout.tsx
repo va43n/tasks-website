@@ -22,22 +22,26 @@ export default function Layout ({
 
   const [searchQuery, setSearchQuery] = useState("");
 
+  // Проверка логина на каждой странице
   useEffect(() => {
     fetch("/api/auth/me")
       .then((res) => res.json())
       .then((data) => setUser(data.user));
   }, [pathname]);
 
+  // переключение режима меню
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   }
 
+  // Выполнение выхода из аккаунта
   const handleLogout = async () => {
     await fetch("/api/auth/logout", {method: "POST"});
     setUser(null);
     router.push("/");
   }
 
+  // Поиск профиля доктора
   const handleSearch = ()  => {
     if (!searchQuery.trim()) return;
     router.push(`/profile/${searchQuery}`);

@@ -12,6 +12,7 @@ export async function POST(req: NextRequest) {
 		return NextResponse.json({error: "Файл не найден"}, {status: 400});
 	}
 
+	// Проверка токена пользователя
 	const token = req.cookies.get("token")?.value;
 	if (!token) {
 		return NextResponse.json({error: "Пользователь не залогинен"}, {status: 400});
@@ -20,6 +21,7 @@ export async function POST(req: NextRequest) {
 		return NextResponse.json({error: "Недостаточно прав"}, {status: 400});
 	}
 
+	// Попытка загрузить файл в облачное хранилище
 	try {
 		const publicUrl = await uploadFile(file, `tasks/${username}`);
 

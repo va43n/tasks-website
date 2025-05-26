@@ -16,6 +16,7 @@ export async function POST(req: NextRequest) {
 		return NextResponse.json({error: "Не удалось получить username"}, {status: 400});
 	}
 
+	// Проверка токена пользователя
 	const token = req.cookies.get("token")?.value;
 	if (!token) {
 		return NextResponse.json({error: "Пользователь не залогинен"}, {status: 400});
@@ -24,6 +25,7 @@ export async function POST(req: NextRequest) {
 		return NextResponse.json({error: "Недостаточно прав"}, {status: 400});
 	}
 
+	// Поиск очереди файлов на скачивание
 	const {data: all_id, error} = await supabase
 		.from("files_to_download")
 		.select("task_id")
@@ -33,6 +35,7 @@ export async function POST(req: NextRequest) {
 		return NextResponse.json({error: "id файлов пациента не найдены"}, {status: 500});
 	}
 
+	// Формирование массива файлов для отправки
 	let files = [];
 
 	for (var id of all_id) {
@@ -54,13 +57,21 @@ export async function POST(req: NextRequest) {
 export async function DELETE(req: NextRequest) {
 	const {username, task_id} = await req.json();
 
-	console.log(username, task_id);
-
 	if (!username || !task_id) {
 		console.log("Не удалось получить username или task_id");
 		return NextResponse.json({error: "Не удалось получить username или task_id"}, {status: 400});
 	}
 
+	// Проверка токена пользователя
+	const token = req.cookies.get("token")?.value;
+	if (!token) {
+		return NextResponse.json({error: "Пользователь не залогинен"}, {status: 400});
+	}
+	if (!isLoginValid(username, token)) {
+		return NextResponse.json({error: "Недостаточно прав"}, {status: 400});
+	}
+
+	// Удаление файла из очереди
 	const {error: deleteError} = await supabase
 		.from("files_to_download")
 		.delete()

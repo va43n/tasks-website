@@ -24,6 +24,7 @@ export default function PatientFiles() {
 	const {username} = useParams();
 	const [files, setFiles] = useState<File[]>([]);
 
+	// Выполнение действия при запуске страницы
 	useEffect(() => {
 		const fetchUser = async () => {
 			const res = await fetch("/api/auth/me");
@@ -32,6 +33,7 @@ export default function PatientFiles() {
 			setSelfUser(data.user);
 		};
 
+		// Получение данных об очереди заданий 
 		const getFiles = async () => {
 			try {
 				const response = await fetch(`/api/patient-files/${username}`, {
@@ -58,6 +60,7 @@ export default function PatientFiles() {
 		getFiles();
 	}, [username]);
 
+	// Обработка нажатия на крестик - удаления задания из очереди
 	const handleDelete = async (task_id: string) => {
 		setFiles(files.filter(file => file.task_id !== task_id));
 

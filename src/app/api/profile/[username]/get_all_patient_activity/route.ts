@@ -7,6 +7,7 @@ export async function POST(req: NextRequest) {
 	try {
 		const { username, patient } = await req.json();
 
+		// Проверка токена пользователя
 		const token = req.cookies.get("token")?.value;
 		if (!token) {
 			return NextResponse.json({error: "Пользователь не залогинен"}, {status: 400});
@@ -15,6 +16,7 @@ export async function POST(req: NextRequest) {
 			return NextResponse.json({error: "Недостаточно прав"}, {status: 400});
 		}
 
+		// Поиск заданий доктора
 		const {data: all_id, error: all_id_error} = await supabase
 			.from("tasks")
 			.select("task_id")
@@ -29,6 +31,7 @@ export async function POST(req: NextRequest) {
 			all_id_array.push(id.task_id);
 		}
 
+		// Получение всех активностей пациентов по любым заданиям доктора
 		const {data: allPatientActivities, error: allPatientActivitiesError} = await supabase
 			.from("patient_activities")
 			.select("task_id, patient_username, time, activity, tasks (title)")
@@ -39,8 +42,7 @@ export async function POST(req: NextRequest) {
 			return NextResponse.json({error: "Не удалось найти имена пользователей, которые недавно совершали активность с Вашими заданиями"}, {status: 500});
 		}
 
-		console.log(allPatientActivities);
-
+		// Получение активности только одного пациента
 		let certainPatientActivities = [];
 
 		for (let patientActivity of allPatientActivities) {
@@ -48,6 +50,7 @@ export async function POST(req: NextRequest) {
 			certainPatientActivities.push(patientActivity);
 		}
 
+		// Оформление времени активностей в удобном, читаемом виде
 		const currentTime = Date.now();
 		for (let i = 0; i < certainPatientActivities.length; i++) {
 			let activityTime = "";

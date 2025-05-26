@@ -10,6 +10,7 @@ export async function POST(req: NextRequest) {
 		return NextResponse.json({error: "Не удалось получить username или password или task_id"}, {status: 400});
 	}
 
+	// Поиск пользователя с таким логином
 	const {data: user, error: userError} = await supabase
 		.from("users")
 		.select("*")
@@ -22,11 +23,13 @@ export async function POST(req: NextRequest) {
 		return NextResponse.json({message: "Не удалось найти пользователя"}, {status: 500});
 	}
 
+	// Проверка пароля
 	const passwordMatch = await bcrypt.compare(password, user.password);
 	if (!passwordMatch) {
 		return NextResponse.json({message: "Не удалось найти пользователя"}, {status: 400});
 	}
 
+	// Поиск пациента с таким логином
 	const {data: patient, error: patientError} = await supabase
 		.from("patients")
 		.select("*")
@@ -39,6 +42,7 @@ export async function POST(req: NextRequest) {
 		return NextResponse.json({message: "Не удалось найти пациента"}, {status: 500});
 	}
 
+	// Поиск задания с таким task_id
 	const {data: task, error: taskError} = await supabase
 		.from("tasks")
 		.select("*")
@@ -51,9 +55,11 @@ export async function POST(req: NextRequest) {
 		return NextResponse.json({message: "Задание не найдено"}, {status: 500});
 	}
 
+	// Формирование строки активности
 	const time = Date.now();
 	const activity = `Пациент начал выполнение задания ${task.title}`;
 
+	// Добавление строки активности в таблицу
 	const {error: insertError} = await supabase
 		.from("patient_activities")
 		.insert({

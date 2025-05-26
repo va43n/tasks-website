@@ -34,6 +34,7 @@ export default function EditProfile() {
 	const [resetTrigger, setResetTrigger] = useState(false);
 
 	useEffect(() => {
+		// Получение данных о профиле
 		const getProfile = async () => {
 			try {
 				const response = await fetch(`/api/profile/${username}/get`, {
@@ -60,6 +61,7 @@ export default function EditProfile() {
 		getProfile();
 	}, [username]);
 
+	// Обновление описания профиля
 	const updateBio = async() => {
 		setBioMessage("");
 		const response = await fetch(`/api/profile/${username}`, {
@@ -78,6 +80,7 @@ export default function EditProfile() {
 		setBioMessage(data.message);
 	};
 
+	// Загрузка файла в облачное хранилище
 	const uploadFile = async (file: File | null, type: "file" | "image") => {
 		console.log(username, file);
 
@@ -111,6 +114,7 @@ export default function EditProfile() {
 		return data.publicUrl;
 	}
 
+	// Добавление задания
 	const addTask = async() => {
 		setAddTaskMessage("");
 
@@ -142,6 +146,7 @@ export default function EditProfile() {
 		setTimeout(() => setResetTrigger(false), 1000);
 	};
 
+	// Удаление задания
 	const deleteTask = async() => {
 		setDeleteTaskMessage("");
 

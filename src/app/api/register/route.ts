@@ -10,6 +10,7 @@ export async function POST(req: NextRequest) {
 			return NextResponse.json({error: "Вы не заполнили все поля"}, {status: 400});
 		}
 
+		// Поиск пользователя с таким же логином
 		const { data: existingUser } = await supabase
 			.from("users")
 			.select("id")
@@ -24,8 +25,10 @@ export async function POST(req: NextRequest) {
 			return NextResponse.json({error: "Пароли не совпадают"}, {status: 400});
 		}
 
+		// Хеширование пароля
 		const hashedPassword = await bcrypt.hash(password, 11);
 
+		// Добавление новой строки в users
 		const { data: newRow, error: error } = await supabase
 			.from("users")
 			.insert({
@@ -41,6 +44,7 @@ export async function POST(req: NextRequest) {
 			return NextResponse.json({error: "Не удалось зарегистрироваться " + error}, {status: 500});
 		}
 
+		// Добавление строки в таблицу doctors или patients в зависимости от роли
 		if (role === "Доктор") {
 			const { error } = await supabase
 			.from("doctors")

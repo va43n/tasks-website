@@ -11,6 +11,7 @@ export async function POST(req: NextRequest) {
 		return NextResponse.json({error: "Не удалось получить username пользователя или task_id"}, {status: 400});
 	}
 
+	// Проверка токена пользователя
 	const token = req.cookies.get("token")?.value;
 	if (!token) {
 		return NextResponse.json({error: "Пользователь не залогинен"}, {status: 400});
@@ -19,7 +20,7 @@ export async function POST(req: NextRequest) {
 		return NextResponse.json({error: "Недостаточно прав"}, {status: 400});
 	}
 
-
+	// Поиск пациента с таким логином
 	const {data: patient, error: patientNotFound} = await supabase
 		.from("patients")
 		.select("*")
@@ -30,6 +31,7 @@ export async function POST(req: NextRequest) {
 		return NextResponse.json({error: "Запись о пациенте не найдена"}, {status: 500});
 	}
 
+	// Поиск записи о файлах пациента для скачивания
 	const {data: all_id, error: idNotFound} = await supabase
 		.from("files_to_download")
 		.select("*")
@@ -45,6 +47,7 @@ export async function POST(req: NextRequest) {
 		}
 	}
 
+	// Добавление нового задания в очередь на скачивание
 	const { error: addError } = await supabase
 		.from("files_to_download")
 		.insert({

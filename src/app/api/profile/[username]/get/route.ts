@@ -5,6 +5,7 @@ export async function POST(req: NextRequest) {
 	try {
 		const { username } = await req.json();
 
+		// Поиск заданий доктора
 		const {error: tasksNotFound, data: tasks} = await supabase
 			.from("tasks")
 			.select("*")
@@ -18,6 +19,7 @@ export async function POST(req: NextRequest) {
 			return NextResponse.json({error: "Профиля не существует"}, {status: 404});
 		}
 
+		// Получение описания доктора
 		const {error: bioNotFound, data: bio} = await supabase
 			.from("doctors")
 			.select("bio")
@@ -27,6 +29,7 @@ export async function POST(req: NextRequest) {
 			return NextResponse.json({error: "Не удалось получить информацию о докторе"}, {status: 500});
 		}
 
+		// Составление переменной профиля
 		const profile = {
 			doctor_username: username,
 			bio: bio[0].bio,

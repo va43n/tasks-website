@@ -18,7 +18,9 @@ export default function ShowActivePatients() {
 
 	const [patientActivities, setPatientActivities] = useState<PatientActivity[]>([]);
 
+	// Выполнение действия при загрузке страницы
 	useEffect(() => {
+		// Получение последних активностей всех разных пациентов доктора
 		const getActiveUsernames = async () => {
 			try {
 				const response = await fetch(`/api/profile/${username}/get_active_usernames`, {
@@ -43,6 +45,7 @@ export default function ShowActivePatients() {
 		getActiveUsernames();
 	}, [username]);
 
+	// Обработка нажатия на кнопку "Подробнее"
 	const getDetails = async (patient_username: string) => {
 		console.log(patient_username);
 		router.push(`/profile/${username}/activities/${patient_username}`);

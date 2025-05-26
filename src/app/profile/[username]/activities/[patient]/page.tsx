@@ -24,7 +24,9 @@ export default function ShowAllPatientActivity() {
 
     const [patientActivities, setPatientActivities] = useState<PatientActivity[]>([]);
 
+    // Выполнение действия при загрузке страницы
     useEffect(() => {
+        // Получение всех активностей одного конкретного пациента
         const getActiveUsernames = async () => {
             try {
                 const response = await fetch(`/api/profile/${username}/get_all_patient_activity`, {
@@ -48,10 +50,6 @@ export default function ShowAllPatientActivity() {
         }
         getActiveUsernames();
     }, [username, patient]);
-
-    const getDetails = async (username: string) => {
-        console.log(username);
-    }
 
     if (!patientActivities) {
         return (

@@ -5,13 +5,12 @@ import bcrypt from "bcryptjs";
 export async function POST(req: NextRequest) {
 	const {username, password} = await req.json();
 
-	console.log(username);
-
 	if (!username || !password) {
 		console.log("Не удалось получить username или password");
 		return NextResponse.json({error: "Не удалось получить username или password"}, {status: 400});
 	}
 
+	// Поиск пользователя с таким логином
 	const {data: user, error: userError} = await supabase
 		.from("users")
 		.select("*")
@@ -24,11 +23,13 @@ export async function POST(req: NextRequest) {
 		return NextResponse.json({message: "Не удалось найти пользователя"}, {status: 500});
 	}
 
+	// Проверка пароля
 	const passwordMatch = await bcrypt.compare(password, user.password);
 	if (!passwordMatch) {
 		return NextResponse.json({message: "Неправильный пароль"}, {status: 400});
 	}
 
+	// Поиск пациента с таким логином
 	const {data: patient, error: patientError} = await supabase
 		.from("patients")
 		.select("*")
@@ -41,6 +42,7 @@ export async function POST(req: NextRequest) {
 		return NextResponse.json({message: "Не удалось найти пациента"}, {status: 500});
 	}
 
+	// Поиск файлов на скачивание
 	const {data: all_id, error} = await supabase
 		.from("files_to_download")
 		.select("task_id")
@@ -52,9 +54,11 @@ export async function POST(req: NextRequest) {
 
 	let files = [];
 
+	// Получение текущего времени для отправки активности скачивания файла
 	const time = Date.now();
 
 	for (var id of all_id) {
+		// Получение очередного файла
 		const {data: file, error} = await supabase
 			.from("tasks")
 			.select("task_id, title, file_url")
@@ -64,6 +68,7 @@ export async function POST(req: NextRequest) {
 			return NextResponse.json({error: "Не удалось получить файл"}, {status: 500});
 		}
 
+		// Отправка информации об активности
 		const activity = `Пациент скачал файл ${file[0].title}`;
 
 		const {error: insertError} = await supabase
@@ -84,6 +89,7 @@ export async function POST(req: NextRequest) {
 
 	console.log(files);
 
+	// Удаление информации об очереди сообщений
 	const {error: deleteError} = await supabase
 		.from("files_to_download")
 		.delete()
