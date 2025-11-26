@@ -3,7 +3,7 @@ import supabase from "../../../../../lib/supabase";
 import bcrypt from "bcryptjs";
 
 export async function POST(req: NextRequest) {
-	const {username, password, task_id, result} = await req.json();
+	const {username, password, task_id, result, all_times} = await req.json();
 
 	if (!username || !task_id || !result) {
 		console.log("Не удалось получить username или task_id или результат");
@@ -59,6 +59,8 @@ export async function POST(req: NextRequest) {
 	const time = Date.now();
 	const activity = (result === "Success" ? "Пациент выполнил задание " : "Пациент не справился с заданием ") + task.title;
 
+	console.log(`TIMES:::::: ${all_times}`);
+
 	// Добавление строки активности в таблицу
 	const {error: insertError} = await supabase
 		.from("patient_activities")
@@ -66,7 +68,8 @@ export async function POST(req: NextRequest) {
 			patient_username: username,
 			task_id: task_id,
 			activity: activity,
-			time: time
+			time: time,
+			all_times: all_times
 		});
 
 	if (insertError) {

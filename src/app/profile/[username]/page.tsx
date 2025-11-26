@@ -141,7 +141,7 @@ export default function ProfilePage() {
 								<div className="profile-task-content">
 									<p className="profile-task-text profile-space-text">{task.description}</p>
 									<div className="profile-button-img-container">
-										{task.image_url && <Image src={task.image_url} alt={task.title} className="profile-img-size" />}
+										{task.image_url && <Image width={1920} height={200} src={task.image_url} alt={task.title} className="profile-img-size" />}
 										{task.file_url && (
 											<button className="profile-button-download" onClick={() => handleDownload(task.task_id, index)}>Скачать</button>
 										)}
