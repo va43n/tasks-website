@@ -66,12 +66,11 @@ export async function POST(req: NextRequest) {
 			patient_username: username,
 			task_id: task_id,
 			activity: activity,
-			time: time,
-			all_times: []
+			time: time
 		});
 
 	if (insertError) {
-		return NextResponse.json({error: `Не удалось вставить строку об активности ${username}`}, {status: 500});
+		return NextResponse.json({error: `Не удалось вставить строку об активности ${username}`}, {status: 504});
 	}
 
 	return NextResponse.json({status: 200});
