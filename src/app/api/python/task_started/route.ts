@@ -66,7 +66,8 @@ export async function POST(req: NextRequest) {
 			patient_username: username,
 			task_id: task_id,
 			activity: activity,
-			time: time
+			time: time,
+			all_times: []
 		});
 
 	if (insertError) {
