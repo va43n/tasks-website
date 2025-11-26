@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
 	console.log(user);
 
 	if (!user) {
-		return NextResponse.json({message: "Не удалось найти пользователя"}, {status: 500});
+		return NextResponse.json({message: "Не удалось найти пользователя"}, {status: 501});
 	}
 
 	// Проверка пароля
@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
 	console.log(patient);
 
 	if (!patient) {
-		return NextResponse.json({message: "Не удалось найти пациента"}, {status: 500});
+		return NextResponse.json({message: "Не удалось найти пациента"}, {status: 502});
 	}
 
 	// Поиск задания с таким task_id
@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
 	console.log(task);
 
 	if (!task) {
-		return NextResponse.json({message: "Задание не найдено"}, {status: 500});
+		return NextResponse.json({message: "Задание не найдено"}, {status: 503});
 	}
 
 	// Формирование строки активности
@@ -69,11 +69,11 @@ export async function POST(req: NextRequest) {
 			task_id: task_id,
 			activity: activity,
 			time: time,
-			all_times: [...all_times]
+			// all_times: [...all_times]
 		});
 
 	if (insertError) {
-		return NextResponse.json({error: `Не удалось вставить строку об активности ${username}`}, {status: 500});
+		return NextResponse.json({error: `Не удалось вставить строку об активности ${username}`}, {status: 504});
 	}
 
 	return NextResponse.json({status: 200});
