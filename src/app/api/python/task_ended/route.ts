@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
 			task_id: task_id,
 			activity: activity,
 			time: time,
-			// all_times: [...all_times]
+			all_times: all_times
 		});
 
 	if (insertError) {
