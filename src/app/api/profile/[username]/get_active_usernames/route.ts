@@ -83,6 +83,7 @@ export async function POST(req: NextRequest) {
 			distinctPatientActivities[i].time = activityTime;
 		}
 
+		console.log("KJASGHDFKJSDHKFJHSDKFJHG");
 		console.log(allPatientActivities, distinctPatientActivities);
 
 		return NextResponse.json({"allPatientActivities": distinctPatientActivities}, {status: 200});
