@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
 	const time = Date.now();
 	const activity = (result === "Success" ? "Пациент выполнил задание " : "Пациент не справился с заданием ") + task.title;
 
-	console.log(`TIMES:::::: ${all_times}, ${typeof all_times}`);
+	console.log(`TIMES:::::: ${all_times}, ${typeof all_times}, ${typeof [1, 2, 3, 4, 5, 6]}`);
 
 	// Добавление строки активности в таблицу
 	const {error: insertError} = await supabase
@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
 			task_id: task_id,
 			activity: activity,
 			time: time,
-			all_times: all_times
+			all_times: [...all_times]
 		});
 
 	if (insertError) {
