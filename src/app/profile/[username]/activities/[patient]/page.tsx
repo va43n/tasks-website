@@ -26,6 +26,12 @@ type PatientActivity = {
     all_times: string[];
 }
 
+type TimeStatItem = {
+    name: string;
+    g1: number;
+    mean: number;
+};
+
 export default function ShowAllPatientActivity() {
     const router = useRouter();
 
@@ -34,7 +40,7 @@ export default function ShowAllPatientActivity() {
     const [patientActivities, setPatientActivities] = useState<PatientActivity[]>([]);
     const [activitiesWithStatistics, setActivitiesWithStatistics] = useState<PatientActivity[]>([]);
     const [openedStatistics, setOpenedStatistics] = useState<boolean[]>([]);
-    const [timeStats, setTimeStats] = useState([]);
+    const [timeStats, setTimeStats] = useState<TimeStatItem[][]>([]);
 
     // Выполнение действия при загрузке страницы
     useEffect(() => {
