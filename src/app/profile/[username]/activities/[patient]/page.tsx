@@ -37,8 +37,6 @@ export default function ShowAllPatientActivity() {
     const [openedMainStatistic, setOpenedMainStatistic] = useState<boolean>(false);
 
     const [timeStats, setTimeStats] = useState<TimeStatItem[][]>([]);
-    const [allTimeStats, setAllTimeStats] = useState<any[]>([]);
-    const [allTimeStatsNames, setAllTimeStatsNames] = useState<string[]>([]);
 
     // Выполнение действия при загрузке страницы
     useEffect(() => {
@@ -62,8 +60,6 @@ export default function ShowAllPatientActivity() {
                 const isStats = Array(data.patientActivities.length).fill(false);
                 let stats = [];
                 let statNumber = 0;
-                let all_stat = [];
-                let all_stat_names = [];
                 for (let i = 0; i < data.patientActivities.length; i++) {
                     if (!(data.patientActivities[i].all_times !== undefined && data.patientActivities[i].all_times.length !== 0)) {
                         stats.push([])
@@ -71,23 +67,11 @@ export default function ShowAllPatientActivity() {
                     }
                     isStats[i] = true;
                     const statArray = [];
-                    
-                    all_stat_names.push("g" + `${i + 1}`);
-
-                    if (all_stat.length === 0) {
-                        for (let j = 0; j < data.patientActivities[i].all_times.length; j++) {
-                            const str = `${j + 1}`
-                            all_stat.push({"name": str});
-                        }
-
-                        console.log(all_stat);
-                    }
 
                     for (let j = 0; j < data.patientActivities[i].all_times.length; j++) {
                         const str: string = `${j + 1}`;
                         const graph_name: string = `g${statNumber + 1}`;
                         statArray.push({"name": str, "g1": parseFloat(data.patientActivities[statNumber].all_times[j].toFixed(3))});
-                        all_stat[j][graph_name] = parseFloat(data.patientActivities[statNumber].all_times[j].toFixed(3));
                     }
 
                     statNumber++;
@@ -97,14 +81,8 @@ export default function ShowAllPatientActivity() {
                 setActivitiesWithStatistics(isStats);
 
                 if (statNumber !== 0) {
-                    setAllTimeStatsNames(all_stat_names);
-                    console.log("all_stat_names", all_stat_names);
-
                     console.log("stats", stats);
-
                     setTimeStats(stats);
-                    setAllTimeStats(all_stat);
-                    console.log("all_stat", all_stat);
                 }
 
                 setPatientActivities(data.patientActivities);
