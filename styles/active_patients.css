@@ -13,6 +13,10 @@
   .actpat-button:hover {
     background-color: #0056b3;
   }
+
+  .actpat-button-big-stat {
+    width: 300px;
+  }
 }
 
 @media (orientation: portrait) {
@@ -30,6 +34,20 @@
   .actpat-button:hover {
     background-color: #0056b3;
   }
+
+  .actpat-button-big-stat {
+    width: 20vw;
+  }
+}
+
+.actpat-border {
+  border-radius: 10px;
+  border: 2px solid #0056b3;
+}
+
+.actpat-stat {
+  width: 100%;
+  transition: all 0.3s ease;
 }
 
 .actpat-centered-container {

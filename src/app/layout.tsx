@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 
 import "../../styles/globals.css";
+import { ZIndexLayer } from "recharts";
 
 type User = {
   username: string;
@@ -54,7 +55,7 @@ export default function Layout ({
         <title>Сайт с заданиями</title>
       </head>
       <body>
-        <header>
+        <header style={{zIndex: 10000}}>
           <div className="header-buttons-container">
             <button className="header-button" onClick={() => router.push("/")}>
                <Image alt="Меню" src="/icons/home.svg" width={16} height={16} />

@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import {useParams, useRouter} from "next/navigation";
 import "../../../../../../styles/globals.css";
 import "../../../../../../styles/active_patients.css";
-import { CartesianGrid, Line, LineChart, XAxis, YAxis, ResponsiveContainer, Tooltip, Legend } from 'recharts';
+import { CartesianGrid, Line, Text, LineChart, XAxis, YAxis, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 
 
 type TaskInfo = {
@@ -22,7 +22,6 @@ type PatientActivity = {
 type TimeStatItem = {
     name: string;
     g1: number;
-    mean: number;
 };
 
 
@@ -33,9 +32,13 @@ export default function ShowAllPatientActivity() {
 
     const [patientActivities, setPatientActivities] = useState<PatientActivity[]>([]);
     const [activitiesWithStatistics, setActivitiesWithStatistics] = useState<PatientActivity[]>([]);
+
     const [openedStatistics, setOpenedStatistics] = useState<boolean[]>([]);
+    const [openedMainStatistic, setOpenedMainStatistic] = useState<boolean>(false);
+
     const [timeStats, setTimeStats] = useState<TimeStatItem[][]>([]);
     const [allTimeStats, setAllTimeStats] = useState<any[]>([]);
+    const [allTimeStatsNames, setAllTimeStatsNames] = useState<string[]>([]);
 
     // Выполнение действия при загрузке страницы
     useEffect(() => {
@@ -54,13 +57,13 @@ export default function ShowAllPatientActivity() {
                     return;
                 }
 
-                console.log(data.patientActivities);
+                console.log("data.patientActivities", data.patientActivities);
 
                 const isStats = Array(data.patientActivities.length).fill(false);
                 let stats = [];
-                let mean: number[] = [];
                 let statNumber = 0;
                 let all_stat = [];
+                let all_stat_names = [];
                 for (let i = 0; i < data.patientActivities.length; i++) {
                     if (!(data.patientActivities[i].all_times !== undefined && data.patientActivities[i].all_times.length !== 0)) {
                         stats.push([])
@@ -68,38 +71,40 @@ export default function ShowAllPatientActivity() {
                     }
                     isStats[i] = true;
                     const statArray = [];
+                    
+                    all_stat_names.push("g" + `${i + 1}`);
 
-                    if (statNumber === 0) mean = [...data.patientActivities[i].all_times];
-                    else mean = mean.map((val, index) => val + data.patientActivities[i].all_times[index]);
+                    if (all_stat.length === 0) {
+                        for (let j = 0; j < data.patientActivities[i].all_times.length; j++) {
+                            const str = `${j + 1}`
+                            all_stat.push({"name": str});
+                        }
+
+                        console.log(all_stat);
+                    }
+
+                    for (let j = 0; j < data.patientActivities[i].all_times.length; j++) {
+                        const str: string = `${j + 1}`;
+                        const graph_name: string = `g${statNumber + 1}`;
+                        statArray.push({"name": str, "g1": parseFloat(data.patientActivities[statNumber].all_times[j].toFixed(3))});
+                        all_stat[j][graph_name] = parseFloat(data.patientActivities[statNumber].all_times[j].toFixed(3));
+                    }
 
                     statNumber++;
-
-                    if (all_stat.length === 0)
-                        all_stat = Array(data.patientActivities[i].all_times.length).fill({});
-                    for (let j = 0; j < data.patientActivities[i].all_times.length; j++) {
-                        let str: string = `${j + 1}`;
-                        let graph_name: string = `g${i + 1}`;
-                        statArray.push({"name": str, "g1": parseFloat(data.patientActivities[i].all_times[j].toFixed(3)), "mean": 0});
-                        all_stat[j]["name"] = str;
-                        all_stat[j][graph_name] = parseFloat(data.patientActivities[i].all_times[j].toFixed(3));
-                    }
+                    
                     stats.push(statArray)
                 }
                 setActivitiesWithStatistics(isStats);
 
                 if (statNumber !== 0) {
-                    mean = mean.map((val, index) => val / statNumber);
-                    console.log(stats);
-                    for (let i = 0; i < stats.length; i++) {
-                        if (stats[i].length === 0) continue;
-                        for (let j = 0; j < stats[i].length; j++) {
-                            let m = parseFloat(mean[j].toFixed(3));
-                            stats[i][j]["mean"] = m;
-                            all_stat[j]["mean"] = m;
-                        }
-                    }
+                    setAllTimeStatsNames(all_stat_names);
+                    console.log("all_stat_names", all_stat_names);
+
+                    console.log("stats", stats);
+
                     setTimeStats(stats);
                     setAllTimeStats(all_stat);
+                    console.log("all_stat", all_stat);
                 }
 
                 setPatientActivities(data.patientActivities);
@@ -110,6 +115,10 @@ export default function ShowAllPatientActivity() {
         }
         getActiveUsernames();
     }, [username, patient]);
+
+    const generateColor = (index: number, total: number, saturation = 50, lightness = 55, alpha = 1) => {
+        return `hsla(${(index * 285 / (total) + 200) % 360}, ${saturation}%, ${lightness}%, ${alpha})`;
+    };
 
     const changeVisibility = async (index: number) => {
         setOpenedStatistics(openedStatistics.map((val, i) => i === index ? !val : val));
@@ -127,13 +136,14 @@ export default function ShowAllPatientActivity() {
         <div className="actpat-centered-container actpat-centered-container-width">
             <div className="actpat-patient-activity">
                 <h1 className="actpat-text">Активность пациента {patient} в Ваших заданиях</h1>
-                <button className="actpat-button actpat-button-big-stat actpat-box-size actpat-rounded-box" onClick={() => {
-                    router.push(`/profile/${username}/activities`);
-                }}>Общая статистика</button>
                 <button className="actpat-button actpat-box-size actpat-rounded-box" onClick={() => {
                     router.push(`/profile/${username}/activities`);
                 }}>Назад</button>
             </div>
+            { openedMainStatistic && allTimeStatsNames.length !== 0 && allTimeStats.length !== 0 &&
+                <div className="actpat-stat">
+                </div>
+            }
             {patientActivities && patientActivities.length > 0 && (
                 <div>
                     <div className="actpat-gap-between-tasks">
@@ -157,8 +167,7 @@ export default function ShowAllPatientActivity() {
                                             <YAxis label={{ value: 'Время', angle: -90, position: 'insideLeft' }} />
                                             <Tooltip />
                                             <Legend />
-                                            <Line type="monotone" dataKey="g1" stroke="#8884d8" name="Текущий результат"/>
-                                            <Line type="monotone" dataKey="mean" stroke="#34F5a1" name="Средний результат"/>
+                                            <Line type="monotone" dataKey="g1" stroke="#8884d8" strokeWidth={4} name="Текущий результат"/>
                                         </LineChart>
                                     </div>
                                 }
