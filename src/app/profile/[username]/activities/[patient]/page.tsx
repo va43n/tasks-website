@@ -118,10 +118,6 @@ export default function ShowAllPatientActivity() {
                     router.push(`/profile/${username}/activities`);
                 }}>Назад</button>
             </div>
-            { openedMainStatistic && allTimeStatsNames.length !== 0 && allTimeStats.length !== 0 &&
-                <div className="actpat-stat">
-                </div>
-            }
             {patientActivities && patientActivities.length > 0 && (
                 <div>
                     <div className="actpat-gap-between-tasks">
