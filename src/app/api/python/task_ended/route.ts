@@ -60,8 +60,8 @@ export async function POST(req: NextRequest) {
 	const activity = (result === "Success" ? "Пациент выполнил задание " : "Пациент не справился с заданием ") + task.title;
 
 	console.log(`TIMES:::::: ${all_times}`);
-	console.log(`user_points:::::: ${user_points}, ${JSON.stringify(user_points)}`);
-	console.log(`figures_for_graph:::::: ${figures_for_graph}, ${JSON.stringify(figures_for_graph)}`);
+	console.log(`user_points:::::: ${user_points.map((item: any) => JSON.stringify(item))} ${typeof(user_points.map((item: any) => JSON.stringify(item)))}`);
+	console.log(`figures_for_graph:::::: ${figures_for_graph.map((item: any) => JSON.stringify(item))} ${typeof(figures_for_graph.map((item: any) => JSON.stringify(item)))}`);
 
 	// Добавление строки активности в таблицу
 	const {error: insertError} = await supabase
@@ -72,8 +72,8 @@ export async function POST(req: NextRequest) {
 			activity: activity,
 			time: time,
 			all_times: all_times.map((time: string) => parseFloat(time)),
-			user_points: JSON.stringify(user_points),
-			figures_for_graph: JSON.stringify(figures_for_graph)
+			user_points: user_points.map((item: any) => JSON.stringify(item)),
+			figures_for_graph: figures_for_graph.map((item: any) => JSON.stringify(item))
 		});
 
 	if (insertError) {
