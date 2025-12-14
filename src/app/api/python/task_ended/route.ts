@@ -3,7 +3,7 @@ import supabase from "../../../../../lib/supabase";
 import bcrypt from "bcryptjs";
 
 export async function POST(req: NextRequest) {
-	const {username, password, task_id, result, all_times} = await req.json();
+	const {username, password, task_id, result, all_times, user_points, figures_for_graph} = await req.json();
 
 	if (!username || !task_id || !result) {
 		console.log("Не удалось получить username или task_id или результат");
@@ -59,7 +59,9 @@ export async function POST(req: NextRequest) {
 	const time = Date.now();
 	const activity = (result === "Success" ? "Пациент выполнил задание " : "Пациент не справился с заданием ") + task.title;
 
-	console.log(`TIMES:::::: ${all_times}, ${typeof all_times}, ${typeof [1, 2, 3, 4, 5, 6]}`);
+	console.log(`TIMES:::::: ${all_times}`);
+	console.log(`user_points:::::: ${user_points}`);
+	console.log(`figures_for_graph:::::: ${figures_for_graph}`);
 
 	// Добавление строки активности в таблицу
 	const {error: insertError} = await supabase
@@ -69,7 +71,9 @@ export async function POST(req: NextRequest) {
 			task_id: task_id,
 			activity: activity,
 			time: time,
-			all_times: all_times.map((time: string) => parseFloat(time))
+			all_times: all_times.map((time: string) => parseFloat(time)),
+			user_points: JSON.stringify(user_points),
+			figures_for_graph: JSON.stringify(figures_for_graph)
 		});
 
 	if (insertError) {

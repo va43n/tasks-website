@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import {useParams, useRouter} from "next/navigation";
 import "../../../../../../styles/globals.css";
 import "../../../../../../styles/active_patients.css";
-import { CartesianGrid, Line, Text, LineChart, XAxis, YAxis, ResponsiveContainer, Tooltip, Legend } from 'recharts';
+import { CartesianGrid, Line, Text, LineChart, XAxis, YAxis, ResponsiveContainer, Tooltip, Legend, Scatter, ScatterChart, ZAxis, Dot } from 'recharts';
 
 
 type TaskInfo = {
@@ -98,9 +98,27 @@ export default function ShowAllPatientActivity() {
         return `hsla(${(index * 285 / (total) + 200) % 360}, ${saturation}%, ${lightness}%, ${alpha})`;
     };
 
-    const changeVisibility = async (index: number) => {
-        setOpenedStatistics(openedStatistics.map((val, i) => i === index ? !val : val));
-    }
+    const generateEllipseData = (centerX: number, centerY: number, radiusX: number, radiusY: number, rotationDeg = 0, points = 50) => {
+        const data = [];
+        const rotationRad = rotationDeg * Math.PI / 180;
+        
+        for (let i = 0; i <= points; i++) {
+            const angle = (i / points) * 2 * Math.PI;
+            
+            const x0 = radiusX * Math.cos(angle);
+            const y0 = radiusY * Math.sin(angle);
+            
+            const xRotated = x0 * Math.cos(rotationRad) - y0 * Math.sin(rotationRad);
+            const yRotated = x0 * Math.sin(rotationRad) + y0 * Math.cos(rotationRad);
+            
+            const x = centerX + xRotated;
+            const y = centerY + yRotated;
+            
+            data.push({ x, y, name: `Ellipse_${centerX}_${centerY}` });
+        }
+        
+        return data;
+    };
 
     if (!patientActivities) {
         return (
@@ -118,6 +136,28 @@ export default function ShowAllPatientActivity() {
                     router.push(`/profile/${username}/activities`);
                 }}>Назад</button>
             </div>
+            <ScatterChart width={800} height={400}>
+                <XAxis type="number" dataKey="x" name="X" />
+                <YAxis type="number" dataKey="y" name="Y" />
+                <Scatter 
+                    data={[{"x": 0, "y": 0}, {"x": 1920, "y": 1080}]} 
+                    fill="none"
+                />
+                <Scatter 
+                    data={generateEllipseData(100, 300, 100, 300)} 
+                    fill="#8884d8"
+                    line 
+                    shape={<Dot r={2} />}
+                    strokeWidth={4}
+                />
+                <Scatter 
+                    data={generateEllipseData(800, 500, 400, 130)} 
+                    fill="#8884d8"
+                    line 
+                    shape={<Dot r={2} />}
+                    strokeWidth={4}
+                />
+            </ScatterChart>
             {patientActivities && patientActivities.length > 0 && (
                 <div>
                     <div className="actpat-gap-between-tasks">
