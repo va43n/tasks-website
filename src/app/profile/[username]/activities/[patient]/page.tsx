@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import {useParams, useRouter} from "next/navigation";
 import "../../../../../../styles/globals.css";
 import "../../../../../../styles/active_patients.css";
-import { CartesianGrid, Line, Text, LineChart, XAxis, YAxis, ResponsiveContainer, Tooltip, Legend, Scatter, ScatterChart, ZAxis, Dot } from 'recharts';
+import { CartesianGrid, Line, LineChart, XAxis, YAxis, ResponsiveContainer, Tooltip, Legend, Scatter, ScatterChart, ZAxis, Dot } from 'recharts';
 
 
 type TaskInfo = {
@@ -37,6 +37,7 @@ export default function ShowAllPatientActivity() {
     const [openedMainStatistic, setOpenedMainStatistic] = useState<boolean>(false);
 
     const [timeStats, setTimeStats] = useState<TimeStatItem[][]>([]);
+    const [movementStats, setMovementStats] = useState<any>([]);
 
     // Выполнение действия при загрузке страницы
     useEffect(() => {
@@ -59,14 +60,23 @@ export default function ShowAllPatientActivity() {
 
                 const isStats = Array(data.patientActivities.length).fill(false);
                 let stats = [];
+                let movement_stats = [];
                 let statNumber = 0;
                 for (let i = 0; i < data.patientActivities.length; i++) {
-                    if (data.patientActivities[i].all_times === null || data.patientActivities[i].all_times === undefined) {
-                        stats.push([])
+                    if (data.patientActivities[i].all_times === null || data.patientActivities[i].all_times === undefined || 
+                        data.patientActivities[i].user_points === null || data.patientActivities[i].user_points === undefined ||
+                        data.patientActivities[i].figures_for_graph === null || data.patientActivities[i].figures_for_graph === undefined
+                    ) {
+                        stats.push([]);
+                        movement_stats.push([]);
                         continue;
                     }
-                    if (data.patientActivities[i].all_times.length === 0) {
-                        stats.push([])
+                    if (data.patientActivities[i].all_times.length === 0 ||
+                        data.patientActivities[i].user_points.length === 0 ||
+                        data.patientActivities[i].figures_for_graph.length === 0
+                    ) {
+                        stats.push([]);
+                        movement_stats.push([]);
                         continue;
                     }
                     isStats[i] = true;
@@ -74,20 +84,21 @@ export default function ShowAllPatientActivity() {
 
                     for (let j = 0; j < data.patientActivities[i].all_times.length; j++) {
                         const str: string = `${j + 1}`;
-                        const graph_name: string = `g${statNumber + 1}`;
-                        console.log(data.patientActivities[i].all_times[j])
                         statArray.push({"name": str, "g1": parseFloat(data.patientActivities[i].all_times[j].toFixed(3))});
                     }
 
                     statNumber++;
                     
                     stats.push(statArray)
+                    movement_stats.push([data.patientActivities[i].user_points.map((item: any) => JSON.parse(item)), data.patientActivities[i].figures_for_graph.map((item: any) => JSON.parse(item))])
                 }
                 setActivitiesWithStatistics(isStats);
 
                 if (statNumber !== 0) {
                     console.log("stats", stats);
+                    console.log("movement_stats", movement_stats);
                     setTimeStats(stats);
+                    setMovementStats(movement_stats);
                 }
 
                 setPatientActivities(data.patientActivities);
@@ -145,30 +156,6 @@ export default function ShowAllPatientActivity() {
                     router.push(`/profile/${username}/activities`);
                 }}>Назад</button>
             </div>
-            <ScatterChart width={800} height={400}>
-                <XAxis type="number" dataKey="x" name="X" />
-                <YAxis type="number" dataKey="y" name="Y" />
-                <Scatter 
-                    data={[{"x": 0, "y": 0}, {"x": 1920, "y": 1080}]} 
-                    fill="none"
-                />
-                <Scatter 
-                    name="Эллипс" 
-                    data={generateEllipseData(100, 300, 100, 300)} 
-                    fill="#8884d8"
-                    line 
-                    shape={<Dot r={2} />}
-                    strokeWidth={4}
-                />
-                <Scatter 
-                    name="Эллипс" 
-                    data={generateEllipseData(800, 500, 400, 130)} 
-                    fill="#8884d8"
-                    line 
-                    shape={<Dot r={2} />}
-                    strokeWidth={4}
-                />
-            </ScatterChart>
             {patientActivities && patientActivities.length > 0 && (
                 <div>
                     <div className="actpat-gap-between-tasks">
@@ -186,14 +173,45 @@ export default function ShowAllPatientActivity() {
                                 </div>
                                 {openedStatistics[index] && activitiesWithStatistics[index] &&
                                     <div className="actpat-stat">
+                                        <h1>Время выполнения задания по задачам</h1>
                                         <LineChart style={{ width: '100%', aspectRatio: 1.816, maxWidth: 800, margin: 'auto' }} data={timeStats[index]}>
                                             <CartesianGrid strokeDasharray="3 3" />
                                             <XAxis dataKey="name" label={{ value: 'Номер задачи',  offset: 0 }} />
                                             <YAxis label={{ value: 'Время', angle: -90, position: 'insideLeft' }} />
                                             <Tooltip />
-                                            <Legend />
                                             <Line type="monotone" dataKey="g1" stroke="#8884d8" strokeWidth={4} name="Текущий результат"/>
                                         </LineChart>
+                                        { movementStats[index].length !== 0 && 
+                                        <div>
+                                            <h1>Траектория движения</h1>
+                                            <ScatterChart style={{ width: '100%', aspectRatio: 1.816, maxWidth: 800, margin: 'auto' }}>
+                                                <CartesianGrid strokeDasharray="3 3" />
+                                                <XAxis type="number" dataKey="x" name="X" />
+                                                <YAxis type="number" dataKey="y" name="Y" />
+                                                <Scatter 
+                                                    data={[{"x": 0, "y": 0}, {"x": 1920, "y": 1080}]} 
+                                                    fill="none"
+                                                />
+                                                <Scatter
+                                                    data={movementStats[index][0]} 
+                                                    fill="#FF0000"
+                                                    line 
+                                                    shape={<Dot r={2} />}
+                                                    strokeWidth={4}
+                                                />
+                                                {movementStats[index][1].map((key: any, index: number) => (
+                                                    <Scatter 
+                                                        key={index} 
+                                                        data={generateEllipseData(key["cx"], key["cy"], key["rx"], key["ry"], key["angle"])} 
+                                                        fill="#8884d8"
+                                                        line 
+                                                        shape={<Dot r={2} />}
+                                                        strokeWidth={4}
+                                                    />
+                                                ))}
+                                            </ScatterChart>
+                                        </div>
+                                        }
                                     </div>
                                 }
                             </div>

@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
 		// Получение всех активностей пациентов по любым заданиям доктора
 		const {data: allPatientActivities, error: allPatientActivitiesError} = await supabase
 			.from("patient_activities")
-			.select("task_id, patient_username, time, activity, tasks (title), all_times")
+			.select("task_id, patient_username, time, activity, tasks (title), all_times, user_points, figures_for_graph")
 			.in("task_id", all_id_array)
 			.order('time', { ascending: false });
 
