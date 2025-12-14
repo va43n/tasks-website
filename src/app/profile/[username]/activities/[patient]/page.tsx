@@ -120,6 +120,10 @@ export default function ShowAllPatientActivity() {
         return data;
     };
 
+    const changeVisibility = async (index: number) => {
+        setOpenedStatistics(openedStatistics.map((val, i) => i === index ? !val : val));
+    }
+
     if (!patientActivities) {
         return (
             <div className="actpat-centered-container actpat-centered-container-width">
@@ -144,6 +148,7 @@ export default function ShowAllPatientActivity() {
                     fill="none"
                 />
                 <Scatter 
+                    name="Эллипс" 
                     data={generateEllipseData(100, 300, 100, 300)} 
                     fill="#8884d8"
                     line 
@@ -151,6 +156,7 @@ export default function ShowAllPatientActivity() {
                     strokeWidth={4}
                 />
                 <Scatter 
+                    name="Эллипс" 
                     data={generateEllipseData(800, 500, 400, 130)} 
                     fill="#8884d8"
                     line 
