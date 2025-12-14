@@ -61,7 +61,11 @@ export default function ShowAllPatientActivity() {
                 let stats = [];
                 let statNumber = 0;
                 for (let i = 0; i < data.patientActivities.length; i++) {
-                    if (!(data.patientActivities[i].all_times !== undefined && data.patientActivities[i].all_times.length !== 0)) {
+                    if (data.patientActivities[i].all_times === null || data.patientActivities[i].all_times === undefined) {
+                        stats.push([])
+                        continue;
+                    }
+                    if (data.patientActivities[i].all_times.length === 0) {
                         stats.push([])
                         continue;
                     }
@@ -71,7 +75,8 @@ export default function ShowAllPatientActivity() {
                     for (let j = 0; j < data.patientActivities[i].all_times.length; j++) {
                         const str: string = `${j + 1}`;
                         const graph_name: string = `g${statNumber + 1}`;
-                        statArray.push({"name": str, "g1": parseFloat(data.patientActivities[statNumber].all_times[j].toFixed(3))});
+                        console.log(data.patientActivities[i].all_times[j])
+                        statArray.push({"name": str, "g1": parseFloat(data.patientActivities[i].all_times[j].toFixed(3))});
                     }
 
                     statNumber++;

@@ -60,8 +60,8 @@ export async function POST(req: NextRequest) {
 	const activity = (result === "Success" ? "Пациент выполнил задание " : "Пациент не справился с заданием ") + task.title;
 
 	console.log(`TIMES:::::: ${all_times}`);
-	console.log(`user_points:::::: ${user_points}`);
-	console.log(`figures_for_graph:::::: ${figures_for_graph}`);
+	console.log(`user_points:::::: ${user_points}, ${JSON.stringify(user_points)}`);
+	console.log(`figures_for_graph:::::: ${figures_for_graph}, ${JSON.stringify(figures_for_graph)}`);
 
 	// Добавление строки активности в таблицу
 	const {error: insertError} = await supabase
