@@ -1,5 +1,6 @@
 import {NextRequest, NextResponse} from "next/server";
-import {uploadFile} from "../../../../../../lib/supabase";
+// import {uploadFile} from "../../../../../../lib/supabase";
+import {uploadFileYandex} from "../../../../../../lib/yandex_cloud";
 import {isLoginValid} from "../../../../../../lib/jwt";
 
 export async function POST(req: NextRequest) {
@@ -23,11 +24,12 @@ export async function POST(req: NextRequest) {
 
 	// Попытка загрузить файл в облачное хранилище
 	try {
-		const publicUrl = await uploadFile(file, `tasks/${username}`);
-
-		return NextResponse.json({publicUrl}, {status: 200});
-	} catch (err) {
-		console.log("Ошибка загрузки", 500);
-		return NextResponse.json({error: "Ошибка загрузки"}, {status: 500});
+		console.log("Начинаю загрузку в Yandex...");
+		const publicUrl = await uploadFileYandex(file!, `profiles-files/tasks/${username}`);
+		console.log("Загрузка успешна, URL:", publicUrl);
+		return NextResponse.json({ publicUrl }, { status: 200 });
+	} catch (err: any) {
+		console.error("ОШИБКА В API UPLOAD:", err);
+		return NextResponse.json({ error: "Ошибка загрузки: " + err.message }, { status: 500 });
 	}
 }

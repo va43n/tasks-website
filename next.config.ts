@@ -10,6 +10,13 @@ const nextConfig: NextConfig = {
         pathname: '/storage/v1/object/public/**',
         search: '',
       },
+      {
+        protocol: 'https',
+        hostname: 'storage.yandexcloud.net',
+        port: '',
+        pathname: '/tasks-website-bucket/**',
+        search: '',
+      },
     ],
   },
 };
