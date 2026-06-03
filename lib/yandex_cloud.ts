@@ -34,7 +34,6 @@ export async function uploadFileYandex(file: File, folder: string) {
     }
 
     const publicUrl = `https://storage.yandexcloud.net/tasks-website-bucket/${filePath}`;
-    console.log(publicUrl);
     return publicUrl;
 }
 

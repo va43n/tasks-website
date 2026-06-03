@@ -24,12 +24,10 @@ export async function POST(req: NextRequest) {
 
 	// Попытка загрузить файл в облачное хранилище
 	try {
-		console.log("Начинаю загрузку в Yandex...");
 		const publicUrl = await uploadFileYandex(file!, `profiles-files/tasks/${username}`);
-		console.log("Загрузка успешна, URL:", publicUrl);
 		return NextResponse.json({ publicUrl }, { status: 200 });
 	} catch (err: any) {
-		console.error("ОШИБКА В API UPLOAD:", err);
+		console.log("Ошибка загрузки " + err.message);
 		return NextResponse.json({ error: "Ошибка загрузки: " + err.message }, { status: 500 });
 	}
 }

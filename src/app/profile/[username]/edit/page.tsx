@@ -104,8 +104,10 @@ export default function EditProfile() {
 			method: "POST",
 			body: formData,
 		});
+		console.log("out");
 
 		const data = await res.json();
+		console.log(data);
 		if (data.error) {
 			console.log(`Ошибка загрузки ${type}: ${data.error}`);
 			return null;
