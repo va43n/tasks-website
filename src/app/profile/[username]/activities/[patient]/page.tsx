@@ -16,6 +16,7 @@ import {
   ScatterChart,
   Dot,
 } from "recharts";
+import { JSONValue } from "next/dist/server/config-shared";
 
 type TaskInfo = {
   title: string;
@@ -28,6 +29,8 @@ type PatientActivity = {
   tasks: TaskInfo;
   all_times: string[];
   task_id: string;
+  user_points: JSONValue[];
+  figures_for_graph: JSONValue[];
 };
 
 type TimeStatItem = {
