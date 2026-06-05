@@ -91,6 +91,10 @@
   /* margin-bottom: 15px; */
 }
 
+.global-stat-box-offset {
+  margin-top: 15px;
+}
+
 .actpat-patient-activity {
   width: 100%;
   display: flex;
