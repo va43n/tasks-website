@@ -271,7 +271,7 @@ export default function ShowAllPatientActivity() {
           >Глобальная статистика</button>
         
           {openedMainStatistic && globalTaskStats.length > 0 && (
-            <div style={{"margin-top": 15}} className="actpat-gap-between-tasks">
+            <div className="actpat-gap-between-tasks global-stat-box-offset">
             {globalTaskStats.map((stat) => (
                 <div className="actpat-container-for-statistic"
                 key={stat.task_id}
